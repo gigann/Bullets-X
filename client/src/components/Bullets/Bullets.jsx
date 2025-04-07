@@ -1,3 +1,9 @@
-export default function Bullets() {
-    
+function Bullets() {
+
+  return (
+    <>
+    </>
+  )
 }
+
+export default Bullets;

@@ -1,3 +1,9 @@
-export default function Profile() {
-    
+function Profile() {
+
+  return (
+    <>
+    </>
+  )
 }
+
+export default Profile;

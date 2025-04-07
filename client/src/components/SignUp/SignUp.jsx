@@ -1,3 +1,9 @@
-export default function SignUp() {
-    
+function SignUp() {
+
+  return (
+    <>
+    </>
+  )
 }
+
+export default SignUp;
