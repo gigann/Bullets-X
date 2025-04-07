@@ -1,4 +1,4 @@
-function Bullets() {
+function Profile() {
 
     return (
       <>
@@ -6,4 +6,4 @@ function Bullets() {
     )
   }
   
-  export default Bullets;
+  export default Profile;

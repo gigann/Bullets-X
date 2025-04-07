@@ -1,9 +1,11 @@
-function Home() {
+
+
+export default function Profile() {
 
     return (
       <>
+
       </>
     )
   }
   
-  export default Home;
