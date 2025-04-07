@@ -80,3 +80,7 @@ function Upcoming() {
 }
 
 export default Upcoming;
+
+// TODO
+// sorting table
+// adding assigned bullets in dropdowns (details)
