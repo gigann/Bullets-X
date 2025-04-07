@@ -33,4 +33,8 @@ const server = app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);
 });
 
+app.get('/', (req, res) => {
+	res.send('Server is up and running.')
+})
+
 module.exports = { app, server, PORT };

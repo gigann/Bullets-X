@@ -12,19 +12,20 @@ router.get("/", (req, res) => {
 
 router.get("/users/:id", (req, res) => {
   let id = req.params.id;
-  if (isNaN(Number(id))) {
-    knex("activity")
-      .select("*")
-      .whereILike("user_id", `%${id}%`)
-      .then((activity) => res.status(200).json(activity))
-      .catch((err) => res.status(500).json({ error: err.message }));
-  } else {
-    knex("activity")
-      .select()
-      .where("user_id", id)
-      .then((activity) => res.status(200).json(activity))
-      .catch((err) => res.status(500).json({ error: err.message }));
-  }
+  knex("activity")
+    .select()
+    .where("user_id", id)
+    .then((activity) => res.status(200).json(activity))
+    .catch((err) => res.status(500).json({ error: err.message }));
+});
+
+router.get("/:id", (req, res) => {
+  let id = req.params.id;
+  knex("activity")
+    .select()
+    .where("id", id)
+    .then((activity) => res.status(200).json(activity))
+    .catch((err) => res.status(500).json({ error: err.message }));
 });
 
 //CREATE

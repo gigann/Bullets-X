@@ -14,19 +14,11 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   let id = req.params.id;
-  if (isNaN(Number(id))) {
-    knex("users")
-      .select()
-      .whereILike("name", `%${id}%`)
-      .then((users) => res.status(200).json(users))
-      .catch((err) => res.status(500).json({ error: err.message }));
-  } else {
-    knex("users")
-      .select()
-      .where("id", id)
-      .then((users) => res.status(200).json(users))
-      .catch((err) => res.status(500).json({ error: err.message }));
-  }
+  knex("users")
+    .select()
+    .where("id", id)
+    .then((users) => res.status(200).json(users))
+    .catch((err) => res.status(500).json({ error: err.message }));
 });
 
 // CREATE
@@ -50,7 +42,7 @@ router.post("/", (req, res) => {
         last_name,
         unit_name,
         username,
-        password,
+        password: hashedPassword,
         rank,
         profile_picture,
         supervisor_id,
