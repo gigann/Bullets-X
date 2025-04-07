@@ -65,7 +65,7 @@
 
 .award-card:hover,
 .bullet-card:hover,
-.my-bullets:hover, .award-winning-bullets:hover {
+.my-bullets:hover {
   transform: scale(1.1);
 }
 
