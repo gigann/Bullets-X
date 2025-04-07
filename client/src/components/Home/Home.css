@@ -1,0 +1,77 @@
+/* todo:
+ - remove width, it's just for scaffolding
+
+*/
+
+.home-page {
+  display: flex;
+  flex-direction: row;
+}
+
+.home-sub-page {
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.award-winning-bullets {
+  background-color: RGBA(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 20px;
+  width: 500px;
+}
+
+.my-bullets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 290px;
+}
+
+.add-a-quick-action {
+  width: 240px;
+  height: 290px;
+  background-color: RGBA(0, 0, 0, 0.1);
+}
+
+.upcoming-awards {
+  background-color: RGBA(0, 0, 0, 0.1);
+  text-align: center;
+  width: 250px;
+  margin: 20px;
+}
+
+.award-card {
+  background-color: RGBA(255, 255, 255, 0.1);
+}
+
+.award-card,
+.bullet-card,
+.my-bullets {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.award-card:hover,
+.bullet-card:hover,
+.my-bullets:hover, .award-winning-bullets:hover {
+  transform: scale(1.1);
+}
+
+
+.test-img {
+  margin: 20px;
+  width: 128px;
+  height: 128px;
+}
