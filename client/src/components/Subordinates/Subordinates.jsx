@@ -1,9 +1,8 @@
 function Subordinates() {
+  return (
+    <>
+    </>
+  )
+}
 
-    return (
-      <>
-      </>
-    )
-  }
-  
-  export default Subordinates;
+export default Subordinates;

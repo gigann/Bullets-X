@@ -28,6 +28,8 @@ body {
   justify-content: center;
   align-items: center;
   min-width: 320px;
+  place-items: center;
+  width: 100%;
   min-height: 100vh;
 }
 

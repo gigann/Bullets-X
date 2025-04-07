@@ -1,0 +1,45 @@
+.activity-con{
+    width: 100%;
+    background-color: rgb(58, 59, 59);
+    margin-left: 20%;
+    text-align: center;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+table{
+    background-color:rgba(160, 160, 160, 0.767) ;
+    padding: 30px;
+    border: 5px solid rgba(255, 255, 255, 0.308);
+    overflow: auto;
+    border-radius: 15px;
+    max-height: 700px;
+}
+
+th{
+    border: 2px solid rgba(255, 255, 255, 0.507);
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: rgb(126, 126, 129);
+    
+}
+td{
+    padding: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.568);
+    margin: 5px;
+    border-radius: 5px;
+    
+}
+
+input{
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;border: 2px solid rgba(255, 255, 255, 0.623);
+}
+
+.descrip{
+    min-width: 500px;
+   
+}
+
