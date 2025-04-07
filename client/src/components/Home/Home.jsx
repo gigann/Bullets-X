@@ -60,3 +60,14 @@ function Home() {
 }
 
 export default Home;
+
+// TODO
+/*
+  fetches
+
+  Make award-winning bullets cycle through and show them (every 5 seconds). with arrows to go back and forth
+
+  make bullet/award cards
+
+  not sure what quick action is for yet
+*/
