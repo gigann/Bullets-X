@@ -10,7 +10,7 @@
 
 .subordinates-container {
   display: flex;
-  flex-direction: row; /* Arrange category blocks side by side */
+  flex-direction: row;
   gap: 20px;
   padding: 30px;
   border-radius: 12px;
@@ -30,7 +30,7 @@
   background-color: #f4f4f4;
   border-radius: 8px;
   gap: 10px;
-  flex: 1; /* Evenly space each column */
+  flex: 1;
   box-sizing: border-box;
 }
 
