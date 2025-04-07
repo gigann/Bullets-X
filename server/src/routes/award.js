@@ -37,12 +37,15 @@ router.get("/:id", (req, res) => {
   }
 });
 
+//hi
+
 //post new award
 router.post("/", (req, res) => {
-  const { name, description, due_date, bullet_minimum, bullet_maximum } = req.body;
+  const { name, description, due_date, bullet_minimum, bullet_maximum } =
+    req.body;
   knex("award")
     .insert({ name, description, due_date, bullet_minimum, bullet_maximum })
-    .then(() => res.status(201).json({message: 'Award added successfully.'}))
+    .then(() => res.status(201).json({ message: "Award added successfully." }))
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
