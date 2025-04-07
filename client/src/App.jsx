@@ -8,6 +8,7 @@ import Activity from './components/Activity/Activity';
 import Bullets from './components/Bullets/Bullets';
 import Upcoming from './components/Upcoming/Upcoming';
 import Subordinates from './components/Subordinates/Subordinates';
+import Navbar from './components/Navbar/Navbar';
 
 
 
@@ -18,6 +19,7 @@ function App() {
 
   return (
     <>
+      <Navbar/>
       <Routes>
         <Route path='/' element={<Login />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>

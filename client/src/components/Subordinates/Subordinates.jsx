@@ -25,8 +25,6 @@ function Subordinates() {
   //         console.error('Error fetching data:', error);
   //   });
   // }, []);
-
-
   return (
 <>
   <div className = "subordinates-page-container">
