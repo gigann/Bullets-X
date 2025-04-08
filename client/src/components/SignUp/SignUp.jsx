@@ -2,23 +2,20 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router'
 import { useLocalStorage } from "@uidotdev/usehooks"
 import './SignUp.css'
-import bcrypt from "bcryptjs-react"
 
 
 function Signup() {
     const [postValues, setPostValues ] = useState({firstname: '', lastname: '', username: '', password: '', rank: 'E-1', unit: '', supervisor: ''})
     const [userData, setUserData] = useState([])
-    // const [ unit, setUnit ] = useState(postValues.unit);
+    const [units, setUnits] = useState([]);
     const navigate = useNavigate()
-    const [loggedin, setLoggedIn] = useLocalStorage('loggedIn')
-    const saltRounds = 10;
 
-    // useEffect(() => {
-    //     fetch(`http://localhost:3001/users/byunit/${postValues.unit}`)
-    //         .then(res => res.json())
-    //         .then(res2 => setUserData(res2))
-    //         .catch(err => console.log("error: ",err))
-    // }, [postValues.unit])
+    useEffect(() => {
+        fetch(`http://localhost:3001/unit`)
+            .then(rawData => rawData.json())
+            .then(data => setUnits(data))
+            .catch(err => console.log("error: ",err))
+    }, [])
 
     function handleChange(event){
         var {name, value} = event.target
@@ -44,15 +41,6 @@ function Signup() {
             return
         }
 
-        //checks if a user already exists with username
-        // for(let i of userData){
-        //     if(i.username == postValues.username){
-        //         alert("User already exist with that username, choose another one")
-        //         return
-        //     }
-        // }
-
-        
         fetch('http://localhost:3001/users', {
             method: 'POST',
             mode: 'cors',
@@ -78,7 +66,6 @@ function Signup() {
                 alert("Account Created");
                 navigate("/");
             })
-
     }
 
     return (
@@ -94,7 +81,7 @@ function Signup() {
                     <input type="text" name="username" placeholder="Username" value={postValues.username} onChange={handleChange}/>
                     <input type="text" name="password" placeholder="Password" value={postValues.password} onChange={handleChange}/>
                 </div>
-                <select name="rank" placeholder="Rank" onChange={handleChange}> 
+                <select name="rank" placeholder="Rank" onChange={handleChange}>
                     <option value="E-1">E-1</option>
                     <option value="E-2">E-2</option>
                     <option value="E-3">E-3</option>
@@ -121,19 +108,16 @@ function Signup() {
                 </select>
                 <select name="unit" onChange={handleChange}>
                     <option value="Select">Select</option>
-                    <option value="71st ISRS">71st ISRS</option>
-                    <option value="72nd ISRS">72nd ISRS</option>
-                    <option value="73rd ISRS">73rd ISRS</option>
-                    <option value="74th ISRS">74th ISRS</option>
-                    <option value="75th ISRS">75th ISRS</option>
-                    <option value="Launch">Launch</option>
+                    {units?.map((unit, i) => {
+                        return <option key={i} value={unit.name}>{unit.name}</option>
+                    })}
                 </select>
                 <select name="supervisor" onChange={handleChange}>
                     {userData?.map((user, i) => {
                         return <option key={i} value={user.id}>{user.first_name} {user.last_name} ({user.rank})</option>
                     })}
                 </select>
-                
+
             </form>
             <button type="submit" className="signup-submit" onClick={() => {submit()}}>SUBMIT</button>
             <div className="signup-links">
@@ -143,5 +127,5 @@ function Signup() {
       </>
     )
   }
-  
+
   export default Signup;
