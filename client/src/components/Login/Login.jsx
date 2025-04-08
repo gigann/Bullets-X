@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useLocalStorage } from "@uidotdev/usehooks"
 import './Login.css'
 import bcrypt from "bcryptjs-react"
@@ -10,11 +10,13 @@ function Login() {
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn')
     const [data, setData] = useState([])
 
-    // useEffect(() => {
-    //     fetch('URLGOES HERE')
-    //         .then(res => res.json())
-    //         .then(res2 => setData(res2))
-    // },[])
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        fetch('http://localhost:3001/users')
+            .then(res => res.json())
+            .then(res2 => setData(res2))
+    },[])
 
     function handleChange(event){
         var { name, value} = event.target
@@ -26,29 +28,28 @@ function Login() {
             setHiddenV(false)
             return
         }
+        
+        fetch('http://localhost:3001/users/login', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: formValues.username,
+                password: formValues.password,
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Server Response: ", data);
+                setLoggedIn(data.user)
+                navigate("/home/" + data.user.id.toString())
 
-        var loggedInbool = false;
-        var userid = 0
-        if(data){
-            for(let i of data){
-                if(i.username == username){
-                    var salt = bcrypt.genSaltSync(10);
-                    var hash = bcrypt.hashSync(password, salt)
-                    if(bcrypt.compare(i.password, hash)){
-                        alert("Successful Login");
-                        setLoggedIn(i)
-                        loggedInbool = true;
-                        userid = i.id;
-                    }
-                }
-            }
-        }
+            })
 
-        if(!loggedInbool){
-            alert("Incorrect Password or username")
-        }else(
-            navigate('/home/' + userid)
-        )
+        
 
 
     }
@@ -57,12 +58,12 @@ function Login() {
     <>
         <div className="login-container">
             <h1 className="headertext">Login</h1>
-            <form className="login-form">
+            <form className="login-form" onSubmit={submit}>
                 <input type="text" name="username" value={formValues.username} placeholder="USERNAME" onChange={handleChange}/>
-                <input type="text" name="password" value={formValues.password} placeholder="PASSWORD" onChange={handleChange}/>
+                <input type="password" name="password" value={formValues.password} placeholder="PASSWORD" onChange={handleChange}/>
                 <p className="login-warning" hidden={hiddenV}>All fields must be filled out</p>
-                <button className="login-submit" onClick={()=>{submit()}}>SUBMIT</button>
             </form>
+            <button onClick={ () => {submit()}}>SUBMIT</button>
             <div className="login-links">
                 <Link to="/signup">Create Account</Link>
             </div>

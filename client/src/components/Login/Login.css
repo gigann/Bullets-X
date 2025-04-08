@@ -28,7 +28,7 @@
     flex-wrap: wrap;
     align-content: center;
     padding: 14.5px;
-    width: 90%;
+    width: 100%;
     justify-content: center;
     margin-bottom: 2rem;
     color: var(--color);
@@ -79,6 +79,7 @@
     animation: wobble 0.3s ease-in;
     -webkit-animation: wobble 0.3s ease-in;
 }
+
 
 .login-links{
     display: flex;

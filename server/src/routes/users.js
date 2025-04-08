@@ -21,6 +21,15 @@ router.get("/:id", (req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
+router.get("/byunit/:unit", (req, res) => {
+  let unit = req.params.unit;
+  knex("users")
+    .select()
+    .whereILike("unit_name", `%${unit}%`)
+    .then((users) => res.status(200).json(users))
+    .catch((err) => res.status(500).json({ error: err.message }));
+});
+
 // CREATE
 
 router.post("/", (req, res) => {
