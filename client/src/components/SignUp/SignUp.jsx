@@ -5,7 +5,7 @@ import './SignUp.css'
 import bcrypt from "bcryptjs-react"
 
 function Signup() {
-    const [postValues, setPostValues ] = useState({firstname: '', lastname: '', username: '', password: '', rank: '', unit: '', supervisor: ''})
+    const [postValues, setPostValues ] = useState({firstname: '', lastname: '', username: '', password: '', rank: 'E-1', unit: '', supervisor: ''})
     const [userData, setUserData] = useState([])
     // const [ unit, setUnit ] = useState(postValues.unit);
     const navigate = useNavigate()
