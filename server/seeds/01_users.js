@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
@@ -5,13 +7,14 @@
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
   await knex("users").del();
+  const hashedPassword = await bcrypt.hash("123abc", 10);
   await knex("users").insert([
     {
       first_name: "Mickey",
       last_name: "Mouse",
       unit_name: "Launch",
       username: "mickeymouse1",
-      password: "789abc",
+      password: hashedPassword,
       rank: "O-5",
       profile_picture: "something.png",
       supervisor_id: null,
@@ -22,7 +25,7 @@ exports.seed = async function (knex) {
       last_name: "Duck",
       unit_name: "Launch",
       username: "daisyduck1",
-      password: "123abc",
+      password: hashedPassword,
       rank: "O-2",
       profile_picture: "something.png",
       supervisor_id: 1,
@@ -33,10 +36,65 @@ exports.seed = async function (knex) {
       last_name: "Duck",
       unit_name: "Launch",
       username: "donaldduck1",
-      password: "456abc",
+      password: hashedPassword,
       rank: "O-4",
       profile_picture: "something.png",
       supervisor_id: 1,
+      is_supervisor: true,
+    },
+    {
+      first_name: "Homer",
+      last_name: "Simpson",
+      unit_name: "71st ISRS",
+      username: "homer1",
+      password: hashedPassword,
+      rank: "O-5",
+      profile_picture: "something.png",
+      supervisor_id: null,
+      is_supervisor: true,
+    },
+    {
+      first_name: "Marge",
+      last_name: "Simpson",
+      unit_name: "71st ISRS",
+      username: "marge1",
+      password: hashedPassword,
+      rank: "O-3",
+      profile_picture: "something.png",
+      supervisor_id: 4,
+      is_supervisor: true,
+    },
+    {
+      first_name: "Maggie",
+      last_name: "Simpson",
+      unit_name: "71st ISRS",
+      username: "maggie1",
+      password: hashedPassword,
+      rank: "O-1",
+      profile_picture: "something.png",
+      supervisor_id: 5,
+      is_supervisor: true,
+    },
+    {
+      first_name: "Bart",
+      last_name: "Simpson",
+      unit_name: "72nd ISRS",
+      username: "bart1",
+      password: hashedPassword,
+      rank: "O-1",
+      profile_picture: "something.png",
+      supervisor_id: null,
+      is_supervisor: true,
+    },
+    {
+      first_name: "Lisa",
+      last_name: "Simpson",
+      unit_name: "72nd ISRS",
+      username: "lisa1",
+      password: hashedPassword,
+      rank: "E-3",
+      profile_picture: "something.png",
+      supervisor_id: 7,
       is_supervisor: true,
     },
   ]);
