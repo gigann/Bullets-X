@@ -9,7 +9,6 @@ function Home() {
 
   return (
     <>
-      <div>hamburger/navbar placeholder</div>
       {(loggedIn) ? (
         <div className='home-page'>
           <div>
