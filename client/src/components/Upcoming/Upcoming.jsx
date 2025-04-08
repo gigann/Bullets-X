@@ -21,15 +21,12 @@ function Upcoming() {
   }, []);
 
   useEffect(() => {
-    let newBulletData = {};
-
     for (let i in awardData) {
       let awardID = awardData[i].id;
 
       fetch(`http://localhost:3001/bullet/award/${awardID}`)
         .then(res => res.json())
-        .then(data => setBulletData(data)
-      );
+        .then(data => setBulletData(data));
     }
   }, [awardData]);
 
@@ -103,12 +100,15 @@ function Upcoming() {
                         <td className='award-td' key={j}>
                           <details>
                             <summary>{item}</summary>
+                            Bullets:
                             <ul>
-                              {row[7]?.map((bullet, k) => (<li key={k}>{bullet}</li>))}
+                              {/* todo: bullet card here */}
                             </ul>
                           </details>
                         </td>
                       )
+                    case 6:
+                      return null;
                     default:
                       return <td className='award-td' key={j}>{item}</td>;
                   }
