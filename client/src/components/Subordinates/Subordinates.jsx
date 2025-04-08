@@ -1,6 +1,6 @@
 import "./Subordinates.css";
 import { useState, useEffect } from 'react';
-
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 function Subordinates() {
   const [loading, setLoading] = useState(true);
@@ -8,23 +8,30 @@ function Subordinates() {
   const [subordinateData, setSubordinateData] = useState([]);
   const [subordinateAwards, setSubordinateAwards] = useState([]);
   const [subordinateAwardNames, setSubordinateAwardNames] = useState([]);
+  const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
 
-  const userID = 1;
+
+  const userID = loggedIn?.id;
 
   useEffect(() => {
-    if (userID) {
+    if (!userID) {
+      setLoading(false);
+      setError("User not logged in.");
+      return;
+    }
+
         fetch(`http://localhost:3001/users/supervisor/${userID}`, )
         .then((res) => res.json())
         .then((data) => {
           console.log("Fetched items data:", data);
           setSubordinateData(data)
+          setLoading(false);
         })
         .catch((error) => {
           setLoading(false);
           setError(error.message);
           console.error('Error fetching data:', error);
       });
-    }
   }, [userID]);
 
 
@@ -58,7 +65,7 @@ function Subordinates() {
   useEffect(() => {
     // const timeout = setTimeout(() => {
       if (Array.isArray(subordinateData) && subordinateData.length > 0) {
-      const fetchAwards = async () => {
+      const fetchAwardNames = async () => {
         try {
           const awardNamesPromises = subordinateAwards.map((awardInfo) =>
             fetch(`http://localhost:3001/award/${awardInfo.award_id}`)
@@ -80,7 +87,7 @@ function Subordinates() {
         }
       };
 
-      fetchAwards();
+      fetchAwardNames();
     }
   }, [subordinateAwards]);
 // }, 1000);
@@ -89,7 +96,8 @@ function Subordinates() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  if (!Array.isArray(subordinateData)) return <p>You have no subordinates</p>;
+  if (!Array.isArray(subordinateData) || subordinateData.length === 0)
+     return <p>You have no subordinates</p>;
 
   return (
 <>
@@ -128,7 +136,7 @@ function Subordinates() {
           <p className="subordinate-title">Ready For Review?</p>
           {subordinateAwards.map((re, i) => (
             <label key={i} className="subordinate-ready-for-review">
-            <input type = "checkbox"
+            <input type = "checkbox" className="subordinate-checkbox"
               checked = {re?.status === "Submitted"}
               readOnly
             />

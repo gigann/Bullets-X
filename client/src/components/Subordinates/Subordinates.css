@@ -19,6 +19,7 @@
   max-width: 900px;
   width: 100%;
   justify-content: space-between;
+  margin-top: 15px;
 }
 
 .subordinate-item {
@@ -63,7 +64,7 @@
   width: 100%;
 }
 
-.subordinates-checkbox {
+.subordinate-checkbox {
   transform: scale(3);
   cursor: pointer;
   margin-top: 5px;
