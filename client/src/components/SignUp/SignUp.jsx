@@ -7,39 +7,52 @@ import bcrypt from "bcryptjs-react"
 function Signup() {
     const [postValues, setPostValues ] = useState({firstname: '', lastname: '', username: '', password: '', rank: '', unit: '', supervisor: ''})
     const [userData, setUserData] = useState([])
+    // const [ unit, setUnit ] = useState(postValues.unit);
     const navigate = useNavigate()
+    const [loggedin, setLoggedIn] = useLocalStorage('loggedIn')
     const saltRounds = 10;
 
-    useEffect(() => {
-        fetch("URL GOES HERE")
-            .then(res => res.json())
-            .then(res2 => setUserData(res2))
-    }, [])
+    // useEffect(() => {
+    //     fetch(`http://localhost:3001/users/byunit/${postValues.unit}`)
+    //         .then(res => res.json())
+    //         .then(res2 => setUserData(res2))
+    //         .catch(err => console.log("error: ",err))
+    // }, [postValues.unit])
 
     function handleChange(event){
-        var { name, value} = event.target
+        var {name, value} = event.target
+        if(name == 'unit') {
+            fetch(`http://localhost:3001/users/byunit/${value}`)
+            .then(res => res.json())
+            .then(data => {
+                //500
+                setUserData(data)
+                console.log("user data:", userData)
+            })
+            .catch(err => console.log("error: ",err))
+        }
         setPostValues(e => ({...e, [name]: value}))
+        // setUnit(postValues.unit);
     }
 
-    function submit(){
-
+    function submit(event){
         //checks for empty fields in the form
-        if(postValues.firstname = "",postValues.lastname = "",postValues.username = "",postValues.password = "", postValues.rank = "", postValues.unit = "", postValues.supervisor = ""){
+        //event.preventDefault()
+        if(postValues.firstname == "" || postValues.lastname == "" || postValues.username == "" || postValues.password == "" || postValues.rank == "" || postValues.unit == ""){
             alert("all fields must be filled out")
             return
         }
 
         //checks if a user already exists with username
-        for(let i of userData){
-            if(i.username == postValues.username){
-                alert("User already exist with that username, choose another one")
-                return
-            }
-        }
+        // for(let i of userData){
+        //     if(i.username == postValues.username){
+        //         alert("User already exist with that username, choose another one")
+        //         return
+        //     }
+        // }
 
-        postValues.password = bcrypt.hashSync(postValues.password, saltRounds)
-
-        fetch('URL GOES HERE', {
+        
+        fetch('http://localhost:3001/users', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -47,32 +60,37 @@ function Signup() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                username: postValues.username,
+                password: postValues.password,
+                unit_name: postValues.unit,
                 first_name: postValues.firstname,
                 last_name: postValues.lastname,
-                user_name: postValues.username,
-                password: postValues.password,
                 rank: postValues.rank,
-                unit: postValues.unit,
-                supervisor: postValues.supervisor
+                profile_picture: "something.png",
+                supervisor_id: postValues.supervisor,
+                is_supervisor: false
             })
         })
             .then(res => res.json())
-            .then(data => console.log("Server Response: ", data))
-            .then(dummy => {if(data.success == true){alert("Account Successfully created"); navigate("/login")}})
+            .then(data => {
+                // console.log("Server Response: ", data);
+                alert("Account Created");
+                navigate("/");
+            })
 
     }
 
     return (
       <>
         <div className="signup-container">
-            <h1>Create User</h1>
+            <h1>Sign Up</h1>
             <form className="signup-form">
                 <div className="signup-names">
-                    <input type="text" name="first_name" placeholder="First Name" value={postValues.firstname} onChange={handleChange}/>
-                    <input type="text" name="last_name" placeholder="Last Name" value={postValues.lastname} onChange={handleChange}/>
+                    <input type="text" name="firstname" placeholder="First Name" value={postValues.firstname} onChange={handleChange}/>
+                    <input type="text" name="lastname" placeholder="Last Name" value={postValues.lastname} onChange={handleChange}/>
                 </div>
                 <div className="signup-passwords">
-                    <input type="text" name="user_name" placeholder="Username" value={postValues.username} onChange={handleChange}/>
+                    <input type="text" name="username" placeholder="Username" value={postValues.username} onChange={handleChange}/>
                     <input type="text" name="password" placeholder="Password" value={postValues.password} onChange={handleChange}/>
                 </div>
                 <select name="rank" placeholder="Rank" onChange={handleChange}> 
@@ -101,19 +119,22 @@ function Signup() {
                     <option value="W-5">W-5</option>
                 </select>
                 <select name="unit" onChange={handleChange}>
+                    <option value="Select">Select</option>
                     <option value="71st ISRS">71st ISRS</option>
                     <option value="72nd ISRS">72nd ISRS</option>
                     <option value="73rd ISRS">73rd ISRS</option>
                     <option value="74th ISRS">74th ISRS</option>
                     <option value="75th ISRS">75th ISRS</option>
+                    <option value="Launch">Launch</option>
                 </select>
-                <select name="supervisor">
-                    <option value="Damon as a Supervisor" onChange={handleChange}>Badass Supervisor</option>
-                    <option value="Brooke as a Supervisor" onChange={handleChange}>Absolute DOGSHIT supervisor</option>
+                <select name="supervisor" onChange={handleChange}>
+                    {userData?.map((user, i) => {
+                        return <option key={i} value={user.id}>{user.first_name} {user.last_name} ({user.rank})</option>
+                    })}
                 </select>
-                <button className="signup-submit" onClick={() => {submit()}}>SUBMIT</button>
+                
             </form>
-            {/* <button onClick={() => console.log(postValues)}>Console.log</button> */}
+            <button type="submit" className="signup-submit" onClick={() => {submit()}}>SUBMIT</button>
             <div className="signup-links">
                 <Link to="/">Back to Login</Link>
             </div>

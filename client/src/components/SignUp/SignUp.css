@@ -102,13 +102,20 @@
 }
 
 .signup-submit{
-    display: flex;
     justify-self: center;
+    width: 94%;
+}
+
+.signup-container button{
+    display: flex;
+    place-self: center;
+    justify-content: center;
 }
 
 .signup-names{
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 
 .signup-passwords{
