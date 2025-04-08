@@ -30,5 +30,40 @@ exports.seed = async function (knex) {
       status: "Complete",
       award_id: 2,
     },
+    {
+      user_id: 4,
+      name: "Ops",
+      description: "Ohh say can u seeeee",
+      status: "Complete",
+      award_id: 1,
+    },
+    {
+      user_id: 5,
+      name: "Things",
+      description: "Yeah yeah yeah",
+      status: "Supervisor Review",
+      award_id: 2,
+    },
+    {
+      user_id: 6,
+      name: "Random",
+      description: "Random dancing",
+      status: "Drafting",
+      award_id: 1,
+    },
+    {
+      user_id: 7,
+      name: "Tina",
+      description: "Tina come get your dinner",
+      status: "Drafting",
+      award_id: 1,
+    },
+    {
+      user_id: 8,
+      name: "Fox",
+      description: "The brown fox jumps",
+      status: "Submitted",
+      award_id: 2,
+    },
   ]);
 };
