@@ -1,15 +1,44 @@
 import { useState } from "react";
+import TextareaAutosize from 'react-textarea-autosize';
 
 import './Home.css';
+import { useLocalStorage } from "@uidotdev/usehooks";
 
+// [question] what's the point if we have a navbar
 function Home() {
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [userID, setUserID] = useState(); // context?
+  const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
 
+  const addActivity = (name, description) => {
+    if (!name || !description) {
+      alert('Missing one or more fields!');
+      return;
+    }
+    fetch('http://localhost:3001/activity', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: loggedIn.id,
+        name: name,
+        description: description
+      })
+    })
+      .then(res => {
+
+        res.json();
+        if (res.ok) {
+          alert('Activity added!');
+          window.location.reload();
+        }
+      })
+  }
 
   return (
     <>
-      {(loggedIn) ? (
+      {(loggedIn.id > 0) ? (
         <div className='home-page'>
           <div>
             <div className='award-winning-bullets'>
@@ -21,7 +50,14 @@ function Home() {
                 <h3>My Bullets</h3>
               </div>
               <div className='add-a-quick-action'>
-                Add a quick action
+                <b>Add a quick action</b>
+                <input id='quick-name' type='text' placeholder='Name' />
+                <TextareaAutosize id='quick-description' placeholder='Description' minRows={3} />
+                <button onClick={() => {
+                  let name = document.querySelector('#quick-name').value;
+                  let description = document.querySelector('#quick-description').value;
+                  addActivity(name, description);
+                }}>Add</button>
               </div>
             </div>
           </div>
@@ -51,7 +87,7 @@ function Home() {
         </div>
       ) : (
         <div className='login-warning'>
-          <h1><strong>You must sign in to do that.</strong></h1>
+          <h1><strong>You must login in to do that.</strong></h1>
         </div>
       )}
     </>
