@@ -8,65 +8,75 @@ function Subordinates() {
   const [error, setError] = useState(null);
   const [subordinateData, setSubordinateData] = useState([]);
 
-  // useEffect(() => {
-  //       fetch(`http://localhost:3001/subordinates`)
-  //       .then((res) => {
-  //           console.log(res.status)
-  //           return res.json()
-  //       })
-  //       .then((data) => {
-  //         console.log("Fetched items data:", data);
-  //         setLoading(false)
-  //         setSubordinateData(data)
-  //       })
-  //       .catch((error) => {
-  //         setLoading(false);
-  //         setError(error.message);
-  //         console.error('Error fetching data:', error);
-  //   });
-  // }, []);
+  const userID = 1;
+
+  useEffect(() => {
+    if (userID) {
+        fetch(`http://localhost:3001/users/supervisor/${userID}`, )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Fetched items data:", data);
+          setLoading(false)
+          setSubordinateData(data)
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error.message);
+          console.error('Error fetching data:', error);
+      });
+    }
+  }, [userID]);
+
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!Array.isArray(subordinateData)) return <p>You have no subordinates</p>;
+
   return (
 <>
-  <div className = "subordinates-page-container">
-    {/* {subordinateData.length > 0 ? (
-      subordinateData.map((subordinate) => ( */}
-    <div className = "subordinates-container">
-      <div className="subordinate-item">
-        <p className="subordinate-title">Name</p>
-        <p className="subordinate-name">Jimmy Buffett</p>
-        <p className="subordinate-name">Guy Guyson</p>
-        <p className="subordinate-name">Dude Dudeguy</p>
-        {/* <p className="subordinate-name">{subordinate.subordinate_name}</p> */}
-      </div>
-      <div className="subordinate-item">
-        <p className="subordinate-title">Rank</p>
-        <p className="subordinate-rank">O-40</p>
-        <p className="subordinate-rank">E-2</p>
-        <p className="subordinate-rank">O-4</p>
+  <div className="subordinates-page-container">
+      <div className="subordinates-container">
+        <div className="subordinate-item">
+          <p className="subordinate-item-name-rank"></p>
+          <p className="subordinate-title">Name</p>
+          {subordinateData.map((sub, i) => (
+            <p key={i} className="subordinate-name">
+              {`${sub.first_name} ${sub.last_name}`}
+            </p>
+          ))}
+        </div>
 
-        {/* <p className="subordinate-rank">{subordinate.subordinate_rank}</p> */}
+        <div className="subordinate-item">
+          <p className="subordinate-item-name-rank"></p>
+          <p className="subordinate-title">Rank</p>
+          {subordinateData.map((sub, i) => (
+            <p key={i} className="subordinate-rank">
+              {sub.rank}
+            </p>
+          ))}
+        </div>
+
+        <div className="subordinate-item">
+          <p className="subordinate-title">Awards Nominated</p>
+          {subordinateData.map((sub, i) => (
+            <p key={i} className="subordinate-awards-nominated">
+              {/* {sub.profile_picture} */}
+            </p>
+          ))}
+        </div>
+
+        <div className="subordinate-item">
+          <p className="subordinate-title">Ready For Review?</p>
+          {subordinateData.map((_, i) => (
+            <label key={i} className="subordinate-ready-for-review">
+              <input type="checkbox" />
+            </label>
+          ))}
+        </div>
       </div>
-      <div className="subordinate-item">
-        <p className="subordinate-title">Awards Nominated</p>
-        <p className="subordinate-awards-nominated">400</p>
-        <p className="subordinate-awards-nominated">2</p>
-        <p className="subordinate-awards-nominated">a mil</p>
-        {/* <p className="subordinate-awards-nominated">{subordinate.awards_nominated}</p> */}
-      </div>
-      <div className="subordinate-item">
-        <p className="subordinate-title">Ready For Review?</p>
-        <td className="subordinate-ready-for-review">
-          <input type = "checkbox"></input>
-        </td>
-	    </div>
     </div>
-    {/* ))
-  ) : (
-		<p>No Items found.</p>
-  )} */}
-  </div>
 </>
-  )
+  );
 }
 
 export default Subordinates;
