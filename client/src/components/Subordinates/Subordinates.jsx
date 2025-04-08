@@ -69,7 +69,7 @@ function Subordinates() {
           <p className="subordinate-title">Ready For Review?</p>
           {subordinateData.map((_, i) => (
             <label key={i} className="subordinate-ready-for-review">
-              <input type="checkbox" />
+              <input type="checkbox" className=".subordinates-checkbox" />
             </label>
           ))}
         </div>
