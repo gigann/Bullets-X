@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from 'react-router'
 import { useLocalStorage } from "@uidotdev/usehooks"
-import './login.css'
+import './Login.css'
 import bcrypt from "bcryptjs-react"
 
 function Login() {
@@ -50,7 +50,7 @@ function Login() {
             navigate('/home/' + userid)
         )
 
-        
+
     }
 
   return (
