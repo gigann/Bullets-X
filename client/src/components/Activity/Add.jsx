@@ -1,9 +1,9 @@
 import {useEffect, useState, useContext} from 'react'
-
+import { useLocalStorage } from "@uidotdev/usehooks"
 
 export default function Addact() {
 
-    
+    const [user, setUser] = useLocalStorage('loggedIn');
     const [formData, setFormData] = useState({
         name: '',
         description: '',        
@@ -80,15 +80,4 @@ export default function Addact() {
     )
     }
 
-    let user = {
-        "id": 1,
-        "first_name": "Mickey",
-        "last_name": "Mouse",
-        "unit_name": "Launch",
-        "username": "mickeymouse1",
-        "password": "789abc",
-        "rank": "O-5",
-        "profile_picture": "something.png",
-        "supervisor_id": null,
-        "is_supervisor": true
-      }
+    
