@@ -21,20 +21,21 @@ const activityRoute = require("./routes/activity");
 const awardRoute = require("./routes/award");
 const userAwardRoute = require("./routes/user_award");
 const bulletRoute = require("./routes/bullet");
+const unitRoute = require("./routes/unit");
 
 app.use("/users", usersRoute);
 app.use("/activity", activityRoute);
 app.use("/award", awardRoute);
 app.use("/user_award", userAwardRoute);
 app.use("/bullet", bulletRoute);
-
+app.use("/unit", unitRoute);
 
 const server = app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);
 });
 
-app.get('/', (req, res) => {
-	res.send('Server is up and running.')
-})
+app.get("/", (req, res) => {
+  res.send("Server is up and running.");
+});
 
 module.exports = { app, server, PORT };

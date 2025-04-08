@@ -142,8 +142,6 @@ function Subordinates() {
               // console.log("blah", award)
             return (
             <label key={i} className="subordinate-ready-for-review">
-              <input type = "checkbox"
-                checked = {award?.status === "Submitted"}
                 readOnly
               />
             </label>

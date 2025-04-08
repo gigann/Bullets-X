@@ -44,26 +44,38 @@ router.post("/", (req, res) => {
     supervisor_id,
     is_supervisor,
   } = req.body;
-  bcrypt.hash(password, 10).then((hashedPassword) => {
-    knex("users")
-      .insert({
-        first_name,
-        last_name,
-        unit_name,
-        username,
-        password: hashedPassword,
-        rank,
-        profile_picture,
-        supervisor_id,
-        is_supervisor,
+
+  knex('users')
+  .where({ username })
+  .first()
+  .then(foundUser => {
+    if(foundUser) {
+      return res.status(409).json({
+        message: "Username already taken"
       })
-      .returning("id")
-      .then(() => res.status(201).json({ message: `User added successfully` }))
-      .catch((err) =>
-        res.status(500).json({
-          message: "User could not be added",
-        })
-      );
+    } else {
+        bcrypt.hash(password, 10).then((hashedPassword) => {
+          knex("users")
+            .insert({
+              first_name,
+              last_name,
+              unit_name,
+              username,
+              password: hashedPassword,
+              rank,
+              profile_picture,
+              supervisor_id,
+              is_supervisor,
+            })
+            .returning("id")
+            .then(() => res.status(201).json({ message: `User added successfully` }))
+            .catch((err) =>
+              res.status(500).json({
+                message: "User could not be added",
+              })
+            );
+        });
+    };
   });
 });
 

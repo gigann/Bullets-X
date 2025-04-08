@@ -1,39 +1,54 @@
 import './Activity.css';
+import {useEffect, useState, useContext} from 'react';
+import Addact from './Add.jsx'
+import HandleDelete from './Delete.jsx'
+import { useLocalStorage } from "@uidotdev/usehooks"
 
 export default function Activity() {
+    const [results, setResults] = useState([]);
+    const [user, setUser] = useLocalStorage('loggedIn');
+    
+
+    useEffect(() => {
+        if (!user) return;
+        fetch("http://localhost:3001/activity")
+        .then(res => res.json())
+        .then((data) => {
+            const filteredData =data.filter((activity) => activity.user_id === user?.id)
+            setResults(filteredData);
+        })
+        .catch((err) => console.error('Error fetching:', err))
+    }, [user])
     
     return(
         <>
             <div className='activity-con'>
                 <h2>My Activity</h2>
-                
+                <Addact/>
+                <div className='t-div'>
                 <table >
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Date</th>
                             <th>Description</th>
+                            <th>Date</th>
                             <th>Changes</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
-                        <tr>
-                            <td><input placeholder='Name'></input></td>
-                            <td><input placeholder='Date format: YYYY-MM-DD'></input></td>
-                            <td><input className='descrip' placeholder='Give a Description of your work!'></input></td>
-                            <td><button>Add Activity!</button></td>
-                            
-                        </tr>
-                        <tr>
-                            <td>Example</td>
-                            <td>Example</td>
-                            <td>Example</td>
-                            <td><button>Edit</button> <button>X</button></td>
-                            
-                        </tr>
-                        
+                            {results.map( (row) => (
+                                <tr key={row.id}>
+                                <td>{row.name}</td>
+                                <td className='description'>{row.description}</td>
+                                <td>{new Date(row.created_at).toLocaleDateString()}</td>
+                                <td><HandleDelete id={row.id}/></td>
+                            </tr>
+                        ))}
                     </tbody>
+                    
                 </table>
+                </div>
             </div>
         </>
     )
