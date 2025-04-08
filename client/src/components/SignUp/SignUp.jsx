@@ -4,6 +4,7 @@ import { useLocalStorage } from "@uidotdev/usehooks"
 import './SignUp.css'
 import bcrypt from "bcryptjs-react"
 
+
 function Signup() {
     const [postValues, setPostValues ] = useState({firstname: '', lastname: '', username: '', password: '', rank: 'E-1', unit: '', supervisor: ''})
     const [userData, setUserData] = useState([])
@@ -66,7 +67,7 @@ function Signup() {
                 first_name: postValues.firstname,
                 last_name: postValues.lastname,
                 rank: postValues.rank,
-                profile_picture: "something.png",
+                profile_picture: "../public/daisy.jpg",
                 supervisor_id: postValues.supervisor,
                 is_supervisor: false
             })
