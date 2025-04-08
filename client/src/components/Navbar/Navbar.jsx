@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Navbar.css'
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import Hamburger from "hamburger-react"
 import { useLocalStorage } from '@uidotdev/usehooks';
 
@@ -15,10 +15,13 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 
   return (
     <>
-      
-        <nav className="navbar">
-          <h1 className='navHeader'>BulletX</h1>
 
+        <nav className="navbar">
+          <Link to = "/home" >
+            <h1 className='navHeader'>
+              BulletX
+            </h1>
+          </Link>
           {isOpen && (
           <ul>
                 <li hidden={!loggedIn} ><button className='nav-btn' onClick={() => handleNavigation('/home/:id')}>Home</button></li>
@@ -29,7 +32,7 @@ import { useLocalStorage } from '@uidotdev/usehooks';
                 <li hidden={!loggedIn} ><button className='nav-btn' onClick={() => handleNavigation('/subordinates/:id')}>Subordinates</button></li>
                 <li hidden={!loggedIn} ><button onClick={() => {setLoggedIn(), navigate('/')}}>Log Out</button></li>
                 <li hidden={loggedIn}><button className='nav-btn' onClick={() => handleNavigation('/')}>Log In</button></li>
-                </ul>
+          </ul>
           )}
           <Hamburger toggled={isOpen} toggle={setOpen} />
         </nav>

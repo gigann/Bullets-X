@@ -4,7 +4,7 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
+
   .navbar {
     display: flex;
     flex-wrap: wrap;
@@ -20,24 +20,25 @@
     left: 0;
     z-index: 1000; /* Keeps it above other elements */
   }
-  
+
   .navHeader{
     margin-top: 0;
     position: fixed;
     top: 40px;
     left: 20px;
+    color: white;
   }
   /* Make sure the content below doesn’t overlap the navbar */
   body {
     padding-top: 80px; /* Adjusted space so navbar doesn't cover content */
   }
-  
+
   .navbar{
     align-content: center;
   }
-  
-  
-  
+
+
+
   .navbar ul {
     display: flex;
     list-style: none;
@@ -45,11 +46,11 @@
     align-content: center;
     justify-content: right;
   }
-  
+
   .navbar li {
     margin: 0 15px;
   }
-  
+
   .navbar-btn {
     background-color: transparent;
     border: 2px solid #ecf0f1;
@@ -61,20 +62,20 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-  
+
   }
-  
+
   .navbar-btn:hover {
     background-color: #ecf0f1;
     color: #2c3e50;
     transform: scale(1.05);
   }
-  
+
   .navbar-btn:focus {
     outline: none;
     border-color: #3498db;
   }
-  
+
   /* Fire effect */
   .navbar-btn:active::after {
     content: '';
@@ -88,7 +89,7 @@
     transform: translate(-50%, -50%) scale(0);
     animation: fireburst 0.5s ease-out forwards;
   }
-  
+
   @keyframes fireburst {
     0% {
       transform: translate(-50%, -50%) scale(0);
@@ -99,22 +100,22 @@
       opacity: 0;
     }
   }
-  
+
   @media (max-width: 768px) {
     .navbar {
       flex-direction: column;
       align-items: center;
     }
-  
+
     .navbar h4 {
       margin-bottom: 15px;
     }
-  
+
     .navbar ul {
       flex-direction: column;
       align-items: right;
     }
-  
+
     .navbar li {
       margin: 10px 0;
       /* background: #34495e; */

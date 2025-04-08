@@ -166,4 +166,22 @@ router.delete("/:id", (req, res) => {
     );
 });
 
+router.get("/supervisor/:supervisor_id", (req, res) => {
+  const supervisor_id = req.params.supervisor_id;
+
+  knex("users")
+    .select("id", "first_name", "last_name", "rank")
+    .where("supervisor_id", supervisor_id)
+    .then((subordinates) => {
+      if (subordinates.length > 0) {
+        res.status(200).json(subordinates);
+      } else {
+        res.status(404).json({ message: "No subordinates found for this supervisor." });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
 module.exports = router;
