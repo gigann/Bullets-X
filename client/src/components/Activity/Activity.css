@@ -1,7 +1,7 @@
 .activity-con{
     width: 100%;
     background-color: rgb(58, 59, 59);
-    margin-left: 20%;
+    margin-left: 20% auto;
     text-align: center;
     border-radius: 15px;
     padding: 15px;
@@ -13,8 +13,9 @@ table{
     border: 5px solid rgba(255, 255, 255, 0.308);
     overflow: auto;
     border-radius: 15px;
-    max-height: 700px;
+    height: 200px;
 }
+
 
 th{
     border: 2px solid rgba(255, 255, 255, 0.507);
@@ -39,7 +40,19 @@ input{
 }
 
 .descrip{
-    min-width: 500px;
-   
+    min-width: 300px;
+   margin: 10px;
 }
 
+.add-act{
+    margin: 15px;
+    padding:5px;
+}
+
+
+.t-div{
+    height: 500px;
+    
+    overflow: auto;
+    border-radius: 15px;
+}
