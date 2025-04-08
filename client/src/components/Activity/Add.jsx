@@ -41,11 +41,10 @@ export default function Addact() {
         })
 
         const data = await response.json()
-            if (data.success == true) {
+            if (response.ok) {
                 alert('Activity added!')
-            } else {
-                alert('Failed request')
-            }
+                window.location.reload();
+            } 
         } catch(error) {
             console.error('Error:', error);
             alert('An error occured')

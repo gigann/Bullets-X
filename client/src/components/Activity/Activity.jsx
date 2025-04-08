@@ -22,6 +22,7 @@ export default function Activity() {
             <div className='activity-con'>
                 <h2>My Activity</h2>
                 <Addact/>
+                <div className='t-div'>
                 <table >
                     <thead>
                         <tr>
@@ -31,6 +32,7 @@ export default function Activity() {
                             <th>Changes</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
                             {results.map( (row) => (
                                 <tr key={row.id}>
@@ -41,7 +43,9 @@ export default function Activity() {
                             </tr>
                         ))}
                     </tbody>
+                    
                 </table>
+                </div>
             </div>
         </>
     )
