@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextareaAutosize from 'react-textarea-autosize';
 
 import './Home.css';
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { useNavigate, Link } from 'react-router-dom';
 
-// [question] what's the point if we have a navbar
 function Home() {
   const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
+  const navigate = useNavigate();
+
+  const [upcomingAwards, setUpcomingAwards] = useState();
+
+  useEffect(() => {
+    fetch('http://localhost:3001/award')
+      .then(res => res.json())
+      .then(data => setUpcomingAwards(data))
+  }, []);
 
   const addActivity = (name, description) => {
     if (!name || !description) {
@@ -47,7 +56,9 @@ function Home() {
             </div>
             <div className='home-sub-page'>
               <div className='my-bullets'>
-                <h3>My Bullets</h3>
+                <h3 className='my-bullets-link'><a onClick={() => {
+                  navigate(`/bullets/${loggedIn.id}`);
+                }}>My Bullets</a></h3>
               </div>
               <div className='add-a-quick-action'>
                 <b>Add a quick action</b>
@@ -63,26 +74,18 @@ function Home() {
           </div>
           <div className='upcoming-awards'>
             <h3>Upcoming Awards</h3>
-            <div className='award-card'>
-              <h3>Award #1</h3>
-              <span>April 2025</span>
-            </div>
-            <div className='award-card'>
-              <h3>Award #2</h3>
-              <span>April 2025</span>
-            </div>
-            <div className='award-card'>
-              <h3>Award #3</h3>
-              <span>April 2025</span>
-            </div>
-            <div className='award-card'>
-              <h3>Award #4</h3>
-              <span>April 2025</span>
-            </div>
-            <div className='award-card'>
-              <h3>Award #5</h3>
-              <span>April 2025</span>
-            </div>
+            {upcomingAwards?.map((award, i) => (
+              <div
+                className='award-card'
+                key={i}
+                onClick={() => {
+                  navigate(`/upcoming/${loggedIn.id}`);
+                }}
+              >
+                <h3>{award.name}</h3>
+                <span>{award.due_date}</span>
+              </div>
+            ))}
           </div>
         </div>
       ) : (
