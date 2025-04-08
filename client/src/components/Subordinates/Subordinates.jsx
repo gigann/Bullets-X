@@ -7,6 +7,8 @@ function Subordinates() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [subordinateData, setSubordinateData] = useState([]);
+  const [subordinateID, setSubordinateID] = useState([]);
+  const [subordinateAwards, setSubordinateAwards] = useState([]);
 
   const userID = 1;
 
@@ -27,6 +29,32 @@ function Subordinates() {
     }
   }, [userID]);
 
+
+  useEffect(() => {
+    if (Array.isArray(subordinateData) && subordinateData.length > 0) {
+      const fetchAwards = async () => {
+        try {
+          const awardsPromises = subordinateData.map((subordinate) =>
+            fetch(`http://localhost:3001/user_award/users/${subordinate.id}`)
+              .then((res) => {
+              if (!res.ok) {
+                throw new Error(`Failed to fetch awards for user ID ${subordinate.id}`);
+              }
+              return res.json();
+            })
+          );
+
+          const awardsData = await Promise.all(awardsPromises);
+          console.log("Fetched awards data:", awardsData);
+          setSubordinateAwards(awardsData);
+        } catch (error) {
+          setError(error.message);
+        }
+      };
+
+      fetchAwards();
+    }
+  }, [subordinateData]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -58,20 +86,27 @@ function Subordinates() {
 
         <div className="subordinate-item">
           <p className="subordinate-title">Awards Nominated</p>
-          {subordinateData.map((sub, i) => (
+          {subordinateData.map((_, i) => (
             <p key={i} className="subordinate-awards-nominated">
-              {/* {sub.profile_picture} */}
+              Hi
             </p>
           ))}
         </div>
 
         <div className="subordinate-item">
           <p className="subordinate-title">Ready For Review?</p>
-          {subordinateData.map((_, i) => (
+          {subordinateData.map((sub, i) => {
+            const award = subordinateAwards.find((aw) => aw.user_id === sub.id);
+              console.log(award)
+            return (
             <label key={i} className="subordinate-ready-for-review">
-              <input type="checkbox" />
+              <input type = "checkbox"
+                checked = {award?.status === "Drafting"}
+                readOnly
+              />
             </label>
-          ))}
+            )
+          })}
         </div>
       </div>
     </div>
