@@ -56,3 +56,8 @@ input{
     overflow: auto;
     border-radius: 15px;
 }
+
+.description{
+    min-width: 400px;
+    max-width: 800px;
+}

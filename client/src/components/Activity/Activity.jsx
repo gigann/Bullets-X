@@ -2,9 +2,12 @@ import './Activity.css';
 import {useEffect, useState, useContext} from 'react';
 import Addact from './Add.jsx'
 import HandleDelete from './Delete.jsx'
+import { useLocalStorage } from "@uidotdev/usehooks"
 
 export default function Activity() {
     const [results, setResults] = useState([]);
+    const [user, setUser] = useLocalStorage('loggedIn');
+    
 
     useEffect(() => {
         if (!user) return;
@@ -37,7 +40,7 @@ export default function Activity() {
                             {results.map( (row) => (
                                 <tr key={row.id}>
                                 <td>{row.name}</td>
-                                <td>{row.description}</td>
+                                <td className='description'>{row.description}</td>
                                 <td>{new Date(row.created_at).toLocaleDateString()}</td>
                                 <td><HandleDelete id={row.id}/></td>
                             </tr>
@@ -50,15 +53,3 @@ export default function Activity() {
         </>
     )
 }
-let user = {
-    "id": 1,
-    "first_name": "Mickey",
-    "last_name": "Mouse",
-    "unit_name": "Launch",
-    "username": "mickeymouse1",
-    "password": "789abc",
-    "rank": "O-5",
-    "profile_picture": "something.png",
-    "supervisor_id": null,
-    "is_supervisor": true
-  }
