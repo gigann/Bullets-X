@@ -18,15 +18,18 @@
 }
 
 .award-thead, .award-th {
-  background-color: rgba(0, 0, 0, 1.0);
+  color: var(--bg-color);
+  background-color: var(--text-color);
 }
 
 .award-tr:nth-child(even) {
-  background-color: rgba(16, 23, 37, 0.85);
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
 }
 
 .award-tr:nth-child(odd) {
-  background-color: rgba(16, 23, 37, 1.0);
+  color: var(--panel-text-color);
+  background-color: rgb(from var(--panel-bg-color) r g b / 0.5)
 }
 
 .award-checkbox {
