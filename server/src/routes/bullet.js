@@ -37,6 +37,21 @@ router.get("/award/:award_id", (req, res) => {
     );
 });
 
+//get latest updated bullets with "Awarded" as status
+router.get("/latest-awarded", (req, res) => {
+  knex("bullet")
+    .join("award", "award_id", "=", "award.id")
+    .select("bullet.*", "award.name as award_name")
+    .where("status", "Awarded")
+    .orderBy("updated_at", "desc")
+    .then((bullets) => res.status(200).json(bullets))
+    .catch((err) =>
+      res.status(500).json({
+        message: `Bullet data not available`,
+      })
+    );
+});
+
 //get list of bullets with the award name by looking up user id
 router.get("/with_award_name/:user_id", (req, res) => {
   const user_id = req.params.user_id;

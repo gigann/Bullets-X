@@ -1,0 +1,6 @@
+.winning-bullets-div{
+  height: 30vh;
+  overflow: scroll;
+  padding: 10px;
+  margin: 10px;
+}
