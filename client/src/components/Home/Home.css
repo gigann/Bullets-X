@@ -17,7 +17,8 @@
 }
 
 .award-winning-bullets {
-  background-color: #101725;
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,24 +38,27 @@
 .add-a-quick-action {
   display: flex;
   flex-direction: column;
-  background-color: #101725;
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
 }
 
 .upcoming-awards {
-  background-color: #101725;
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
   text-align: center;
   width: 250px;
   margin: 20px;
 }
 
 .award-card {
-  background-color: #101725;
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
 }
 
 .award-card,
 .bullet-card,
 .my-bullets {
-  color: #B67EF0;
+  color: var(--accent-color-1);
   display: flex;
   flex-direction: row;
   justify-content: space-around;

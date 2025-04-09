@@ -10,7 +10,7 @@
     flex-wrap: wrap;
     justify-content: right;
     align-items: center;
-    background-color: #101725;
+    background-color: var(--panel-bg-color);
     padding: 20px 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -22,11 +22,11 @@
   }
 
   .navHeader{
+    color: var(--panel-text-color);
     margin-top: 0;
     position: fixed;
     top: 40px;
     left: 20px;
-    color: white;
   }
   /* Make sure the content below doesn’t overlap the navbar */
   body {

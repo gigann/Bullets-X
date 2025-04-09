@@ -27,7 +27,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (!darkMode) {
+    if (darkMode) {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
     }
