@@ -1,34 +1,38 @@
 
 .award-page {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 20px;
 }
 
+.award-buttons {
+  margin: 20px;
+}
+
 .award-table, .award-th, .award-td {
-  border: 1px solid rgba(0, 0, 0, 1.0);
+  border: 1px solid #6e6e6e;
+  border-collapse: collapse;
+
 }
 
 .award-thead, .award-th {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 1.0);
 }
 
 .award-tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(16, 23, 37, 0.85);
 }
 
 .award-tr:nth-child(odd) {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(16, 23, 37, 1.0);
 }
 
 .award-checkbox {
   transform: scale(4) translateX(7.5px);
 }
 
-details {
+.award-details {
   cursor: pointer;
 }
-/*
-details:hover {
-} */
