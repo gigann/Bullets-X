@@ -31,6 +31,10 @@
   background-color: rgb(from var(--panel-bg-color) r g b / 0.5)
 }
 
+.award-td:first-child {
+  width: 15em;
+}
+
 .award-checkbox {
   transform: scale(4) translateX(7.5px);
 }
