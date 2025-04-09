@@ -86,7 +86,7 @@ router.post("/login", (req, res) => {
     .first()
     .then((user) => {
       if (!user) {
-        return res.status(404).json({ error: "User not found" });
+        return res.status(401).json({ error: "Invalid Credentials" });
       } else {
         return bcrypt.compare(password, user.password).then((result) => {
           if (result) {
@@ -105,7 +105,7 @@ router.post("/login", (req, res) => {
               .status(200)
               .json({ message: "Login successful!", user: userData });
           } else {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(401).json({ error: "Invalid Credentials" });
           }
         });
       }

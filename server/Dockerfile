@@ -1,5 +1,5 @@
 # What image do you want to start building on?
-FROM node:20-alpine
+FROM node:20
 # Make a folder in your image where your app's source code can live
 
 # Tell your container where your app's source code will live

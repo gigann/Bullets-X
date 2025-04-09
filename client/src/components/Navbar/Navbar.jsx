@@ -16,9 +16,10 @@ export default function Navbar() {
   return (
     <>
       <nav className="navbar">
-        <Link to="/home">
+      {!loggedIn && <h1 className="navHeader">BulletsX</h1>}
+        {loggedIn && <Link to = {`/home/${loggedIn.id}`}>
           <h1 className="navHeader">BulletsX</h1>
-        </Link>
+        </Link>}
         {isOpen && (
           <ul>
 

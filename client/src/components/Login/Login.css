@@ -102,6 +102,18 @@
     justify-self: center;
 }
 
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .login-form button {
+    margin-top: 5px;
+    align-self: center;
+  }
+
 @keyframes wobble {
     0% {
         transform: scale(1.025);
