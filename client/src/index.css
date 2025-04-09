@@ -31,7 +31,7 @@
 
 a {
   font-weight: 500;
-  color: #b67ef0;
+  color: var(--accent-color-1);
   text-decoration: inherit;
 }
 a:hover {
@@ -70,6 +70,8 @@ button {
     rgb(255, 196, 68) 40% ,
     rgb(94, 69, 16) 100%
   );
+
+  background-color: var(--accent-color-2);
   cursor: pointer;
   transition: border-color 0.25s;
 }

@@ -6,6 +6,7 @@
 .home-page {
   display: flex;
   flex-direction: row;
+  padding-top: 20px;
 }
 
 .home-sub-page {
@@ -18,9 +19,10 @@
 }
 
 .award-winning-bullets {
-  background-color: #101725;
   border: 1px solid rgba(103, 113, 150, 0.575);
   border-radius: 10px;
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,7 +51,6 @@
   justify-content: center;
   width: 240px;
   height: 290px;
-  background-color: #101725;
   border: 1px solid rgba(103, 113, 150, 0.575);
   border-radius: 10px;
 }
@@ -63,10 +64,13 @@
   margin-bottom:10px;
   text-align: center;
   border: 1px solid rgba(103, 113, 150, 0.575);
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
 }
 
 .upcoming-awards {
-  background-color: #101725;
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
   text-align: center;
   width: 350px;
   margin: 20px 20px 45px 10px;
@@ -76,13 +80,14 @@
 }
 
 .award-card {
-  background-color: #101725;
+  color: var(--panel-text-color);
+  background-color: var(--panel-bg-color);
 }
 
 .award-card,
 .bullet-card,
 .my-bullets {
-  color: #B67EF0;
+  color: var(--accent-color-1);
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -97,17 +102,9 @@
   transform: scale(1.1);
 }
 
-
 .test-img {
   margin: 20px;
   width: 128px;
   height: 128px;
 }
 
-#hbtn{
-  background: linear-gradient( 200deg ,
-    rgb(87, 68, 31) 0%,
-    rgb(236, 176, 46) 50% ,
-    rgb(87, 68, 31) 100%
-  );
-}
