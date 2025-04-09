@@ -6,6 +6,7 @@
 .home-page {
   display: flex;
   flex-direction: row;
+  padding-top: 20px;
 }
 
 .home-sub-page {
@@ -54,7 +55,7 @@
 .award-card,
 .bullet-card,
 .my-bullets {
-  color: #B67EF0;
+  color: #b67ef0;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -68,7 +69,6 @@
 .my-bullets-link:hover {
   transform: scale(1.1);
 }
-
 
 .test-img {
   margin: 20px;
