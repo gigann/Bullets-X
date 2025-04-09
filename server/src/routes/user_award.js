@@ -23,6 +23,21 @@ router.get("/users/:user_id", (req, res) => {
     );
 });
 
+// gets all award information for a specified user
+router.get("/:user_id/awards", (req, res) => {
+  let user_id = req.params.user_id;
+  knex("user_award")
+  .join("award", "award_id", "=", "award.id")
+  .select("*")
+    .where("user_id", user_id)
+    .then((user_awards) => res.status(200).json(user_awards))
+    .catch((err) =>
+      res.status(404).json({
+        message: `Awards data for user ID ${user_id} not available`,
+      })
+    );
+});
+
 // add a new award that a specific user is interested in -- specify user and award id
 router.post("/", (req, res) => {
   const { user_id, award_id, status } = req.body;

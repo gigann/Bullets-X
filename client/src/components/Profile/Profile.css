@@ -1,5 +1,5 @@
 .profile-and-name{
-    
+
 }
 
 .profile-container{
@@ -8,7 +8,8 @@
     justify-content: center;
     width: 55rem;
     height: 40rem;
-    background-color: #101725;
+    background-color: var(--panel-bg-color);
+    color: var(--panel-text-color);
     flex-direction: column;
     border: 1px solid hsla(0, 0%, 65%, 0.158);
     box-shadow: 0 0 36px 1px rgba(0, 0 , 0, 0.2);
@@ -23,7 +24,7 @@
 
 .profile-container img{
     border-radius: 200px;
-    border: 5px solid #b67ef0;
+    border: 5px solid var(--accent-color-1);
 }
 
 .profile-header{
@@ -152,9 +153,9 @@
 
 .edit-arrows{
     position: fixed;
-    top: 22rem;
-    border-radius: 25px;
-    background-color: #d5a822;
+    top: 17rem;
+    border-radius: 20px;
+    background-color: var(--accent-color-2);
     color: #d5a822;
     border: 3px solid #b67ef0;
 }
@@ -179,8 +180,8 @@
 .edit-save{
     position: fixed;
     top: 35rem;
-    left: 50rem;
-    background-color: #d5a822;
+    left: 70rem;
+    background-color: var(--accent-color-2);
     border-radius: 30px;
 }
 

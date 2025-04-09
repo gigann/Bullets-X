@@ -72,7 +72,7 @@ function Bullets() {
 
   const handleEditBullet = (id, fieldName, newText) => {
     setBullets(prevBullets => {
-      prevBullets.map(bullet => {
+      return prevBullets.map(bullet => {
         if (bullet.id === id) {
           return {...bullet, [fieldName]: newText};
         }

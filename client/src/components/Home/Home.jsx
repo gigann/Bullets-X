@@ -61,10 +61,10 @@ function Home() {
                 }}>My Bullets</a></h3>
               </div>
               <div className='add-a-quick-action'>
-                <b>Add a quick action</b>
+                <b>Add Activity:</b>
                 <input id='quick-name' type='text' placeholder='Name' />
                 <TextareaAutosize id='quick-description' placeholder='Description' minRows={3} />
-                <button onClick={() => {
+                <button id="hbtn" onClick={() => {
                   let name = document.querySelector('#quick-name').value;
                   let description = document.querySelector('#quick-description').value;
                   addActivity(name, description);
@@ -83,7 +83,7 @@ function Home() {
                 }}
               >
                 <h3>{award.name}</h3>
-                <span>{award.due_date}</span>
+                <span>{new Date(award.due_date).toLocaleDateString()}</span>
               </div>
             ))}
           </div>

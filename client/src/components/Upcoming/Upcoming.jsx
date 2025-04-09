@@ -47,25 +47,25 @@ function Upcoming() {
         awardData[i].description,
         awardData[i].bullet_minimum,
         awardData[i].bullet_maximum,
-        awardData[i].due_date,
+        new Date(awardData[i].due_date).toLocaleDateString()
       ];
 
-      for (let j in userAwardData) {
-        if (awardData[i].id === userAwardData[j].award_id) {
-          newRow.push(userAwardData[j].status);
-          break;
-        }
-      }
+      // for (let j in userAwardData) {
+      //   if (awardData[i].id === userAwardData[j].award_id) {
+      //     newRow.push(userAwardData[j].status);
+      //     break;
+      //   }
+      // }
 
       // add bullets assigned to this award
-      let bullets = [];
+      // let bullets = [];
 
-      for (let k in bulletData) {
-        if (awardData[i].id === bulletData[k].award_id) {
-          bullets.push(bulletData[k]);
-        }
-      }
-      newRow.push(bullets);
+      // for (let k in bulletData) {
+      //   if (awardData[i].id === bulletData[k].award_id) {
+      //     bullets.push(bulletData[k]);
+      //   }
+      // }
+      // newRow.push(bullets);
 
       newTableData.push(newRow);
     }
@@ -74,74 +74,69 @@ function Upcoming() {
   }, [awardData, bulletData, userAwardData]);
 
   return (
-    <div className='award-page'>
-
-      <div className='award-buttons'>
-        <button>All Awards</button>
-        <button>My Awards</button>
-
-
-      </div>
-      {(tableData !== undefined) ? (
-        <table className='award-table'>
-          <thead className='award-thead'>
-            <tr className='award-tr'>
-              <th className='award-th'>Name</th>
-              <th className='award-th'>Description</th>
-              <th className='award-th'>Min Bullets</th>
-              <th className='award-th'>Max Bullets</th>
-              <th className='award-th'>Due Date</th>
-              <th className='award-th'>Status</th>
-              {/* <th className='award-th'>Selected</th> */}
-            </tr>
-          </thead>
-          <tbody className='award-tbpdy'>
-            {tableData.map((row, i) => (
-              <tr className='award-tr' key={i}>
-                {row.map((item, j) => {
-                  switch (j) {
-                    case 0:
-                      return (
-
-                        <td className='award-td' key={j}>
-                          {(row[6]?.length > 0) ? (
-                            <details className='award-details'>
-                              <summary>{item}</summary>
-                              Your Assigned Bullets:
-                              <ul>
-                                {row[6].map((bullet, k) => (
-                                  <li key={k}>
-                                    {bullet.name}
-                                  </li>
-                                ))}
-                              </ul>
-                            </details>
-                          ) : (
-                            <p>{item}</p>
-                          )}
-
-                        </td>
-                      )
-                    case 6:
-                      return null;
-                    default:
-                      return <td className='award-td' key={j}>{item}</td>;
-                  }
-                })}
-                {/* <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td> */}
+    <>
+      <h1>Upcoming Awards</h1>
+      <div className='award-page'>
+        {(tableData !== undefined) ? (
+          <table className='award-table'>
+            <thead className='award-thead'>
+              <tr className='award-tr'>
+                <th className='award-th'>Name</th>
+                <th className='award-th'>Description</th>
+                <th className='award-th'>Min Bullets</th>
+                <th className='award-th'>Max Bullets</th>
+                <th className='award-th'>Due Date</th>
+                {/* <th className='award-th'>Status</th> */}
+                {/* <th className='award-th'>Selected</th> */}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        null
-        // loading spinner could go here
-      )}
+            </thead>
+            <tbody className='award-tbpdy'>
+              {tableData.map((row, i) => (
+                <tr className='award-tr' key={i}>
+                  {row.map((item, j) => {
+                    switch (j) {
+                      case 0:
+                        return (
+
+                          <td className='award-td' key={j}>
+                            {(row[6]?.length > 0) ? (
+                              <details className='award-details'>
+                                <summary>{item}</summary>
+                                Your Assigned Bullets:
+                                <ul>
+                                  {row[6].map((bullet, k) => (
+                                    <li key={k}>
+                                      {bullet.name}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </details>
+                            ) : (
+                              <p>{item}</p>
+                            )}
+
+                          </td>
+                        )
+                      case 6:
+                        return null;
+                      default:
+                        return <td className='award-td' key={j}>{item}</td>;
+                    }
+                  })}
+                  {/* <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td> */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          null
+          // loading spinner could go here
+        )}
 
 
 
-      {/* this could be its own component */}
-      {/* <div className='upcoming-awards'>
+        {/* this could be its own component */}
+        {/* <div className='upcoming-awards'>
         <h3>Upcoming Awards</h3>
         <div className='award-card'>
           <input className='award-checkbox' type='checkbox' />
@@ -164,7 +159,8 @@ function Upcoming() {
           <span>April 2025</span>
         </div>
       </div> */}
-    </div>
+      </div>
+    </>
   )
 }
 

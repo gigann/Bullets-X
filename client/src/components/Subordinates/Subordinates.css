@@ -74,3 +74,14 @@
 .subordinate-item-name-rank {
   margin-bottom: -15px;
 }
+
+a {
+  color: inherit; /* Inherit the color from the parent element */
+  text-decoration: none; /* Remove the underline */
+}
+
+/* Optional: Add hover effect for links */
+a:hover {
+  color: #007bff; /* Change to a desired color on hover */
+  text-decoration: underline; /* Add underline on hover if desired */
+}

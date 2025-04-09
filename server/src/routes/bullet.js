@@ -67,12 +67,38 @@ router.get("/with_award_name/:user_id", (req, res) => {
     );
 });
 
+//get a specific user's bullets NOT in draft (ie. ready for supervisor view), with award name showing
+router.get("/completed/:user_id", (req, res) => {
+  const user_id = req.params.user_id;
+  knex("bullet")
+    .join("award", "award_id", "=", "award.id")
+    .select("bullet.*", "award.name as award_name")
+    .where("user_id", user_id)
+    .where("drafting", false)
+    .then((bullets) => res.status(200).json(bullets))
+    .catch((err) =>
+      res.status(404).json({
+        message: "Bullet data not available",
+      })
+    );
+});
+
 // CREATE
 
 router.post("/", (req, res) => {
-  const { user_id, name, action, impact, result, status, award_id } = req.body;
+  const { user_id, name, action, impact, result, status, drafting, award_id } =
+    req.body;
   knex("bullet")
-    .insert({ user_id, name, action, impact, result, status, award_id })
+    .insert({
+      user_id,
+      name,
+      action,
+      impact,
+      result,
+      status,
+      drafting,
+      award_id,
+    })
     .returning("id")
     .then(() => res.status(201).json({ message: `Bullet added successfully` }))
     .catch((err) =>
@@ -86,7 +112,8 @@ router.post("/", (req, res) => {
 
 router.patch("/:id", (req, res) => {
   let id = req.params.id;
-  const { user_id, name, action, impact, result, status, award_id } = req.body;
+  const { user_id, name, action, impact, result, status, drafting, award_id } =
+    req.body;
   knex("bullet")
     .where("id", id)
     .update({
@@ -96,6 +123,7 @@ router.patch("/:id", (req, res) => {
       impact,
       result,
       status,
+      drafting,
       award_id,
     })
     .then((count) => {
