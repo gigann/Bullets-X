@@ -15,6 +15,7 @@ import Upcoming from './components/Upcoming/Upcoming';
 import Subordinates from './components/Subordinates/Subordinates';
 import Awards from './components/Awards/Awards';
 import Navbar from './components/Navbar/Navbar';
+import SubordinatesBullets from './components/SubordinatesBullets/SubordinatesBullets';
 
 import "./App.css";
 
@@ -51,6 +52,7 @@ function App() {
         <Route path='/upcoming/:id' element={<Upcoming />}></Route>
         <Route path='/awards/:id' element={<Awards />}></Route>
         <Route path='/subordinates/:id' element={<Subordinates />}></Route>
+        <Route path='/subordinates/bullet/:id' element={<SubordinatesBullets />}></Route>
       </Routes>
       <footer className='app-footer'>
         <DarkModeSwitch
