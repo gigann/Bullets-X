@@ -17,10 +17,12 @@ export default function Profile() {
     const [name, setName] = useState(loggedIn.first_name)
     const [lastName, setLastName] = useState(loggedIn.last_name)
     const [patchValues, setPatchValues] = useState({first_name: loggedIn.first_name, last_name: loggedIn.last_name, supervisor_id: loggedIn.supervisor_id, unit_name: loggedIn.unit_name})
-    const [profileImg, setProfileImg] = useState('')
     const imageArray = ['/donald.jpg', '/daisy.jpg', '/generic.jpg']
+    const [profileImg, setProfileImg] = useState(imageArray[2])
     const testArray = [1, 2, 2]
     const [iterator, setIterator] = useState(0)
+    const [supervisorList, setSupervisorList] = useState()
+
     // useEffect(()=>{
     //   fetch(`http://localhost:3001/users/${loggedIn.id}`)
     //   .then(res => res.json())
@@ -50,6 +52,15 @@ export default function Profile() {
           .then(data => {
             setSupervisor(data[0].first_name)
         })
+
+        fetch(`http://localhost:3001/users/byunit/${loggedIn.unit_name}`)
+            .then(res => res.json())
+            .then(data => {
+                //500
+                setSupervisorList(data)
+                console.log("user data:", supervisorList)
+            })
+            .catch(err => console.log("error: ",err))
     }, [])
 
     const editProfile = async ()=>{
@@ -93,9 +104,10 @@ export default function Profile() {
           <div className="profile-edit">
             <input type="text" name="first_name" value={patchValues.first_name}  onChange={(e) => {setName(e.target.value), handleChange(e)}} hidden={isHidden}/>
             <input type="text" name="last_name" value={patchValues.last_name}  onChange={(e) => {setLastName(e.target.value), handleChange(e)}} hidden={isHidden}/>
-            <select name="supervisor_id" value={patchValues.supervisor_id} hidden={isHidden}>
-              <option value="1"> NEW SUPERVISOR</option>
-              <option value="2"> NEW NEW SUPERVISOR</option>
+            <select name="supervisor_id" value={patchValues.supervisor_id} hidden={isHidden} >
+              {supervisorList?.map((user, i) => {
+                          return <option key={i} value={user.id}>{user.first_name} {user.last_name} ({user.rank})</option>
+                      })}
             </select>
             {!isHidden && <IconButton onClick={() => {
               iterator === imageArray.length-1? setIterator(0): setIterator(iterator+1)
