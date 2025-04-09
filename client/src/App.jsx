@@ -1,4 +1,9 @@
+
 import { Route, Routes } from 'react-router-dom';
+import * as ReactDOM from 'react-dom';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import { useEffect, useState } from 'react';
+import { useLocalStorage } from '@uidotdev/usehooks';
 
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
@@ -11,16 +16,31 @@ import Subordinates from './components/Subordinates/Subordinates';
 import Awards from './components/Awards/Awards';
 import Navbar from './components/Navbar/Navbar';
 
-
-
 import "./App.css";
-
 
 function App() {
 
+  const [darkMode, setDarkMode] = useLocalStorage('darkMode') || false;
+
+  const toggleDarkMode = (checked) => {
+    setDarkMode(checked);
+  };
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
+    }
+    else {
+      document.body.classList.add('light-mode');
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode])
+
+
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Routes>
         <Route path='/' element={<Login />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
@@ -32,8 +52,15 @@ function App() {
         <Route path='/awards/:id' element={<Awards />}></Route>
         <Route path='/subordinates/:id' element={<Subordinates />}></Route>
       </Routes>
+      <footer className='app-footer'>
+        <DarkModeSwitch
+          checked={darkMode}
+          onChange={toggleDarkMode}
+          size={64}
+        />
+      </footer>
     </>
-  )
+  );
 }
 
 export default App;
