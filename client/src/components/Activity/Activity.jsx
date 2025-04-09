@@ -26,9 +26,9 @@ export default function Activity() {
                 <h2>My Activity</h2>
                 <Addact/>
                 <div className='t-div'>
-                <table >
+                <table className='act-table'>
                     <thead>
-                        <tr>
+                        <tr className='act-tr'>
                             <th className='name'>Name</th>
                             <th className='descrip' >Description</th>
                             <th className='date'>Date</th>
@@ -38,11 +38,11 @@ export default function Activity() {
                     
                     <tbody>
                             {results.map( (row) => (
-                                <tr key={row.id}>
-                                <td>{row.name}</td>
-                                <td className='description'>{row.description}</td>
-                                <td>{new Date(row.created_at).toLocaleDateString()}</td>
-                                <td><HandleDelete id={row.id}/></td>
+                                <tr key={row.id} className='act-tr'>
+                                <td className='act-td'>{row.name}</td>
+                                <td className='act-td' id='description'>{row.description}</td>
+                                <td className='act-td'>{new Date(row.created_at).toLocaleDateString()}</td>
+                                <td className='act-td'><HandleDelete id={row.id}/></td>
                             </tr>
                         ))}
                     </tbody>

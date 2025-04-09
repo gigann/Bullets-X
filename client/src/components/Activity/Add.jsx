@@ -67,7 +67,7 @@ export default function Addact() {
                   ></input>
             <input
              className='descrip'
-                placeholder='description'
+                placeholder='Description'
                  type='text'
                   name='description'
                     value={formData.description}
