@@ -6,7 +6,7 @@
     display: flex;
     justify-self: center;
     justify-content: center;
-    width: 75rem;
+    width: 55rem;
     height: 40rem;
     background-color: #101725;
     flex-direction: column;
@@ -32,7 +32,7 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 30px;
+    top: 8em;
 }
 
 .profile-data{
@@ -40,7 +40,7 @@
     position: fixed;
     flex-direction: column;
     justify-content: center;
-    top: 40px;
+    top: 12rem;
     left: 400px;
 }
 
@@ -51,14 +51,14 @@
 .profile-edit{
     display: flex;
     position: relative;
-    top: 50px;
+    top: 8rem;
     z-index: 999;
 }
 
 .edit-button{
     position: fixed;
-    left: 19rem;
-    top: 17.5rem;
+    left: 19.25rem;
+    top: 24rem;
     color: black;
     background-color: #d5a822;
     border-radius: 20px;
@@ -97,7 +97,7 @@
     padding: 14.5px;
     width: 98%;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.05rem;
     color: var(--color);
     outline: none;
     background-color: #9191911f;
@@ -114,9 +114,15 @@
 }
 
 .profile-edit option {
+    background: #030712;
+    /* color: #9191911f; */
+    color:white;
+}
+
+/* .profile-dropdown{
     background: rgba(0, 0, 0, 0.3);
     color: #9191911f;
-}
+} */
 
 .profile-edit input:focus {
     box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.2);
@@ -132,7 +138,7 @@
 
 .edit-selectors{
     position: fixed;
-    top: 5rem;
+    top: 14.5rem;
     left: 25rem;
 }
 
@@ -140,18 +146,40 @@
     margin-bottom: 50px;
 }
 
+.edit-arrows #hidden{
+    border: transparent;
+}
+
 .edit-arrows{
     position: fixed;
-    top: 17rem;
-    border-radius: 20px;
+    top: 22rem;
+    border-radius: 25px;
     background-color: #d5a822;
     color: #d5a822;
+    border: 3px solid #b67ef0;
+}
+
+.profile-container h2 {
+    border-bottom: 1px solid #b67ef0;
+}
+
+.profile-container h1 {
+    border-bottom: 1px solid #b67ef0;
+}
+
+.profile-title{
+    position: fixed;
+    top: 2rem;
+    left: 15rem;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-bottom: 1px solid #b67ef0;
 }
 
 .edit-save{
     position: fixed;
     top: 35rem;
-    left: 70rem;
+    left: 50rem;
     background-color: #d5a822;
     border-radius: 30px;
 }
@@ -159,6 +187,13 @@
 .edit-save SaveIcon{
     width: 50px;
     height: 50px;
+}
+
+.profile-icon{
+    border: 2px solid #d5a822;
+    transform: scale(1.8);
+    background-color: #d5a822;
+    border-radius: 20px;
 }
 
 @keyframes wobble {

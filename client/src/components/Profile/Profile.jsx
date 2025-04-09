@@ -24,6 +24,7 @@ export default function Profile() {
     const [iterator, setIterator] = useState(0)
     const [supervisorName, setSupervisorName] = useState('')
     const [supervisorList, setSupervisorList] = useState()
+    const [unitList, setUnitList] = useState([])
   
 
     //updatest the localstorage everytime the patch is sent
@@ -39,6 +40,13 @@ export default function Profile() {
       setPatchValues(e => ({...e, [name]: value}))
     }
 
+    useEffect(() => {
+      fetch(`http://localhost:3001/unit`)
+        .then(rawData => rawData.json())
+        .then(data => setUnitList(data))
+        .catch(err => console.log("error: ",err))
+    }, [])
+
     useEffect(()=>{
 
         fetch(`http://localhost:3001/users/${supervisor}`)
@@ -47,7 +55,7 @@ export default function Profile() {
             setSupervisorName(data[0].first_name + ' ' + data[0].last_name + '  (' + data[0].rank + ')')
         })
 
-        fetch(`http://localhost:3001/users/byunit/${loggedIn.unit_name}`)
+        fetch(`http://localhost:3001/users/byunit/${patchValues.unit_name}`)
             .then(res => res.json())
             .then(data => {
                 //500
@@ -55,7 +63,7 @@ export default function Profile() {
                 console.log("user data:", supervisorList)
             })
             .catch(err => console.log("error: ",err))
-    }, [supervisor])
+    }, [supervisor, patchValues.unit_name])
 
     const editProfile = async ()=>{
       try{
@@ -86,8 +94,9 @@ export default function Profile() {
 
     return (
       <>
-        <button onClick={() => console.log(loggedIn)}>Console log</button>
+        {/* <button onClick={() => console.log(loggedIn)}>Console log</button> */}
         <div className="profile-container">
+          <h1 className="profile-title">Your Profile</h1>
           <div className="profile-info">
             <div className="profile-header">
               <img src={profileImg} alt="profile-picture" id='profile-picture'/>
@@ -96,7 +105,7 @@ export default function Profile() {
             <div className="profile-data">
               <h2 className="profile-data-item">Rank: {patchValues.rank}</h2>
               <h2 className="profile-data-item">Supervisor: {supervisorName}</h2>
-              <h2 className="profile-data-item">Unit: {loggedIn.unit_name}</h2>
+              <h2 className="profile-data-item">Unit: {patchValues.unit_name}</h2>
             </div>
           </div>
           
@@ -137,12 +146,17 @@ export default function Profile() {
                             if(user.id == patchValues.id){
                               return
                             }else{
-                              return <option key={i} value={user.id}>{user.first_name} {user.last_name} ({user.rank})</option>
+                              return <option key={i} value={user.id} className="profile-dropdown">{user.first_name} {user.last_name} ({user.rank})</option>
                             }
                         })}
               </select>
+              <select name="unit_name" value={patchValues.unit_name} hidden={isHidden} onChange={(e) => handleChange(e)} >
+                  {unitList?.map((unit, i) => {
+                            return <option key={i} value={unit.name}>{unit.name}</option>
+                        })}
+              </select>
             </div>
-            <div className="edit-arrows">
+            <div className="edit-arrows" hidden={isHidden}>
               {!isHidden && <IconButton onClick={() => {
                 iterator === imageArray.length-1? setIterator(0): setIterator(iterator+1)
                 setProfileImg(imageArray[iterator])
@@ -158,7 +172,7 @@ export default function Profile() {
               <IconButton onClick={() => setIsHidden(!isHidden)} ><EditIcon/></IconButton>
             </div> 
             <div className="edit-save">
-              {!isHidden && <IconButton onClick={() => editProfile()}><SaveIcon/></IconButton>}
+              {!isHidden && <IconButton onClick={() => editProfile()} className="profile-icon"><SaveIcon className="profile-icon"/></IconButton>}
             </div>
           </div>
           
