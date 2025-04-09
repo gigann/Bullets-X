@@ -9,6 +9,7 @@ import Bullets from './components/Bullets/Bullets';
 import Upcoming from './components/Upcoming/Upcoming';
 import Subordinates from './components/Subordinates/Subordinates';
 import Navbar from './components/Navbar/Navbar';
+import SubordinatesBullets from './components/SubordinatesBullets/SubordinatesBullets';
 
 
 
@@ -29,8 +30,7 @@ function App() {
         <Route path='/bullets/:id' element={<Bullets />}></Route>
         <Route path='/upcoming/:id' element={<Upcoming />}></Route>
         <Route path='/subordinates/:id' element={<Subordinates />}></Route>
-
-
+        <Route path='/subordinates/bullet/:id' element={<SubordinatesBullets />}></Route>
       </Routes>
     </>
   )

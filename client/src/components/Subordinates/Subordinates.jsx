@@ -1,6 +1,7 @@
 import "./Subordinates.css";
 import { useState, useEffect } from 'react';
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { Link } from 'react-router-dom';
 
 function Subordinates() {
   const [loading, setLoading] = useState(true);
@@ -125,12 +126,19 @@ function Subordinates() {
 
         <div className="subordinate-item">
           <p className="subordinate-title">Awards Nominated</p>
-          {subordinateAwardNames.map((aw, i) => (
+          {subordinateAwards.map((re, i) => {
+          const awardName = subordinateAwardNames.find((aw) => aw.id === re.award_id);
+        return (
           <p key={i} className="subordinate-awards-nominated">
-            {aw.name}
-          </p>
-            ))}
-        </div>
+            {re?.status === "Submitted" && awardName ? (
+          <Link to={`/subordinates/bullet/${re.user_id}`}>{awardName.name}</Link>
+            ) : (
+            awardName?.name
+        )}
+      </p>
+    );
+  })}
+</div>
 
         <div className="subordinate-item">
           <p className="subordinate-title">Ready For Review?</p>
