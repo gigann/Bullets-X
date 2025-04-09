@@ -74,6 +74,16 @@ export default function Navbar() {
                 Upcoming
               </button>
             </li>
+             <li hidden={!loggedIn}>
+              <button
+                className="nav-btn"
+                onClick={() =>
+                  handleNavigation(loggedIn ? `/awards/${loggedIn.id}` : "")
+                }
+              >
+                Awards
+              </button>
+            </li>
             <li hidden={!loggedIn}>
               <button
                 className="nav-btn"
