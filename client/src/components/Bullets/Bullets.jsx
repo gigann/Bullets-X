@@ -7,6 +7,11 @@ function Bullets() {
   const [bullets, setBullets] = useState([]);
   const [newBullet, setNewBullet] = useState('');
   const [loading, setLoading] = useState(true);
+  const [action, setAction] = useState('');
+  const [impact, setImpact] = useState('');
+  const [result, setResult] = useState('');
+  // const combinedBulletText = `${action} — ${impact}; ${result}`.trim();
+
 
   useEffect(() => {
     // console.log("Login state:", loggedIn);
@@ -29,46 +34,52 @@ function Bullets() {
   }, [userID]);
 
   const handleAddBullet = () => {
-    if (newBullet.trim()) {
-      fetch('http://localhost:3001/bullet', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: userID,
-          name: 'New Bullet',
-          description: newBullet,
-          status: 'Drafting'
-        }),
-      })
-      .then(res => res.json())
-      .then(() => {
-        fetch(`http://localhost:3001/bullet/users/${userID}`)
-          .then(res => res.json())
-          .then(data => {
-            setBullets(data);
-          });
-        setNewBullet('');
-      })
-      .catch(err => {
-        console.log(err);
-        alert('Error adding bullet');
-      });
+    const emptyFieldsCheck = (!action.trim() && !impact.trim() && !result.trim());
+    if (emptyFieldsCheck) {
+      alert('Please fill in the fields');
+      return;
     }
-  };
-
-  const handleEditBullet = (id, newText) => {
-    const updatedBullets = bullets.map(bullet => {
-      if (bullet.id === id) {
-        return {id:bullet.id, description: newText};
-      }
-      return bullet;
+    fetch('http://localhost:3001/bullet', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userID,
+        name: 'New Bullet',
+        action: action,
+        impact: impact,
+        result: result,
+        status: 'Drafting'
+      }),
+    })
+    .then(res => res.json())
+    .then(() => {
+      fetch(`http://localhost:3001/bullet/users/${userID}`)
+        .then(res => res.json())
+        .then(data => {
+          setBullets(data);
+        });
+      setAction('');
+      setImpact('');
+      setResult('');
+    })
+    .catch(err => {
+      console.log(err);
+      alert('Error adding bullet');
     });
-    setBullets(updatedBullets);
+  }
 
-    const bulletToUpdate = bullets.find(bullet => bullet.id === id);
-  if (bulletToUpdate) {
+  const handleEditBullet = (id, fieldName, newText) => {
+    setBullets(prevBullets => {
+      prevBullets.map(bullet => {
+        if (bullet.id === id) {
+          return {...bullet, [fieldName]: newText};
+        }
+        return bullet;
+      })
+    });
+
     fetch(`http://localhost:3001/bullet/${id}`, {
       method: 'PATCH',
       headers: {
@@ -76,10 +87,7 @@ function Bullets() {
       },
       body: JSON.stringify({
         user_id: userID,
-        name: bulletToUpdate.name || 'Updated Bullet',
-        description: newText,
-        status: bulletToUpdate.status || 'Drafting',
-        award_id: bulletToUpdate.award_id
+        [fieldName]: newText,
       }),
     })
     .then(res => {
@@ -92,12 +100,11 @@ function Bullets() {
       console.error('Error updating bullet:', err);
       alert('Error updating bullet. Changes may not be saved.');
     });
-  }
+
   };
 
   const handleDeleteBullet = (id) => {
-    const updatedBullets = bullets.filter(bullet => bullet.id !== id);
-    setBullets(updatedBullets);
+    setBullets(prevBullets => prevBullets.filter(bullet => bullet.id !== id));
 
     fetch(`http://localhost:3001/bullet/${id}`, {
       method: 'DELETE',
@@ -125,46 +132,71 @@ function Bullets() {
   if (loading) return <p>Loading...</p>;
   if (!userID) return <p>Please log in to add bullets</p>;
 
+  const newBulletPreview = `${action} — ${impact}; ${result}`.trim();
+
   return (
     <div className="bullets-container">
-      <div className="header">
-        <h1>Bullets</h1>
+      <h2>New Bullet</h2>
+      <div className="bullet-inputs">
+        <label>
+          Action:
+          <input type="text" value={action} onChange={(e) => setAction(e.target.value)} />
+        </label>
+        <label>
+          Impact:
+          <input type="text" value={impact} onChange={(e) => setImpact(e.target.value)} />
+        </label>
+        <label>
+          Result:
+          <input type="text" value={result} onChange={(e) => setResult(e.target.value)} />
+        </label>
       </div>
-
-      <div className="add-bullet">
-        <input
-          type="text"
-          value={newBullet}
-          onChange={function (event) {
-            setNewBullet(event.target.value);
-          }}
-          placeholder="Add a new bullet"
-        />
-        <button onClick={handleAddBullet}>Add</button>
+      <div className="live-preview">
+        {/* <h3>New Bullet</h3> */}
+        <p>{newBulletPreview || "(Your new bullet will appear here...)"}</p>
       </div>
-
-      <div className="bullet-list">
-        <ul>
-          {bullets.map(function (bullet) {
-            return (
-              <li key={bullet.id}>
+      <button onClick={handleAddBullet}>Add Bullet</button>
+      <h1>My Bullets</h1>
+      <table className="bullets-table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Impact</th>
+            <th>Result</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {bullets.map((bullet) => (
+            <tr key={bullet.id}>
+              <td>
                 <input
                   type="text"
-                  value={bullet.description}
-                  onChange={function (event) {
-                    handleEditBullet(bullet.id, event.target.value);
-                  }}
+                  value={bullet.action}
+                  onChange={(e) => handleEditBullet(bullet.id, "action", e.target.value)}
                 />
-                <button onClick={function () {
-                  handleDeleteBullet(bullet.id);
-                }}>
-                  Delete
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={bullet.impact}
+                  onChange={(e) => handleEditBullet(bullet.id, "impact", e.target.value)}
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={bullet.result}
+                  onChange={(e) => handleEditBullet(bullet.id, "result", e.target.value)}
+                />
+              </td>
+              <td>
+                <button onClick={() => handleDeleteBullet(bullet.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 
