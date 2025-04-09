@@ -72,16 +72,16 @@ function Upcoming() {
     }
 
     setTableData(newTableData);
-  }, [awardData]);
+  }, [awardData, bulletData, userAwardData]);
 
   return (
     <div className='award-page'>
 
       <div className='award-buttons'>
-        <button>Edit Mode</button>
-        <button>Refresh</button>
-        <button>Refresh</button>
-        <button>Refresh</button>
+        {/* <button>Edit Mode</button>
+        <button>Save Changes</button>
+        <button>Discard Changes</button>
+        <button>Delete</button> */}
         <button>Refresh</button>
       </div>
 
