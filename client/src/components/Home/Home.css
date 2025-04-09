@@ -15,16 +15,20 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: start;
+  padding: 15px
 }
 
 .award-winning-bullets {
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
   color: var(--panel-text-color);
   background-color: var(--panel-bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  margin: 20px;
+  margin: 20px auto;
+  padding-top: 10px;
   width: 500px;
 }
 
@@ -34,11 +38,32 @@
   justify-content: center;
   width: 240px;
   height: 290px;
+  background-color: #101725;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
 }
 
 .add-a-quick-action {
+  margin: 10px 10px 0 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 290px;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
+}
+
+#quick-name{
+  margin:10px;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+}
+
+#quick-description{
+  margin-bottom:10px;
+  text-align: center;
+  border: 1px solid rgba(103, 113, 150, 0.575);
   color: var(--panel-text-color);
   background-color: var(--panel-bg-color);
 }
@@ -47,8 +72,11 @@
   color: var(--panel-text-color);
   background-color: var(--panel-bg-color);
   text-align: center;
-  width: 250px;
-  margin: 20px;
+  width: 350px;
+  margin: 20px 20px 45px 10px;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
+  padding: 15px;
 }
 
 .award-card {
@@ -79,3 +107,4 @@
   width: 128px;
   height: 128px;
 }
+
