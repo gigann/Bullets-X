@@ -32,7 +32,7 @@ router.get("/award/:award_id", (req, res) => {
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>
       res.status(404).json({
-        message: `Item data with award ID ${award_id} not available`,
+        message: `Bullet data with award ID ${award_id} not available`,
       })
     );
 });
@@ -55,9 +55,9 @@ router.get("/with_award_name/:user_id", (req, res) => {
 // CREATE
 
 router.post("/", (req, res) => {
-  const { user_id, name, description, status, award_id } = req.body;
+  const { user_id, name, action, impact, result, status, award_id } = req.body;
   knex("bullet")
-    .insert({ user_id, name, description, status, award_id })
+    .insert({ user_id, name, action, impact, result, status, award_id })
     .returning("id")
     .then(() => res.status(201).json({ message: `Bullet added successfully` }))
     .catch((err) =>
@@ -71,13 +71,15 @@ router.post("/", (req, res) => {
 
 router.patch("/:id", (req, res) => {
   let id = req.params.id;
-  const { user_id, name, description, status, award_id } = req.body;
+  const { user_id, name, action, impact, result, status, award_id } = req.body;
   knex("bullet")
     .where("id", id)
     .update({
       user_id,
       name,
-      description,
+      action,
+      impact,
+      result,
       status,
       award_id,
     })

@@ -8,7 +8,9 @@ exports.up = function (knex) {
     table.integer("user_id");
     table.foreign("user_id").references("users.id").onDelete("CASCADE");
     table.string("name", 250);
-    table.string("description", 250);
+    table.string("action", 250);
+    table.string("impact", 250);
+    table.string("result", 250);
     table.string("status", 250);
     table.timestamps(true, true);
     table.integer("award_id");
