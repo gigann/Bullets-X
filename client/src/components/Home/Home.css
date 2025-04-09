@@ -14,15 +14,19 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: start;
+  padding: 15px
 }
 
 .award-winning-bullets {
   background-color: #101725;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  margin: 20px;
+  margin: 20px auto;
+  padding-top: 10px;
   width: 500px;
 }
 
@@ -32,19 +36,43 @@
   justify-content: center;
   width: 240px;
   height: 290px;
+  background-color: #101725;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
 }
 
 .add-a-quick-action {
+  margin: 10px 10px 0 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 290px;
   background-color: #101725;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
+}
+
+#quick-name{
+  margin:10px;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+}
+
+#quick-description{
+  margin-bottom:10px;
+  text-align: center;
+  border: 1px solid rgba(103, 113, 150, 0.575);
 }
 
 .upcoming-awards {
   background-color: #101725;
   text-align: center;
-  width: 250px;
-  margin: 20px;
+  width: 350px;
+  margin: 20px 20px 45px 10px;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
+  padding: 15px;
 }
 
 .award-card {
@@ -74,4 +102,12 @@
   margin: 20px;
   width: 128px;
   height: 128px;
+}
+
+#hbtn{
+  background: linear-gradient( 200deg ,
+    rgb(87, 68, 31) 0%,
+    rgb(236, 176, 46) 50% ,
+    rgb(87, 68, 31) 100%
+  );
 }
