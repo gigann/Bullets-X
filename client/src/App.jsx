@@ -1,3 +1,4 @@
+
 import { Route, Routes } from 'react-router-dom';
 import * as ReactDOM from 'react-dom';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
@@ -14,12 +15,10 @@ import Upcoming from './components/Upcoming/Upcoming';
 import Subordinates from './components/Subordinates/Subordinates';
 import Navbar from './components/Navbar/Navbar';
 
-
-
 import "./App.css";
 
-
 function App() {
+
   const [darkMode, setDarkMode] = useLocalStorage('darkMode') || false;
 
   const toggleDarkMode = (checked) => {
@@ -37,20 +36,19 @@ function App() {
     }
   }, [darkMode])
 
+
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Routes>
-        <Route path='/' element={<Login />}></Route>
-        <Route path='/signup' element={<SignUp />}></Route>
-        <Route path='/profile/:id' element={<Profile />}></Route>
-        <Route path='/home/:id' element={<Home />}></Route>
-        <Route path='/activity/:id' element={<Activity />}></Route>
-        <Route path='/bullets/:id' element={<Bullets />}></Route>
-        <Route path='/upcoming/:id' element={<Upcoming />}></Route>
-        <Route path='/subordinates/:id' element={<Subordinates />}></Route>
-
-
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/profile/:id" element={<Profile />}></Route>
+        <Route path="/home/:id" element={<Home />}></Route>
+        <Route path="/activity/:id" element={<Activity />}></Route>
+        <Route path="/bullets/:id" element={<Bullets />}></Route>
+        <Route path="/upcoming/:id" element={<Upcoming />}></Route>
+        <Route path="/subordinates/:id" element={<Subordinates />}></Route>
       </Routes>
 
       <footer className='app-footer'>
@@ -62,7 +60,7 @@ function App() {
       </footer>
 
     </>
-  )
+  );
 }
 
 export default App;
