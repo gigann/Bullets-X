@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
-
 import './Upcoming.css';
-
+import { useLocalStorage } from "@uidotdev/usehooks";
 // data needed for this page
 // award table for most data
 // bullet table (filter by award id)
 // user_award table for status
 
 function Upcoming() {
+  const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
+
   const [awardData, setAwardData] = useState({});
-  const [bulletData, setBulletData] = useState({});
   const [userAwardData, setUserAwardData] = useState({});
+  const [bulletData, setBulletData] = useState({});
 
   const [tableData, setTableData] = useState();
 
@@ -20,21 +21,19 @@ function Upcoming() {
       .then(data => setAwardData(data));
   }, []);
 
-  useEffect(() => {
-    for (let i in awardData) {
-      let awardID = awardData[i].id;
-
-      fetch(`http://localhost:3001/bullet/award/${awardID}`)
-        .then(res => res.json())
-        .then(data => setBulletData(data));
-    }
-  }, [awardData]);
 
   // for status of awards
   useEffect(() => {
     fetch(`http://localhost:3001/user_award/`)
       .then(res => res.json())
       .then(data => setUserAwardData(data));
+  }, []);
+
+  // for user bullets
+  useEffect(() => {
+    fetch(`http://localhost:3001/bullet/users/${loggedIn.id}`)
+      .then(res => res.json())
+      .then(data => setBulletData(data));
   }, []);
 
   // update table data
@@ -63,7 +62,7 @@ function Upcoming() {
 
       for (let k in bulletData) {
         if (awardData[i].id === bulletData[k].award_id) {
-          bullets.push(bulletData[k].name);
+          bullets.push(bulletData[k]);
         }
       }
       newRow.push(bullets);
@@ -78,13 +77,11 @@ function Upcoming() {
     <div className='award-page'>
 
       <div className='award-buttons'>
-        {/* <button>Edit Mode</button>
-        <button>Save Changes</button>
-        <button>Discard Changes</button>
-        <button>Delete</button> */}
-        <button>Refresh</button>
-      </div>
+        <button>All Awards</button>
+        <button>My Awards</button>
 
+
+      </div>
       {(tableData !== undefined) ? (
         <table className='award-table'>
           <thead className='award-thead'>
@@ -95,7 +92,7 @@ function Upcoming() {
               <th className='award-th'>Max Bullets</th>
               <th className='award-th'>Due Date</th>
               <th className='award-th'>Status</th>
-              <th className='award-th'>Selected</th>
+              {/* <th className='award-th'>Selected</th> */}
             </tr>
           </thead>
           <tbody className='award-tbpdy'>
@@ -105,14 +102,24 @@ function Upcoming() {
                   switch (j) {
                     case 0:
                       return (
+
                         <td className='award-td' key={j}>
-                          <details className='award-details'>
-                            <summary>{item}</summary>
-                            Bullets:
-                            <ul>
-                              {/* todo: bullet card here */}
-                            </ul>
-                          </details>
+                          {(row[6]?.length > 0) ? (
+                            <details className='award-details'>
+                              <summary>{item}</summary>
+                              Your Assigned Bullets:
+                              <ul>
+                                {row[6].map((bullet, k) => (
+                                  <li key={k}>
+                                    {bullet.name}
+                                  </li>
+                                ))}
+                              </ul>
+                            </details>
+                          ) : (
+                            <p>{item}</p>
+                          )}
+
                         </td>
                       )
                     case 6:
@@ -121,7 +128,7 @@ function Upcoming() {
                       return <td className='award-td' key={j}>{item}</td>;
                   }
                 })}
-                <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td>
+                {/* <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td> */}
               </tr>
             ))}
           </tbody>
