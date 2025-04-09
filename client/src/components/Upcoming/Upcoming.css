@@ -36,9 +36,13 @@
 }
 
 .award-checkbox {
-  transform: scale(4) translateX(7.5px);
+  transform: scale(3) translateX(12px);
 }
 
 .award-details {
   cursor: pointer;
+}
+
+.award-td {
+  text-align: center;
 }

@@ -32,7 +32,7 @@ const Awards = () => {
         award.description,
         award.bullet_minimum,
         award.bullet_maximum,
-        award.due_date,
+        new Date(award.due_date).toLocaleDateString(),
         award.status,
       ]
 
@@ -63,7 +63,7 @@ const Awards = () => {
               <th className='award-th'>Max Bullets</th>
               <th className='award-th'>Due Date</th>
               <th className='award-th'>Status</th>
-              {/* <th className='award-th'>Selected</th> */}
+              <th className='award-th'>Selected</th>
             </tr>
           </thead>
           <tbody className='award-tbpdy'>
@@ -98,7 +98,7 @@ const Awards = () => {
                       return <td className='award-td' key={j}>{item}</td>;
                   }
                 })}
-                {/* <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td> */}
+                <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td>
               </tr>
             ))}
           </tbody>

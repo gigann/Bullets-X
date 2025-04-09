@@ -47,25 +47,25 @@ function Upcoming() {
         awardData[i].description,
         awardData[i].bullet_minimum,
         awardData[i].bullet_maximum,
-        awardData[i].due_date,
+        new Date(awardData[i].due_date).toLocaleDateString()
       ];
 
-      for (let j in userAwardData) {
-        if (awardData[i].id === userAwardData[j].award_id) {
-          newRow.push(userAwardData[j].status);
-          break;
-        }
-      }
+      // for (let j in userAwardData) {
+      //   if (awardData[i].id === userAwardData[j].award_id) {
+      //     newRow.push(userAwardData[j].status);
+      //     break;
+      //   }
+      // }
 
       // add bullets assigned to this award
-      let bullets = [];
+      // let bullets = [];
 
-      for (let k in bulletData) {
-        if (awardData[i].id === bulletData[k].award_id) {
-          bullets.push(bulletData[k]);
-        }
-      }
-      newRow.push(bullets);
+      // for (let k in bulletData) {
+      //   if (awardData[i].id === bulletData[k].award_id) {
+      //     bullets.push(bulletData[k]);
+      //   }
+      // }
+      // newRow.push(bullets);
 
       newTableData.push(newRow);
     }
@@ -76,12 +76,7 @@ function Upcoming() {
   return (
     <div className='award-page'>
 
-      <div className='award-buttons'>
-        <button>All Awards</button>
-        <button>My Awards</button>
-
-
-      </div>
+      <h1>Upcoming Awards</h1>
       {(tableData !== undefined) ? (
         <table className='award-table'>
           <thead className='award-thead'>
@@ -91,7 +86,7 @@ function Upcoming() {
               <th className='award-th'>Min Bullets</th>
               <th className='award-th'>Max Bullets</th>
               <th className='award-th'>Due Date</th>
-              <th className='award-th'>Status</th>
+              {/* <th className='award-th'>Status</th> */}
               {/* <th className='award-th'>Selected</th> */}
             </tr>
           </thead>

@@ -71,7 +71,7 @@ export default function Navbar() {
                   handleNavigation(loggedIn ? `/upcoming/${loggedIn.id}` : "")
                 }
               >
-                Upcoming
+                Upcoming Awards
               </button>
             </li>
              <li hidden={!loggedIn}>
@@ -81,7 +81,7 @@ export default function Navbar() {
                   handleNavigation(loggedIn ? `/awards/${loggedIn.id}` : "")
                 }
               >
-                Awards
+                My Awards
               </button>
             </li>
             <li hidden={!loggedIn}>
