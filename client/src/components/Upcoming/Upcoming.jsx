@@ -77,6 +77,14 @@ function Upcoming() {
   return (
     <div className='award-page'>
 
+      <div className='award-buttons'>
+        <button>Edit Mode</button>
+        <button>Refresh</button>
+        <button>Refresh</button>
+        <button>Refresh</button>
+        <button>Refresh</button>
+      </div>
+
       {(tableData !== undefined) ? (
         <table className='award-table'>
           <thead className='award-thead'>
@@ -98,7 +106,7 @@ function Upcoming() {
                     case 0:
                       return (
                         <td className='award-td' key={j}>
-                          <details>
+                          <details className='award-details'>
                             <summary>{item}</summary>
                             Bullets:
                             <ul>
