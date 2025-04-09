@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
+// look up awards a specific user is interested in
 router.get("/users/:user_id", (req, res) => {
   let user_id = req.params.user_id;
   knex("user_award")
@@ -22,7 +23,7 @@ router.get("/users/:user_id", (req, res) => {
     );
 });
 
-
+// add a new award that a specific user is interested in -- specify user and award id
 router.post("/", (req, res) => {
   const { user_id, award_id, status } = req.body;
 
