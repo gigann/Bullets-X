@@ -12,7 +12,8 @@
 }
 
 .award-table, .award-th, .award-td {
-  border: 1px solid #6e6e6e;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+  border-radius: 10px;
   border-collapse: collapse;
 }
 
