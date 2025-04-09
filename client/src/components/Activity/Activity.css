@@ -1,47 +1,47 @@
 .activity-con{
-    width: 100%;
-    background-color: rgb(58, 59, 59);
-    margin-left: 20% auto;
-    text-align: center;
-    border-radius: 15px;
-    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
 }
 
-table{
-    background-color:rgba(160, 160, 160, 0.767) ;
-    padding: 30px;
-    border: 5px solid rgba(255, 255, 255, 0.308);
-    overflow: auto;
-    border-radius: 15px;
-    height: 200px;
-    margin: auto;
+.act-table{
+    border: 1px solid #6e6e6e;
+    border-collapse: collapse;
 }
+.act-tr:nth-child(even) {
+    background-color: rgba(16, 23, 37, 0.85);
+  }
 
+  .act-tr:nth-child(odd) {
+    background-color: rgba(16, 23, 37, 1.0);
+  }
 
 th{
-    border: 2px solid rgba(255, 255, 255, 0.507);
+    border: 1px solid #6e6e6e;
+    border-collapse: collapse;
+    background-color: rgba(0, 0, 0, 1.0);
     padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    background-color: rgb(126, 126, 129);
     
 }
-td{
-    padding: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.568);
-    margin: 5px;
-    border-radius: 5px;
-    
+.act-td{
+    border: 1px solid #6e6e6e;
+    border-collapse: collapse;
+    color:aliceblue;
+    text-align: center;
+    padding: 10px;
 }
 
 input{
     text-align: center;
     padding: 10px;
     border-radius: 10px;border: 2px solid rgba(255, 255, 255, 0.623);
+    cursor: pointer;
 }
 
 .descrip{
-    min-width: 400px;
+    min-width: 500px;
    margin: 10px;
 }
 
@@ -58,11 +58,14 @@ input{
     border-radius: 15px;
 }
 
-.description{
-    width: 400px;
-    max-width: 800px;
+#description{
+    width: 500px;
+   
 }
 
 .name, .date{
     width:100px;
 }
+
+  
+  
