@@ -19,7 +19,7 @@
 .award-winning-bullets {
   background-color: #101725;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
   margin: 20px;

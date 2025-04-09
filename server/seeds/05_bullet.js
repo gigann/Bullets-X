@@ -40,7 +40,7 @@ exports.seed = async function (knex) {
       action: "Aided [Fictional New Technology] deployment",
       impact: "Achieved all performance metrics",
       result: "Accelerated fielding of enhanced space capabilities",
-      status: "Complete",
+      status: "Awarded",
       award_id: 1,
     },
     {
@@ -59,7 +59,7 @@ exports.seed = async function (knex) {
       action: "Developed [Fictional Space Domain Task] training",
       impact: "Increased team proficiency by 20%",
       result: "Reduced mission execution timelines",
-      status: "Drafting",
+      status: "Awarded",
       award_id: 1,
     },
     {
@@ -68,7 +68,7 @@ exports.seed = async function (knex) {
       action: "Led [Fictional Team Leader Role] of [Number] Guardians",
       impact: "Fostered cohesive, high-performing unit",
       result: "Consistently achieved mission objectives under pressure",
-      status: "Drafting",
+      status: "Awarded",
       award_id: 1,
     },
     {
@@ -78,7 +78,7 @@ exports.seed = async function (knex) {
       impact: "Contributed significantly",
       result:
         "Improved [Positive Outcome for the Unit/Organization] beyond primary duties",
-      status: "Submitted",
+      status: "Awarded",
       award_id: 2,
     },
   ]);

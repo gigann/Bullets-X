@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './WinningBullets.css';
 
 const WinningBullets = () => {
   const [wins, setWins] = useState([])
@@ -11,14 +12,14 @@ const WinningBullets = () => {
 
   return(
     <>
+    <h2>Award Winning Bullets</h2>
     <div className="winning-bullets-div">
-      <h2>Award Winning Bullets</h2>
       {
         wins.map((win, i)=>{
           return(
             <>
               <h3>{win.award_name}</h3>
-              <p>{win.description}</p>
+              <p>{win.action}; {win.impact}--{win.result}</p>
             </>
           )
         })
