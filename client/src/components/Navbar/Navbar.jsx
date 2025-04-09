@@ -28,6 +28,7 @@ export default function Navbar() {
                 <li hidden={!loggedIn} ><button className='nav-btn' onClick={() => handleNavigation(loggedIn ? `/activity/${loggedIn.id}` : "")}>Activity</button></li>
                 <li hidden={!loggedIn} ><button className='nav-btn' onClick={() => handleNavigation(loggedIn ? `/bullets/${loggedIn.id}` : "")}>Bullets</button></li>
                 <li hidden={!loggedIn} ><button className='nav-btn' onClick={() => handleNavigation(loggedIn ? `/upcoming/${loggedIn.id}` : "")}>Upcoming</button></li>
+                <li hidden={!loggedIn} ><button className='nav-btn' onClick={() => handleNavigation(loggedIn ? `/awards/${loggedIn.id}` : "")}>Awards</button></li>
                 <li hidden={!loggedIn} ><button className='nav-btn' onClick={() => handleNavigation(loggedIn ? `/subordinates/${loggedIn.id}` : "")}>Subordinates</button></li>
                 <li hidden={!loggedIn} ><button onClick={() => {setLoggedIn(), navigate('/')}}>Log Out</button></li>
                 <li hidden={loggedIn}><button className='nav-btn' onClick={() => handleNavigation('/')}>Log In</button></li>
