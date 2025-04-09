@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TextareaAutosize from 'react-textarea-autosize';
 
 import './Home.css';
+import WinningBullets from '../WinningBullets/WinningBullets.jsx'
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -51,8 +52,7 @@ function Home() {
         <div className='home-page'>
           <div>
             <div className='award-winning-bullets'>
-              <img className='test-img' src='...'></img>
-              <div className='award-winning-header'><h3>Award-winning Bullets</h3></div>
+              <WinningBullets />
             </div>
             <div className='home-sub-page'>
               <div className='my-bullets'>
