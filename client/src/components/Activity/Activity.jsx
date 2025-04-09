@@ -29,9 +29,9 @@ export default function Activity() {
                 <table >
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Date</th>
+                            <th className='name'>Name</th>
+                            <th className='descrip' >Description</th>
+                            <th className='date'>Date</th>
                             <th>Changes</th>
                         </tr>
                     </thead>

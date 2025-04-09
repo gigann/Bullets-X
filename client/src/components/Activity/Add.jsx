@@ -56,7 +56,7 @@ export default function Addact() {
     return(
     <>
         <div className='add-act'>
-            <h2>Add Item to inventory:</h2>
+            
             <input
              className='txtbox'
               placeholder='Activity Name'
