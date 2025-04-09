@@ -10,9 +10,9 @@ const Awards = () => {
 
   useEffect(() => {
     fetch(`http://localhost:3001/user_award/${loggedIn.id}/awards`)
-    .then(res => res.json())
-    .then(data => setAwards(data))
-    .catch(err => console.log("Error: ", err));
+      .then(res => res.json())
+      .then(data => setAwards(data))
+      .catch(err => console.log("Error: ", err));
   }, [])
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Awards = () => {
       let bulletData = [];
 
       for (let bullet of bullets) {
-        if(bullet.award_id == award.award_id) {
+        if (bullet.award_id == award.award_id) {
           bulletData.push(`${bullet.action}, ${bullet.impact}--${bullet.result}`);
         }
       }
@@ -50,59 +50,61 @@ const Awards = () => {
     setTableData(newTableData);
   }, [awards, bullets])
 
-  return(
+  return (
     <>
       <h1>My Awards</h1>
       {(tableData !== undefined) ? (
-        <table className='award-table'>
-          <thead className='award-thead'>
-            <tr className='award-tr'>
-              <th className='award-th'>Name</th>
-              <th className='award-th'>Description</th>
-              <th className='award-th'>Min Bullets</th>
-              <th className='award-th'>Max Bullets</th>
-              <th className='award-th'>Due Date</th>
-              <th className='award-th'>Status</th>
-              <th className='award-th'>Selected</th>
-            </tr>
-          </thead>
-          <tbody className='award-tbpdy'>
-            {tableData?.map((row, i) => (
-              <tr className='award-tr' key={i}>
-                {row.map((item, j) => {
-                  switch (j) {
-                    case 0:
-                      return (
-                        <td className='award-td' key={j}>
-                          {(row[6]?.length > 0) ? (
-                            <details className='award-details'>
-                              <summary>{item}</summary>
-                              Your Assigned Bullets:
-                              <ul>
-                                {row[6].map((bullet, k) => (
-                                  <li key={k}>
-                                    {bullet}
-                                  </li>
-                                ))}
-                              </ul>
-                            </details>
-                          ) : (
-                            <p>{item}</p>
-                          )}
-
-                        </td>
-                      )
-                    case 6:
-                      return null;
-                    default:
-                      return <td className='award-td' key={j}>{item}</td>;
-                  }
-                })}
-                <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td>
+        <div className='award-page'>
+          <table className='award-table'>
+            <thead className='award-thead'>
+              <tr className='award-tr'>
+                <th className='award-th'>Name</th>
+                <th className='award-th'>Description</th>
+                <th className='award-th'>Min Bullets</th>
+                <th className='award-th'>Max Bullets</th>
+                <th className='award-th'>Due Date</th>
+                <th className='award-th'>Status</th>
+                <th className='award-th'>Selected</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='award-tbpdy'>
+              {tableData?.map((row, i) => (
+                <tr className='award-tr' key={i}>
+                  {row.map((item, j) => {
+                    switch (j) {
+                      case 0:
+                        return (
+                          <td className='award-td' key={j}>
+                            {(row[6]?.length > 0) ? (
+                              <details className='award-details'>
+                                <summary>{item}</summary>
+                                Your Assigned Bullets:
+                                <ul>
+                                  {row[6].map((bullet, k) => (
+                                    <li key={k}>
+                                      {bullet}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </details>
+                            ) : (
+                              <p>{item}</p>
+                            )}
+
+                          </td>
+                        )
+                      case 6:
+                        return null;
+                      default:
+                        return <td className='award-td' key={j}>{item}</td>;
+                    }
+                  })}
+                  <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         null // loading spinner could go here
       )}

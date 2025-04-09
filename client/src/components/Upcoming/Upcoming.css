@@ -36,7 +36,7 @@
 }
 
 .award-checkbox {
-  transform: scale(3) translateX(12px);
+  transform: scale(3);
 }
 
 .award-details {
