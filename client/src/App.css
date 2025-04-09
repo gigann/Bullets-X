@@ -1,1 +1,28 @@
+.app-footer {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
 
+.light-mode {
+  --text-color: #030712;
+  --bg-color: #F7F7F7;
+  --panel-bg-color: #adafb3;
+  --panel-text-color: #030712;
+  --accent-color-1: #681eb8;
+  --accent-color-2: #D5A822;
+}
+
+.dark-mode {
+  --text-color: #F7F7F7;
+  --bg-color: #030712;
+  --panel-bg-color: #101725;
+  --panel-text-color: #F7F7F7;
+  --accent-color-1: #B67EF0;
+  --accent-color-2: #D5A822;
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}

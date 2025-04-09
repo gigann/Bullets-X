@@ -8,6 +8,7 @@ exports.seed = async function (knex) {
   await knex("user_award").insert([
     { user_id: 1, award_id: 3, status: "Submitted" },
     { user_id: 2, award_id: 2, status: "Drafting" },
+    { user_id: 2, award_id: 3, status: "Drafting" },
     { user_id: 3, award_id: 1, status: "Awarded" },
     { user_id: 4, award_id: 2, status: "Drafting" },
     { user_id: 4, award_id: 1, status: "Awarded" },

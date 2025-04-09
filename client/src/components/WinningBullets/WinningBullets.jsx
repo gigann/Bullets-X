@@ -14,8 +14,9 @@ const WinningBullets = () => {
     <>
     <h2>Award Winning Bullets</h2>
     <div className="winning-bullets-div">
-      {
-        wins.map((win, i)=>{
+      { wins.length == 0
+        ? <p>No recently awarded bullets.</p>
+        : wins.map((win, i)=>{
           return(
             <>
               <h3>{win.award_name}</h3>

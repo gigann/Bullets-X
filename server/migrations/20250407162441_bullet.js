@@ -12,6 +12,7 @@ exports.up = function (knex) {
     table.string("impact", 250);
     table.string("result", 250);
     table.string("status", 250);
+    table.boolean("drafting");
     table.timestamps(true, true);
     table.integer("award_id");
     table.foreign("award_id").references("award.id").onDelete("CASCADE");
