@@ -1,1 +1,15 @@
+.app-footer {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
 
+.light-mode {
+  color: #FFFFFF;
+  background-color: #000000;
+}
+
+.dark-mode {
+  color: #000000;
+    background-color: #FFFFFF;
+}

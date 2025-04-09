@@ -1,4 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
+import * as ReactDOM from 'react-dom';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import { useEffect, useState } from 'react';
+import { useLocalStorage } from '@uidotdev/usehooks';
 
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
@@ -16,6 +20,22 @@ import "./App.css";
 
 
 function App() {
+  const [darkMode, setDarkMode] = useLocalStorage('darkMode') || false;
+
+  const toggleDarkMode = (checked) => {
+    setDarkMode(checked);
+  };
+
+  useEffect(() => {
+    if (!darkMode) {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
+    }
+    else {
+      document.body.classList.add('light-mode');
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode])
 
   return (
     <>
@@ -32,6 +52,15 @@ function App() {
 
 
       </Routes>
+
+      <footer className='app-footer'>
+        <DarkModeSwitch
+          checked={darkMode}
+          onChange={toggleDarkMode}
+          size={64}
+        />
+      </footer>
+
     </>
   )
 }
