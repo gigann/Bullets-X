@@ -1,0 +1,11 @@
+.award-checkbox {
+  display: none;
+}
+.award-checkbox+.award-checkbox-label:before {
+  content: '☐';
+  font-size: 1.5vw;
+}
+.award-checkbox:checked+.award-checkbox-label:before {
+  content: '✅';
+  font-size: 1.5vw;
+}
