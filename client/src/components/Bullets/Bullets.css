@@ -1,0 +1,28 @@
+.bullet-edit-fields {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.edit-field {
+  flex: 1 1 30%;
+  min-width: 150px;
+}
+
+.edit-field input {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-edit, .btn-done, .btn-delete {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}

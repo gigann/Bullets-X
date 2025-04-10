@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useLocalStorage } from "@uidotdev/usehooks";
+import "./Bullets.css";
 
 function Bullets() {
   const [loggedIn] = useLocalStorage('loggedIn');
@@ -10,7 +11,11 @@ function Bullets() {
   const [action, setAction] = useState('');
   const [impact, setImpact] = useState('');
   const [result, setResult] = useState('');
-  // const combinedBulletText = `${action} — ${impact}; ${result}`.trim();
+  const [editingBulletId, setEditingBulletId] = useState(null);
+
+  const formatBulletText = (action, impact, result) => {
+    return `${action} — ${impact}; ${result}`.trim();
+  }
 
 
   useEffect(() => {
@@ -127,12 +132,20 @@ function Bullets() {
           setBullets(data);
         });
     });
+  };
+
+  const toggleEdit = (id) => {
+    if (editingBulletId === id) {
+      setEditingBulletId(null);
+    } else {
+      setEditingBulletId(id);
+    }
   }
 
   if (loading) return <p>Loading...</p>;
   if (!userID) return <p>Please log in to add bullets</p>;
 
-  const newBulletPreview = `${action} — ${impact}; ${result}`.trim();
+  const newBulletPreview = formatBulletText(action, impact, result);
 
   return (
     <div className="bullets-container">
@@ -152,7 +165,6 @@ function Bullets() {
         </label>
       </div>
       <div className="live-preview">
-        {/* <h3>New Bullet</h3> */}
         <p>{newBulletPreview || "(Your new bullet will appear here...)"}</p>
       </div>
       <button onClick={handleAddBullet}>Add Bullet</button>
@@ -160,41 +172,88 @@ function Bullets() {
       <table className="bullets-table">
         <thead>
           <tr>
-            <th>Action</th>
-            <th>Impact</th>
-            <th>Result</th>
-            <th>Delete</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Last Updated</th>
+            <th>Award ID</th>
+            <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {bullets.map((bullet) => (
-            <tr key={bullet.id}>
-              <td>
-                <input
-                  type="text"
-                  value={bullet.action}
-                  onChange={(e) => handleEditBullet(bullet.id, "action", e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={bullet.impact}
-                  onChange={(e) => handleEditBullet(bullet.id, "impact", e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={bullet.result}
-                  onChange={(e) => handleEditBullet(bullet.id, "result", e.target.value)}
-                />
-              </td>
-              <td>
-                <button onClick={() => handleDeleteBullet(bullet.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
+          {bullets.map((bullet) => {
+            const formattedDate = new Date(bullet.updated_at).toLocaleDateString();
+            const isEditing = bullet.id === editingBulletId;
+            const descriptionBulletPreview = formatBulletText(bullet.action, bullet.impact, bullet.result);
+            const nameElement = isEditing ? (
+                  <input
+                    type="text"
+                    value={bullet.name}
+                    onChange={(e) => handleEditBullet(bullet.id, "name", e.target.value)}
+                  />
+                ) : bullet.name;
+            const descriptionElement = isEditing ? (
+                  <>
+                    <div className="bullet-edit-fields">
+                      <div className="edit-field">
+                        <label htmlFor={`action-${bullet.id}`}>Action:</label>
+                        <input
+                          id={`action-${bullet.id}`}
+                          type="text"
+                          value={bullet.action}
+                          onChange={(e) => handleEditBullet(bullet.id, "action", e.target.value)}
+                        />
+                      </div>
+                      <div className="edit-field">
+                        <label htmlFor={`impact-${bullet.id}`}>Impact:</label>
+                        <input
+                          id={`impact-${bullet.id}`}
+                          type="text"
+                          value={bullet.impact}
+                          onChange={(e) => handleEditBullet(bullet.id, "impact", e.target.value)}
+                        />
+                      </div>
+                      <div className="edit-field">
+                        <label htmlFor={`result-${bullet.id}`}>Result:</label>
+                        <input
+                          id={`result-${bullet.id}`}
+                          type="text"
+                          value={bullet.result}
+                          onChange={(e) => handleEditBullet(bullet.id, "result", e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <p>
+                      <strong>Preview:</strong>{" "}
+                      {descriptionBulletPreview}
+                    </p>
+                  </>
+                ) : descriptionBulletPreview;
+
+            return (
+              <tr key={bullet.id}>
+                <td>{bullet.id}</td>
+                <td>{nameElement}</td>
+                <td>{formattedDate}</td>
+                <td>{bullet.award_id || "N/A"}</td>
+                <td>{descriptionElement}</td>
+                <td>
+                  <button
+                    onClick={() => toggleEdit(bullet.id)}
+                    className={isEditing ? "btn-done" : "btn-edit"}
+                  >
+                    {isEditing ? "Done" : "Edit"}
+                  </button>
+                  <button
+                    onClick={() => handleDeleteBullet(bullet.id)}
+                    className="btn-delete"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
