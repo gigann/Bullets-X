@@ -12,6 +12,7 @@ export default function SubordinatesBullets() {
   const [subordinateBullets, setSubordinateBullets] = useState([]);
   const [newBullet, setNewBullet] = useState("");
   const [subordinateID, setSubordinateID] = useState(null);
+  const [awardID, setAwardID] = useState(null);
   const [makeFormVisible, setMakeFormVisible] = useState(false);
   const [name, setName] = useState("");
   const [action, setAction] = useState("");
@@ -20,8 +21,11 @@ export default function SubordinatesBullets() {
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
   const navigate = useNavigate();
 
-  const handleSetSubordinateID = (id) => {
+  const handleSetSubordinateID = (id, bulletName, awardID) => {
     setSubordinateID(id);
+    setName(bulletName)
+    setMakeFormVisible(true)
+    setAwardID(awardID)
     console.log("Selected Subordinate ID:", id);
   };
 
@@ -163,6 +167,7 @@ export default function SubordinatesBullets() {
         result: result,
         status: "Revised",
         drafting: true,
+        award_id: awardID,
       }),
     })
       .then((res) => res.json())
@@ -195,7 +200,7 @@ export default function SubordinatesBullets() {
         {makeFormVisible && (
           <div className="subordinate-bullet-card">
             <h3>Add a Revised Bullet</h3>
-            <label>
+            {/* <label>
               Name:
               <select value={name} onChange={(e) => setName(e.target.value)}>
                 <option value="" disabled>
@@ -207,7 +212,15 @@ export default function SubordinatesBullets() {
                   </option>
                 ))}
               </select>
-            </label>
+            </label> */}
+
+            <h3>Name:</h3>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              readOnly
+            />
             <h3>Action:</h3>
 
             <input
@@ -241,13 +254,11 @@ export default function SubordinatesBullets() {
             <button
               className="suggest"
               onClick={() => {
-                handleSetSubordinateID(bu.user_id);
-                setMakeFormVisible(true);
-              }}
-            >
-              Suggest
-            </button>
-            <p className="subordinate-bullet-title">{bu.name}</p>
+                handleSetSubordinateID(bu.user_id, bu.name, bu.award_id);
+              }}>Suggest</button>
+            <p className="subordinate-bullet-title">
+              {bu.name}
+            </p>
             <p className="subordinate-bullet-section">
               <span className="subordinate-bullet-label">Action:</span>{" "}
               {bu.action}
