@@ -12,6 +12,7 @@ function Bullets() {
   const [impact, setImpact] = useState('');
   const [result, setResult] = useState('');
   const [editingBulletId, setEditingBulletId] = useState(null);
+  const [userAwards, setUserAwards] = useState([]);
 
   const formatBulletText = (action, impact, result) => {
     return `${action} — ${impact}; ${result}`.trim();
@@ -32,6 +33,24 @@ function Bullets() {
           console.log(err);
           setLoading(false);
           alert('Error fetching bullets');
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [userID]);
+
+  useEffect(() => {
+    if (userID) {
+      fetch(`http://localhost:3001/user_award/${userID}/awards`)
+        .then(res => res.json())
+        .then(data => {
+          setUserAwards(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.log(err);
+          setLoading(false);
+          alert('Error fetching user awards');
         });
     } else {
       setLoading(false);
@@ -177,7 +196,7 @@ function Bullets() {
             <th>Name</th>
             <th>Description</th>
             <th>Last Updated</th>
-            <th>Award ID</th>
+            <th>Award Package Tagged</th>
             <th>Status</th>
             <th>Submit for Review</th>
             <th>Actions</th>
@@ -232,6 +251,21 @@ function Bullets() {
                     </p>
                   </>
                 ) : descriptionBulletPreview;
+
+            const awardElement = isEditing ? (
+              <select
+                value={bullet.award_id || ""}
+                onChange={(e) => handleEditBullet(bullet.id, "award_id", e.target.value === "" ? null : parseInt(e.target.value))}
+              >
+                <option value="">None</option>
+                {userAwards.map(award => (
+                  <option key={award.award_id} value={award.award_id}>
+                    {award.name}
+                  </option>
+                ))}
+              </select>
+            ) : (userAwards.find(award => award.award_id === bullet.award_id)?.name || "No awards tagged at this time.");
+
             const statusElement = isEditing ? (
               <select
                 value={bullet.status || "Drafting"}
@@ -258,7 +292,7 @@ function Bullets() {
                 <td>{nameElement}</td>
                 <td>{descriptionElement}</td>
                 <td>{formattedDate}</td>
-                <td>{bullet.award_id || "N/A"}</td>
+                <td>{awardElement}</td>
                 <td>{statusElement}</td>
                 <td>{submitForReviewElement}</td>
                 <td>
