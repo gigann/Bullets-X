@@ -55,7 +55,8 @@ function Bullets() {
         action: action,
         impact: impact,
         result: result,
-        status: 'Drafting'
+        status: 'Drafting',
+        drafting: true
       }),
     })
     .then(res => res.json())
@@ -174,9 +175,11 @@ function Bullets() {
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Description</th>
             <th>Last Updated</th>
             <th>Award ID</th>
-            <th>Description</th>
+            <th>Status</th>
+            <th>Submit for Review</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -229,14 +232,35 @@ function Bullets() {
                     </p>
                   </>
                 ) : descriptionBulletPreview;
+            const submitForReviewElement = isEditing ? (
+              <input
+                type="checkbox"
+                checked={bullet.drafting}
+                onChange={(e) => handleEditBullet(bullet.id, "drafting", e.target.checked)}
+              />
+            ) : (!bullet.drafting ? "Yes" : "No");
+            const statusElement = isEditing ? (
+              <select
+                value={bullet.status || "Drafting"}
+                onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
+              >
+                <option value="Drafting">Drafting</option>
+                <option value="Ready for Review">Ready for Review</option>
+                <option value="Supervisor Review">Supervisor Review</option>
+                <option value="Approved">Approved</option>
+                <option value="Returned for Corrections">Returned for Corrections</option>
+              </select>
+            ) : (bullet.status || "Drafting");
 
             return (
               <tr key={bullet.id}>
                 <td>{bullet.id}</td>
                 <td>{nameElement}</td>
+                <td>{descriptionElement}</td>
                 <td>{formattedDate}</td>
                 <td>{bullet.award_id || "N/A"}</td>
-                <td>{descriptionElement}</td>
+                <td>{statusElement}</td>
+                <td>{submitForReviewElement}</td>
                 <td>
                   <button
                     onClick={() => toggleEdit(bullet.id)}
