@@ -7,7 +7,7 @@ import { useLocalStorage } from "@uidotdev/usehooks"
 export default function Activity() {
     const [results, setResults] = useState([]);
     const [user, setUser] = useLocalStorage('loggedIn');
-    
+
 
     useEffect(() => {
         if (!user) return;
@@ -19,11 +19,11 @@ export default function Activity() {
         })
         .catch((err) => console.error('Error fetching:', err))
     }, [user])
-    
+
     return(
-        <>
+      <>
+        <h2 className='page-title'>My Activity</h2>
             <div className='activity-con'>
-                <h2>My Activity</h2>
                 <Addact/>
                 <div className='t-div'>
                 <table className='act-table'>
@@ -35,7 +35,7 @@ export default function Activity() {
                             <th>Changes</th>
                         </tr>
                     </thead>
-                    
+
                     <tbody>
                             {results.map( (row) => (
                                 <tr key={row.id} className='act-tr'>
@@ -46,7 +46,7 @@ export default function Activity() {
                             </tr>
                         ))}
                     </tbody>
-                    
+
                 </table>
                 </div>
             </div>

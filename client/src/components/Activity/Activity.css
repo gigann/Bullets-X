@@ -6,36 +6,6 @@
     margin: 20px;
 }
 
-.act-table{
-    border: 1px solid rgba(103, 113, 150, 0.575);
-    border-radius: 10px;
-    border-collapse: collapse;
-}
-.act-tr:nth-child(even) {
-    background-color: rgba(16, 23, 37, 0.85);
-  }
-
-  .act-tr:nth-child(odd) {
-    background-color: rgba(16, 23, 37, 1.0);
-  }
-
-th{
-    border: 1px solid rgba(103, 113, 150, 0.575);
-    border-radius: 10px;
-    border-collapse: collapse;
-    background-color: rgba(0, 0, 0, 1.0);
-    padding: 10px;
-    
-}
-.act-td{
-    border: 1px solid rgba(103, 113, 150, 0.575);
-    border-radius: 10px;
-    border-collapse: collapse;
-    color:aliceblue;
-    text-align: center;
-    padding: 10px;
-}
-
 input{
     text-align: center;
     padding: 10px;
@@ -57,19 +27,18 @@ input{
 
 .t-div{
     height: 500px;
-    
+
     overflow: auto;
     border-radius: 15px;
 }
 
 #description{
     width: 500px;
-   
+
 }
 
 .name, .date{
     width:100px;
 }
 
-  
-  
+

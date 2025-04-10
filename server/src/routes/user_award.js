@@ -28,7 +28,7 @@ router.get("/:user_id/awards", (req, res) => {
   let user_id = req.params.user_id;
   knex("user_award")
   .join("award", "award_id", "=", "award.id")
-  .select("*")
+  .select("*", "user_award.id")
     .where("user_id", user_id)
     .then((user_awards) => res.status(200).json(user_awards))
     .catch((err) =>
@@ -41,16 +41,25 @@ router.get("/:user_id/awards", (req, res) => {
 // add a new award that a specific user is interested in -- specify user and award id
 router.post("/", (req, res) => {
   const { user_id, award_id, status } = req.body;
-
   knex("user_award")
-    .insert({ user_id, award_id, status })
-    .then(res.status(201).json({ message: "Award successfully added!" }))
-    .catch((err) => {
-      console.error("Database insert error:", err);
-      res.status(500).json({
-        message: err,
+  .first()
+  .where("user_id", user_id)
+  .where("award_id", award_id)
+  .then(foundObj => {
+    if (foundObj) {
+      return res.status(409).json({message: "This award has already been added to My Awards."})
+    } else {
+      knex("user_award")
+      .insert({ user_id, award_id, status })
+      .then(res.status(201).json({ message: "Award successfully added!" }))
+      .catch((err) => {
+        console.error("Database insert error:", err);
+        res.status(500).json({
+          message: err,
+        });
       });
-    });
+    }
+  })
 });
 
 router.patch("/:id", (req, res) => {
