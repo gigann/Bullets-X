@@ -43,3 +43,7 @@
 .subordinate-bullets {
   margin-bottom: 20px;
 }
+
+.new-bullet-input {
+  width: 100%;
+}
