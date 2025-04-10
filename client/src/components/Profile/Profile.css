@@ -153,11 +153,11 @@
 
 .edit-arrows{
     position: fixed;
-    top: 17rem;
+    top: 22rem;
     border-radius: 20px;
-    background-color: var(--accent-color-2);
+    /* background-color: var(--accent-color-2); */
     color: #d5a822;
-    border: 3px solid #b67ef0;
+    margin-right: 300px;
 }
 
 .profile-container h2 {
@@ -180,15 +180,12 @@
 .edit-save{
     position: fixed;
     top: 35rem;
-    left: 70rem;
+    left: 50rem;
     background-color: var(--accent-color-2);
     border-radius: 30px;
 }
 
-.edit-save SaveIcon{
-    width: 50px;
-    height: 50px;
-}
+
 
 .profile-icon{
     border: 2px solid #d5a822;
