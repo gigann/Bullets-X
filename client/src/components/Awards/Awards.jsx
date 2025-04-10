@@ -7,20 +7,21 @@ const Awards = () => {
   const [awards, setAwards] = useState([])
   const [bullets, setBullets] = useState([]);
   const [tableData, setTableData] = useState();
+  const [refresh, setRefresh] = useState(1)
 
   useEffect(() => {
     fetch(`http://localhost:3001/user_award/${loggedIn.id}/awards`)
       .then(res => res.json())
       .then(data => setAwards(data))
       .catch(err => console.log("Error: ", err));
-  }, [])
+  }, [refresh])
 
   useEffect(() => {
     fetch(`http://localhost:3001/bullet/users/${loggedIn.id}`)
       .then(res => res.json())
       .then(data => setBullets(data))
       .catch(err => console.log("Error: ", err));
-  }, []);
+  }, [awards]);
 
   useEffect(() => {
     let newTableData = [];
@@ -50,6 +51,23 @@ const Awards = () => {
     setTableData(newTableData);
   }, [awards, bullets])
 
+  const handleRemove = (i) => {
+    fetch(`http://localhost:3001/user_award/${awards[i].id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.message){
+        alert(data.message)
+      }
+      refresh == 1? setRefresh(0):setRefresh(1)
+    })
+    .catch(err => console.log(err))
+  }
+
   return (
     <>
       <h2 className='page-title'>My Awards</h2>
@@ -64,7 +82,7 @@ const Awards = () => {
                 <th className='award-th'>Max Bullets</th>
                 <th className='award-th'>Due Date</th>
                 <th className='award-th'>Status</th>
-                <th className='award-th'>Selected</th>
+                <th className='award-th'>Interested</th>
               </tr>
             </thead>
             <tbody className='award-tbpdy'>
@@ -99,10 +117,7 @@ const Awards = () => {
                         return <td className='award-td' key={j}>{item}</td>;
                     }
                   })}
-                  <td className='award-td'>
-                    <input id= 'award-checkbox' className='award-checkbox' type='checkbox'></input>
-                    <label className='award-checkbox-label' htmlFor='award-checkbox'></label>
-                  </td>
+                  <td className='award-td'><button key={i} onClick={() => handleRemove(i)}>Remove</button></td>
                 </tr>
               ))}
             </tbody>

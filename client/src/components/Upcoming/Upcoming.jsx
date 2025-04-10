@@ -73,6 +73,24 @@ function Upcoming() {
     setTableData(newTableData);
   }, [awardData, bulletData, userAwardData]);
 
+  const handleSelect = (i) => {
+    let request = {user_id: loggedIn.id, award_id: awardData[i].id, status: "Drafting"}
+    fetch('http://localhost:3001/user_award', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(request)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.message){
+        alert(data.message)
+      }
+    })
+    .catch(err => console.log(err))
+  }
+
   return (
     <>
       <h2 className='page-title'>Upcoming Awards</h2>
@@ -87,7 +105,7 @@ function Upcoming() {
                 <th className='award-th'>Max Bullets</th>
                 <th className='award-th'>Due Date</th>
                 {/* <th className='award-th'>Status</th> */}
-                {/* <th className='award-th'>Selected</th> */}
+                <th className='award-th'>Interested</th>
               </tr>
             </thead>
             <tbody className='award-tbpdy'>
@@ -123,7 +141,7 @@ function Upcoming() {
                         return <td className='award-td' key={j}>{item}</td>;
                     }
                   })}
-                  {/* <td className='award-td'><input className='award-checkbox' type='checkbox'></input></td> */}
+                  <td className='award-td'><button key={i} onClick={() => handleSelect(i)}>Select</button></td>
                 </tr>
               ))}
             </tbody>
