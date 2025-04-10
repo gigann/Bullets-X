@@ -11,7 +11,7 @@
     background-color: var(--panel-bg-color);
     color: var(--panel-text-color);
     flex-direction: column;
-    border: 1px solid hsla(0, 0%, 65%, 0.158);
+    border: 1px solid rgba(103, 113, 150, 0.575);
     box-shadow: 0 0 36px 1px rgba(0, 0 , 0, 0.2);
     border-radius: 10px;
     backdrop-filter: blur(20px);
@@ -153,11 +153,11 @@
 
 .edit-arrows{
     position: fixed;
-    top: 17rem;
+    top: 22rem;
     border-radius: 20px;
-    background-color: var(--accent-color-2);
+    /* background-color: var(--accent-color-2); */
     color: #d5a822;
-    border: 3px solid #b67ef0;
+    margin-right: 300px;
 }
 
 .profile-container h2 {
@@ -180,15 +180,12 @@
 .edit-save{
     position: fixed;
     top: 35rem;
-    left: 70rem;
+    left: 50rem;
     background-color: var(--accent-color-2);
     border-radius: 30px;
 }
 
-.edit-save SaveIcon{
-    width: 50px;
-    height: 50px;
-}
+
 
 .profile-icon{
     border: 2px solid #d5a822;

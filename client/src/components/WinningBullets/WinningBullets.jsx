@@ -18,10 +18,10 @@ const WinningBullets = () => {
         ? <p>No recently awarded bullets.</p>
         : wins.map((win, i)=>{
           return(
-            <>
+            <div key={i}>
               <h3>{win.award_name}</h3>
               <p>{win.action}; {win.impact}--{win.result}</p>
-            </>
+            </div>
           )
         })
       }
