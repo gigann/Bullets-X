@@ -210,11 +210,11 @@ export default function SubordinatesBullets() {
 
         {subordinateBullets.map((bu, i) => (
           <div key={i} className="subordinate-bullet-card">
-            <p className="subordinate-bullet-title">{bu.name}</p>
             <button className="suggest" onClick={() => {
               handleSetSubordinateID(bu.user_id);
               setMakeFormVisible(true);
             }}>Suggest</button>
+            <p className="subordinate-bullet-title">{bu.name}</p>
             <p className="subordinate-bullet-section">
               <span className="subordinate-bullet-label">Action:</span> {bu.action}
             </p>
