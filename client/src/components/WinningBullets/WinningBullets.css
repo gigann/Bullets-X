@@ -1,9 +1,7 @@
 .winning-bullets-div{
   height: 30vh;
-  width:30vh;
+  width: 90%;
   overflow: auto;
   padding: 10px;
   margin: 10px;
-  
-
 }
