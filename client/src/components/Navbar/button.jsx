@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useLocalStorage } from '@uidotdev/usehooks';
 
 const Switch = () => {
+    const [darkMode, setDarkMode] = useLocalStorage(true);
+
   return (
     <StyledWrapper>
       <label className="switch">
-        <input id="input" type="checkbox" defaultChecked="darkTheme" />
+        <input id="input" type="checkbox" defaultChecked="darkTheme" onChange={() => setDarkMode(!darkMode)}/>
         <div className="slider round">
           <div className="sun-moon">
             <svg id="moon-dot-1" className="moon-dot" viewBox="0 0 100 100">

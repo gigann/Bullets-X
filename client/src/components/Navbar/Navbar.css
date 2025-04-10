@@ -1,4 +1,27 @@
 /* Global styles */
+.light-mode {
+  --text-color: #030712;
+  --bg-color: #F7F7F7;
+  --panel-bg-color: #adafb3;
+  --panel-text-color: #030712;
+  --accent-color-1: #681eb8;
+  --accent-color-2: #D5A822;
+}
+
+.dark-mode {
+  --text-color: #F7F7F7;
+  --bg-color: #030712;
+  --panel-bg-color: #101725;
+  --panel-text-color: #F7F7F7;
+  --accent-color-1: #B67EF0;
+  --accent-color-2: #D5A822;
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -50,7 +73,7 @@
 .nav-Hamburger{
  position: fixed;
  left: 0.5rem;
-  border: 1px white solid;
+  border: 1px var(--text-color) solid;
   border-radius: 5px;
 }
 
@@ -81,6 +104,7 @@
   background-color: #101725;
   border-radius: 5px;
   align-items: center;
+  background-color: var(--panel-bg-color);
 }
 
 .nav-profile-details-name{
@@ -95,6 +119,7 @@
 .nav-profile-details-buttons{
   display: flex;
   flex-direction: column;
+  
 }
 
 .nav-profile-details-buttons button{
@@ -208,15 +233,24 @@ body {
   }
 }
 
+body {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
 
 .newnav-menu{
   position: fixed;
   top: 120px;
   left: 0px;
   height: 100vh;
-  background-color: #101725;
+  background-color: var(--panel-bg-color);
   width: 20vw;
   animation: slide 0.25s ease-out;
+}
+
+.newnav-menu .visable{
+  display: flex;
+  justify-content: left;
 }
 
 .navbar-username{
@@ -250,7 +284,7 @@ body {
 }
 
 .newnav-menu li:hover{
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--text-color);
   animation: fade 0.25 ease-in;
 }
 
@@ -276,25 +310,4 @@ body {
 
 
 
-.light-mode {
-  --text-color: #030712;
-  --bg-color: #F7F7F7;
-  --panel-bg-color: #adafb3;
-  --panel-text-color: #030712;
-  --accent-color-1: #681eb8;
-  --accent-color-2: #D5A822;
-}
 
-.dark-mode {
-  --text-color: #F7F7F7;
-  --bg-color: #030712;
-  --panel-bg-color: #101725;
-  --panel-text-color: #F7F7F7;
-  --accent-color-1: #B67EF0;
-  --accent-color-2: #D5A822;
-}
-
-body {
-  color: var(--text-color);
-  background-color: var(--bg-color);
-}

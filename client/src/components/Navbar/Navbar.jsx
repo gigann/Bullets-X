@@ -15,7 +15,7 @@ export default function Navbar() {
   const [isOpen, setOpen] = useState(false);
   const [profiledetails, setProfileDetails] = useState(false)
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
-  const [darkMode, setDarkMode] = useLocalStorage('darkMode') || false;
+  const [darkMode, setDarkMode] = useLocalStorage(true);
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -23,20 +23,20 @@ export default function Navbar() {
 
   
   
-    const toggleDarkMode = (checked) => {
-      setDarkMode(checked);
-    };
+  const toggleDarkMode = (checked) => {
+    setDarkMode(checked);
+  };
   
-    useEffect(() => {
-      if (darkMode) {
-        document.body.classList.add('dark-mode');
-        document.body.classList.remove('light-mode');
-      }
-      else {
-        document.body.classList.add('light-mode');
-        document.body.classList.remove('dark-mode');
-      }
-    }, [darkMode])
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
+    }
+    else {
+      document.body.classList.add('light-mode');
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode])
 
   return (
     <>
@@ -117,7 +117,7 @@ export default function Navbar() {
           {/* Visable in both verisons */}
           {/* Night Mode Switch */}
           <div className="Xbutton">
-            <Xbutton onClick={() => {toggleDarkMode}} checked={darkMode}  />
+            <Xbutton onClick={() => {console.log('hello')}} checked={console.log("check")} />
           </div>
         </div>
         

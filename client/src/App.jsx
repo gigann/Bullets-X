@@ -54,13 +54,6 @@ function App() {
         <Route path='/subordinates/:id' element={<Subordinates />}></Route>
         <Route path='/subordinates/bullet/:id' element={<SubordinatesBullets />}></Route>
       </Routes>
-      <footer className='app-footer'>
-        <DarkModeSwitch
-          checked={darkMode}
-          onChange={toggleDarkMode}
-          size={64}
-        />
-      </footer>
     </>
   );
 }
