@@ -4,8 +4,8 @@
   align-items: flex-start;
   min-height: 100vh;
   padding: 40px 20px;
-  background-color: var(--bg-color);
   box-sizing: border-box;
+  margin-top: 10px;
 }
 
 .subordinates-container {
