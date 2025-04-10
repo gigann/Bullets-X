@@ -27,7 +27,7 @@
   grid-template-columns: 230px auto 20px;
   justify-items: end;
   align-items: center;
-  background-color: #101725;
+  background-color: var(--panel-bg-color);
   padding: 20px 40px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -36,6 +36,7 @@
   top: 0; /* Locks it to the top */
   left: 0;
   z-index: 1000; /* Keeps it above other elements */
+  user-select: none;
 }
 
 .navHeader {

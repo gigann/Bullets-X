@@ -75,7 +75,7 @@ function Upcoming() {
 
   return (
     <>
-      <h1>Upcoming Awards</h1>
+      <h2 className='page-title'>Upcoming Awards</h2>
       <div className='award-page'>
         {(tableData !== undefined) ? (
           <table className='award-table'>

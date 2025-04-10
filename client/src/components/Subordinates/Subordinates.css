@@ -4,7 +4,7 @@
   align-items: flex-start;
   min-height: 100vh;
   padding: 40px 20px;
-  background-color: #5e5e5e;
+  background-color: var(--bg-color);
   box-sizing: border-box;
 }
 
@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: row;
   gap: 100px;
-  background-color: #ffffff;
+  background-color: var(--panel-bg-color);
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -20,6 +20,7 @@
   width: 100%;
   justify-content: space-between;
   margin-top: 15px;
+  border: 1px solid rgba(103, 113, 150, 0.575);
 }
 
 .subordinate-item {
@@ -33,7 +34,7 @@
 .subordinate-title {
   font-weight: bold;
   font-size: 16px;
-  color: #222;
+  color: var(--panel-text-color);
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
   text-align: center;
@@ -42,19 +43,19 @@
 
 .subordinate-name {
   font-size: 16px;
-  color: #333;
+  color: var(--panel-text-color);
   text-align: center;
 }
 
 .subordinate-rank {
   font-size: 14px;
-  color: #666;
+  color: var(--panel-text-color);
   text-align: center;
 }
 
 .subordinate-awards-nominated {
   font-size: 14px;
-  color: #333;
+  color: var(--panel-text-color);
   text-align: center;
 }
 
@@ -84,4 +85,18 @@ a {
 a:hover {
   color: #007bff; /* Change to a desired color on hover */
   text-decoration: underline; /* Add underline on hover if desired */
+}
+
+.subordinate-checkbox {
+  display: none;
+}
+
+.subordinate-checkbox+.subordinate-checkbox-label:before {
+  content: '☐';
+  font-size: 2.5vw;
+}
+
+.subordinate-checkbox:checked+.subordinate-checkbox-label:before {
+  content: '✅';
+  font-size: 2vw;
 }
