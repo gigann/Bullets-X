@@ -12,7 +12,18 @@ export default function SubordinatesBullets() {
   const [subordinateAwardNames, setSubordinateAwardNames] = useState([]);
   const [subordinateBullets, setSubordinateBullets] = useState([]);
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
+  const [subordinateID, setSubordinateID] = useState(null);
+  const [makeFormVisible, setMakeFormVisible] = useState(false)
+  const [name, setName] = useState('');
+  const [action, setAction] = useState('');
+  const [impact, setImpact] = useState('');
+  const [result, setResult] = useState('');
   const navigate = useNavigate();
+
+  const handleSetSubordinateID = (id) => {
+    setSubordinateID(id)
+    console.log("Selected Subordinate ID:", id);
+  }
 
   const backButton = () => {
     navigate(-1);
@@ -79,7 +90,7 @@ export default function SubordinatesBullets() {
             fetch(`http://localhost:3001/bullet/completed/${subordinate.id}`)
               .then((res) => {
               if (!res.ok) {
-                throw new Error(`Failed to fetch awards for award ID ${awardInfo.id}`);
+                throw new Error(`Failed to fetch awards for award ID ${subordinate.id}`);
               }
               return res.json();
             })
@@ -97,11 +108,10 @@ export default function SubordinatesBullets() {
 
       fetchBullets();
     }
-  }, [subordinateAwards]);
+  }, [subordinateData]);
 
 
   useEffect(() => {
-    // const timeout = setTimeout(() => {
       if (Array.isArray(subordinateData) && subordinateData.length > 0) {
       const fetchAwardNames = async () => {
         try {
@@ -128,10 +138,46 @@ export default function SubordinatesBullets() {
       fetchAwardNames();
     }
   }, [subordinateAwards]);
-// }, 1000);
 
 
 
+  const handleAddBullet = () => {
+    const emptyFieldsCheck = (!action.trim() && !impact.trim() && !result.trim());
+    if (emptyFieldsCheck) {
+      alert('Please fill in the fields');
+      return;
+    }
+    fetch('http://localhost:3001/bullet', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: subordinateID,
+        name: name,
+        action: action,
+        impact: impact,
+        result: result,
+        status: 'Revised'
+      }),
+    })
+    .then(res => res.json())
+    .then(() => {
+      fetch(`http://localhost:3001/bullet/users/${subordinateID}`)
+        .then(res => res.json())
+        .then(data => {
+          setSubordinateBullets(data);
+        });
+      setName('');
+      setAction('');
+      setImpact('');
+      setResult('');
+    })
+    .catch(err => {
+      console.log(err);
+      alert('Error adding bullet');
+    });
+  }
 
 
 
@@ -144,9 +190,41 @@ export default function SubordinatesBullets() {
 return (
 <>
 <div className="subordinates-bullets-page-container">
+  {makeFormVisible && <div className="bullet-inputs">
+  {makeFormVisible && <h3>Add a Revised Bullet</h3>}
+        <label>
+          Name:
+          <select value={name} onChange={(e) => setName(e.target.value)} >
+            <option value = "" disabled>
+              Select a name
+            </option>
+          {subordinateBullets.map((bu, i) => (
+            <option key = {i} value = {bu.name}>
+              {bu.name}
+            </option>
+          ))}
+          </select>
+        </label>
+        <label>
+          Action:
+          <input type="text" value={action} onChange={(e) => setAction(e.target.value)} />
+        </label>
+        <label>
+          Impact:
+          <input type="text" value={impact} onChange={(e) => setImpact(e.target.value)} />
+        </label>
+        <label>
+          Result:
+          <input type="text" value={result} onChange={(e) => setResult(e.target.value)} />
+        </label>
+      </div>}
+  {makeFormVisible && <button onClick={handleAddBullet}>Add Bullet</button>}
+  {makeFormVisible && <button onClick = {() => setMakeFormVisible(false)}>Cancel</button>}
         {subordinateBullets.map((bu, i) => (
           <div key={i} className="subordinate-bullet-card">
             <p className="subordinate-bullet-title">{bu.name}</p>
+              <button className = "suggest" onClick = {() => {handleSetSubordinateID(bu.user_id);
+                 setMakeFormVisible(true)}}>Suggest</button>
             <p className="subordinate-bullet-section">
               <span className="subordinate-bullet-label">Action:</span> {bu.action}
             </p>

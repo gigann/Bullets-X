@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border-left: 5px solid #007bff;
+  border-left: 5px solid #a18e20cb;
 }
 
 .subordinate-bullet-title {
@@ -42,4 +42,11 @@
 
 .subordinate-bullets {
   margin-bottom: 20px;
+}
+
+.suggest {
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
