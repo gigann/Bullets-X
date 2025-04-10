@@ -232,13 +232,6 @@ function Bullets() {
                     </p>
                   </>
                 ) : descriptionBulletPreview;
-            const submitForReviewElement = isEditing ? (
-              <input
-                type="checkbox"
-                checked={bullet.drafting}
-                onChange={(e) => handleEditBullet(bullet.id, "drafting", e.target.checked)}
-              />
-            ) : (!bullet.drafting ? "Yes" : "No");
             const statusElement = isEditing ? (
               <select
                 value={bullet.status || "Drafting"}
@@ -251,6 +244,13 @@ function Bullets() {
                 <option value="Returned for Corrections">Returned for Corrections</option>
               </select>
             ) : (bullet.status || "Drafting");
+            const submitForReviewElement = isEditing ? (
+              <input
+                type="checkbox"
+                checked={!bullet.drafting}
+                onChange={(e) => handleEditBullet(bullet.id, "drafting", !e.target.checked)}
+              />
+            ) : (!bullet.drafting ? "Yes" : "No");
 
             return (
               <tr key={bullet.id}>
