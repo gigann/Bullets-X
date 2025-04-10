@@ -49,45 +49,48 @@ function Home() {
   return (
     <>
       {(loggedIn.id > 0) ? (
-        <div className='home-page'>
-          <div>
-            <div className='award-winning-bullets'>
-              <WinningBullets />
+        <>
+          <h2 className="page-title">Home</h2>
+          <div className='home-page'>
+            <div>
+              <div className='award-winning-bullets'>
+                <WinningBullets />
+              </div>
+              <div className='home-sub-page'>
+                <div className='my-bullets'>
+                  <h3 className='my-bullets-link'><a onClick={() => {
+                    navigate(`/bullets/${loggedIn.id}`);
+                  }}>My Bullets</a></h3>
+                </div>
+                <div className='add-a-quick-action'>
+                  <b>Add Activity:</b>
+                  <input id='quick-name' type='text' placeholder='Name' />
+                  <TextareaAutosize id='quick-description' placeholder='Description' minRows={3} />
+                  <button id="hbtn" onClick={() => {
+                    let name = document.querySelector('#quick-name').value;
+                    let description = document.querySelector('#quick-description').value;
+                    addActivity(name, description);
+                  }}>Add</button>
+                </div>
+              </div>
             </div>
-            <div className='home-sub-page'>
-              <div className='my-bullets'>
-                <h3 className='my-bullets-link'><a onClick={() => {
-                  navigate(`/bullets/${loggedIn.id}`);
-                }}>My Bullets</a></h3>
-              </div>
-              <div className='add-a-quick-action'>
-                <b>Add Activity:</b>
-                <input id='quick-name' type='text' placeholder='Name' />
-                <TextareaAutosize id='quick-description' placeholder='Description' minRows={3} />
-                <button id="hbtn" onClick={() => {
-                  let name = document.querySelector('#quick-name').value;
-                  let description = document.querySelector('#quick-description').value;
-                  addActivity(name, description);
-                }}>Add</button>
-              </div>
+            <div className='upcoming-awards'>
+              <h3>Upcoming Awards</h3>
+              {upcomingAwards?.map((award, i) => (
+                <div
+                  className='award-card'
+                  key={i}
+                  onClick={() => {
+                    navigate(`/upcoming/${loggedIn.id}`);
+                  }}
+                >
+                  <h3>{award.name}</h3>
+                  <span>{new Date(award.due_date).toLocaleDateString()}</span>
+                </div>
+              ))}
             </div>
           </div>
-          <div className='upcoming-awards'>
-            <h3>Upcoming Awards</h3>
-            {upcomingAwards?.map((award, i) => (
-              <div
-                className='award-card'
-                key={i}
-                onClick={() => {
-                  navigate(`/upcoming/${loggedIn.id}`);
-                }}
-              >
-                <h3>{award.name}</h3>
-                <span>{new Date(award.due_date).toLocaleDateString()}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        </>
       ) : (
         <div className='login-warning'>
           <h1><strong>You must login in to do that.</strong></h1>

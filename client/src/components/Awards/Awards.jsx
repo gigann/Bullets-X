@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../Upcoming/Upcoming.css';
+import '../Awards/Awards.css';
 import { useLocalStorage } from "@uidotdev/usehooks";
 
 const Awards = () => {
@@ -70,7 +70,7 @@ const Awards = () => {
 
   return (
     <>
-      <h1>My Awards</h1>
+      <h2 className='page-title'>My Awards</h2>
       {(tableData !== undefined) ? (
         <div className='award-page'>
           <table className='award-table'>
