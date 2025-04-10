@@ -109,7 +109,7 @@ function Subordinates() {
             <p className="subordinate-item-name-rank"></p>
             <p className="subordinate-title">Name</p>
 
-            {subordinateData.map((re, i) => {
+            {/* {subordinateData.map((re, i) => {
               const award = subordinateAwards.find((aw) => aw.user_id === re.id && aw.status === "Submitted");
               const awardName = award ? subordinateAwardNames.find((awName) => awName.id === award.award_id) : null;
               return (
@@ -122,14 +122,14 @@ function Subordinates() {
                 </p>
               );
             })}
-          </div>
+          </div> */}
 
-          {/* {subordinateData.map((sub, i) => (
+          {subordinateData.map((sub, i) => (
             <p key={i} className="subordinate-name">
               {`${sub.first_name} ${sub.last_name}`}
             </p>
           ))}
-        </div> */}
+        </div>
 
           <div className="subordinate-item">
             <p className="subordinate-item-name-rank"></p>
