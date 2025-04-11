@@ -1,4 +1,3 @@
-![MySlimes](./screenshots/myslimes.png)
 # BulletsX
 Built with **React** on the frontend and **Express**, **Knex.js**, and **PostgreSQL** on the backend, **BulletsX** is a fullstack bullet management system, offering bullet drafting, tracking, and reporting capabilities for supervisors and subordinates.
 
@@ -105,6 +104,7 @@ Made with https://figma.com
 Made with https://sql.toad.cz
 
 ## Authors
+![MySlimes](./screenshots/myslimes.png)
 *  [Isaiah Aguirre](https://github.com/isaiahAguirre)
 *  [Oscar Avina](https://github.com/ocavina)
 *  [Ethan Diem](https://github.com/ethandiem)
