@@ -30,5 +30,13 @@ exports.seed = async function (knex) {
       bullet_minimum: 5,
       bullet_maximum: 6,
     },
+    {
+      name: "*General Bullets*",
+      description:
+        "No specific award, just general bullets",
+      due_date: "2026-01-01",
+      bullet_minimum: 0,
+      bullet_maximum: 100,
+    },
   ]);
 };
