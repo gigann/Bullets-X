@@ -62,6 +62,8 @@ body {
   user-select: none;
 }
 
+
+
 .navHeader {
   margin-top: 0;
   position: fixed;
@@ -197,7 +199,26 @@ body {
 
 .visable{
   animation: slide 0.5s ease-out;
+  justify-content: left;
 }
+
+.visable li{
+  position: relative;
+  margin-left: 0;
+  right: 20px;
+}
+
+.hidden li{
+  position: relative;
+  margin-left: 0;
+  
+  right: 20px;
+}
+
+.hidden li button{
+  padding-left: 0;
+}
+
 
 
 @keyframes fireburst {
@@ -248,6 +269,34 @@ body {
   animation: slide 0.25s ease-out;
 }
 
+.newnav-menu-closed{
+  overflow-x: hidden;
+  position: fixed;
+  top: 120px;
+  left: 0rem;
+  height: 100vh;
+  background-color: var(--panel-bg-color);
+  width: 20vw;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.newnav-menu-closed button{
+  
+  display: flex;
+  justify-content: left;
+  background: none;
+  border: none;
+  font-family: "Orbitron", sans-serif;
+  font-size: large;
+}
+
+.newnav-menu-closed .visable{
+  display: flex;
+  justify-content: left;
+}
+
+
 .newnav-menu .visable{
   display: flex;
   justify-content: left;
@@ -269,6 +318,17 @@ body {
 }
 
 .newnav-menu ul{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.newnav-menu li button{
+  text-align: left;
+  padding-left: 0;
+}
+
+.newnav-menu-closed ul{
   display: flex;
   flex-direction: column;
   
@@ -306,7 +366,14 @@ body {
   }
 }
 
-
+@keyframes slide-out {
+  0%{
+    transform: translateX(200%);
+  }
+  100%{
+    transform: translateX(-100%);
+  }
+}
 
 
 
