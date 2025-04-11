@@ -19,6 +19,8 @@ export default function Navbar() {
 
   const handleNavigation = (path) => {
     navigate(path);
+    //toggle hamburger to close 
+    setOpen(false);
   };
 
   
