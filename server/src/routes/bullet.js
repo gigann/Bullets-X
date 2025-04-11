@@ -14,7 +14,8 @@ router.get("/", (req, res) => {
 router.get("/users/:user_id", (req, res) => {
   let user_id = req.params.user_id;
   knex("bullet")
-    .select("*")
+    .join("award", "award_id", "=", "award.id")
+    .select("bullet.*", "award.name as award_name")
     .where("user_id", user_id)
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>
