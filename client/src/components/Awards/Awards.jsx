@@ -7,7 +7,8 @@ const Awards = () => {
   const [awards, setAwards] = useState([])
   const [bullets, setBullets] = useState([]);
   const [tableData, setTableData] = useState();
-  const [refresh, setRefresh] = useState(1)
+  const [refresh, setRefresh] = useState(1);
+  const [awardName, setAwardName] = useState('');
 
   useEffect(() => {
     fetch(`http://localhost:3001/user_award/${loggedIn.id}/awards`)
@@ -27,7 +28,6 @@ const Awards = () => {
     let newTableData = [];
 
     for (let award of awards) {
-
       let row = [
         award.name,
         award.description,
@@ -36,20 +36,10 @@ const Awards = () => {
         new Date(award.due_date).toLocaleDateString(),
         award.status,
       ]
-
-      let bulletData = [];
-
-      for (let bullet of bullets) {
-        if (bullet.award_id == award.award_id) {
-          bulletData.push(`${bullet.action}, ${bullet.impact}--${bullet.result}`);
-        }
-      }
-
-      row.push(bulletData);
       newTableData.push(row);
     }
     setTableData(newTableData);
-  }, [awards, bullets])
+  }, [awards])
 
   const handleRemove = (i) => {
     fetch(`http://localhost:3001/user_award/${awards[i].id}`, {
@@ -66,6 +56,10 @@ const Awards = () => {
       refresh == 1? setRefresh(0):setRefresh(1)
     })
     .catch(err => console.log(err))
+  }
+
+  const handleName = (event) => {
+    setAwardName(event.target.innerText);
   }
 
   return (
@@ -93,22 +87,7 @@ const Awards = () => {
                       case 0:
                         return (
                           <td className='award-td' key={j}>
-                            {(row[6]?.length > 0) ? (
-                              <details className='award-details'>
-                                <summary>{item}</summary>
-                                Your Assigned Bullets:
-                                <ul>
-                                  {row[6].map((bullet, k) => (
-                                    <li key={k}>
-                                      {bullet}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </details>
-                            ) : (
-                              <p>{item}</p>
-                            )}
-
+                            <p className='award-name-btn' onClick={handleName}>{item}</p>
                           </td>
                         )
                       case 6:
@@ -126,6 +105,22 @@ const Awards = () => {
       ) : (
         null // loading spinner could go here
       )}
+      <div className='bullet-div'>
+        {
+          awardName == ''
+            ? <h3></h3>
+            : <h3>Bullets for {awardName}</h3>
+        }
+        <ul>
+          {
+            bullets
+            .filter(bullet => bullet.award_name == awardName)
+            .map((filteredBullet, i) => {
+              return <li>{filteredBullet.action}, {filteredBullet.impact}--{filteredBullet.result}</li>
+            })
+          }
+        </ul>
+      </div>
     </>
   )
 }

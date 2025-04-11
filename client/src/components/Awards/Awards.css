@@ -9,3 +9,12 @@
   content: '✅';
   font-size: 1.5vw;
 }
+.bullet-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.award-name-btn:hover {
+  color: var(--accent-color-1);
+}
