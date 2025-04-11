@@ -1,6 +1,8 @@
 import {useState, useEffect} from 'react';
 import { useLocalStorage } from "@uidotdev/usehooks";
 import "./Bullets.css";
+import "../SubordinatesBullets/SubordinatesBullets.css";
+
 
 function Bullets() {
   const [loggedIn] = useLocalStorage('loggedIn');
@@ -8,6 +10,7 @@ function Bullets() {
   const [bullets, setBullets] = useState([]);
   const [newBullet, setNewBullet] = useState('');
   const [loading, setLoading] = useState(true);
+  const [bulletName, setBulletName] = useState('');
   const [action, setAction] = useState('');
   const [impact, setImpact] = useState('');
   const [result, setResult] = useState('');
@@ -70,7 +73,7 @@ function Bullets() {
       },
       body: JSON.stringify({
         user_id: userID,
-        name: 'New Bullet',
+        name: bulletName.trim() || 'New Bullet',
         action: action,
         impact: impact,
         result: result,
@@ -85,6 +88,7 @@ function Bullets() {
         .then(data => {
           setBullets(data);
         });
+      setBulletName('');
       setAction('');
       setImpact('');
       setResult('');
@@ -169,25 +173,34 @@ function Bullets() {
 
   return (
     <div className="bullets-container">
-      <h2>New Bullet</h2>
-      <div className="bullet-inputs">
-        <label>
-          Action:
-          <input type="text" value={action} onChange={(e) => setAction(e.target.value)} />
-        </label>
-        <label>
-          Impact:
-          <input type="text" value={impact} onChange={(e) => setImpact(e.target.value)} />
-        </label>
-        <label>
-          Result:
-          <input type="text" value={result} onChange={(e) => setResult(e.target.value)} />
-        </label>
+      <div className="subordinate-bullet-card">
+
+            <h2>New Bullet</h2>
+
+            <h3>Name:</h3>
+            <input
+              type="text"
+              value={bulletName}
+              onChange={(e) => setBulletName(e.target.value)}
+            />
+            <h3>Action:</h3>
+            <input
+            type="text"
+            value={action}
+            onChange={(e) => setAction(e.target.value)} />
+
+            <h3>Impact:</h3>
+            <input type="text" value={impact} onChange={(e) => setImpact(e.target.value)} />
+
+            <h3>Result:</h3>
+            <input type="text" value={result} onChange={(e) => setResult(e.target.value)} />
+
+        <div className="live-preview">
+          <h3>Preview: {newBulletPreview || "(Your new bullet will appear here...)"}</h3>
+        </div>
+        <button onClick={handleAddBullet}>Add Bullet</button>
       </div>
-      <div className="live-preview">
-        <p>{newBulletPreview || "(Your new bullet will appear here...)"}</p>
-      </div>
-      <button onClick={handleAddBullet}>Add Bullet</button>
+
       <h1>My Bullets</h1>
       <table className="bullets-table">
         <thead>
