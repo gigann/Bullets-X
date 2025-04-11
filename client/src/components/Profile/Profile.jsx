@@ -18,7 +18,7 @@ export default function Profile() {
     const [name, setName] = useState(loggedIn.first_name)
     const [lastName, setLastName] = useState(loggedIn.last_name)
     const [patchValues, setPatchValues] = useState({id: loggedIn.id, first_name: loggedIn.first_name, last_name: loggedIn.last_name, username: loggedIn.username, supervisor_id: loggedIn.supervisor_id, unit_name: loggedIn.unit_name, rank: loggedIn.rank, profile_picture: loggedIn.profile_picture, is_supervisor: loggedIn.is_supervisor})
-    const imageArray = ['/donald.jpg', '/daisy.jpg', '/generic.jpg']
+    const imageArray = ['/donald.jpg', '/daisy.jpg', '/generic.jpg', '/alien.png', '/rocket.png', '/telescope.png', '/mitochondria.png', '/astronaut.png']
     const [profileImg, setProfileImg] = useState(imageArray[2])
     const testArray = [1, 2, 2]
     const [iterator, setIterator] = useState(0)
@@ -153,18 +153,22 @@ export default function Profile() {
               <select name="unit_name" value={patchValues.unit_name} hidden={isHidden} onChange={(e) => handleChange(e)} >
                   {unitList?.map((unit, i) => {
                             return <option key={i} value={unit.name}>{unit.name}</option>
-                        })}
+                        })}``
               </select>
             </div>
             <div className="edit-arrows" hidden={isHidden}>
               {!isHidden && <IconButton onClick={() => {
-                iterator === imageArray.length-1? setIterator(0): setIterator(iterator+1)
-                setProfileImg(imageArray[iterator])
+                let temp = iterator
+                temp === imageArray.length-1? temp = 0: temp++
+                setProfileImg(imageArray[temp])
+                setIterator(temp)
 
                 }}><ArrowUpwardIcon/></IconButton>}
               {!isHidden && <IconButton onClick={() => {
-                iterator === 0? setIterator(imageArray.length - 1): setIterator(iterator-1)
-                setProfileImg(imageArray[iterator])
+                let temp2 = iterator
+                temp2 === 0? temp2 = (imageArray.length - 1): temp2--
+                setProfileImg(imageArray[temp2])
+                setIterator(temp2)
                 
                 }}><ArrowDownwardIcon/></IconButton>}
             </div>
