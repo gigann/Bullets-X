@@ -172,7 +172,8 @@ function Bullets() {
   const newBulletPreview = formatBulletText(action, impact, result);
 
   return (
-    <div className="bullets-container">
+
+    <div className="subordinates-bullets-page-container">
       <div className="subordinate-bullet-card">
 
             <h2>New Bullet</h2>
