@@ -14,7 +14,8 @@ router.get("/", (req, res) => {
 router.get("/users/:user_id", (req, res) => {
   let user_id = req.params.user_id;
   knex("bullet")
-    .select("*")
+    .join("award", "award_id", "=", "award.id")
+    .select("bullet.*", "award.name as award_name")
     .where("user_id", user_id)
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>
@@ -74,6 +75,24 @@ router.get("/completed/:user_id", (req, res) => {
     .join("award", "award_id", "=", "award.id")
     .select("bullet.*", "award.name as award_name")
     .where("user_id", user_id)
+    .where("drafting", false)
+    .then((bullets) => res.status(200).json(bullets))
+    .catch((err) =>
+      res.status(404).json({
+        message: "Bullet data not available",
+      })
+    );
+});
+
+//get a specific user's bullets NOT in draft (ie. ready for supervisor view), for a specific award
+router.get("/completed/:user_id/:award_id", (req, res) => {
+  const user_id = req.params.user_id;
+  const award_id = req.params.award_id;
+  knex("bullet")
+    .join("award", "award_id", "=", "award.id")
+    .select("bullet.*", "award.name as award_name")
+    .where("user_id", user_id)
+    .where("award_id", award_id)
     .where("drafting", false)
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>

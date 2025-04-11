@@ -170,13 +170,15 @@ export default function SubordinatesBullets() {
         award_id: awardID,
       }),
     })
+    .then((res) => res.json())
+    .then(() => {
+      const awardNamesPromises = subordinateAwards.map((awardInfo) =>
+      fetch(`http://localhost:3001/bullet/completed/${subordinateID}/${awardInfo.award_id}`)
+      // fetch(`http://localhost:3001/bullet/users/${subordinateID}`)
       .then((res) => res.json())
-      .then(() => {
-        fetch(`http://localhost:3001/bullet/users/${subordinateID}`)
-          .then((res) => res.json())
-          .then((data) => {
+      .then((data) => {
             setSubordinateBullets(data);
-          });
+          }));
         setName("");
         setAction("");
         setImpact("");

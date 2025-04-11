@@ -18,6 +18,7 @@ exports.up = function (knex) {
       .inTable("award")
       .onDelete("CASCADE");
     table.string("status");
+    table.boolean("drafting");
   });
 };
 

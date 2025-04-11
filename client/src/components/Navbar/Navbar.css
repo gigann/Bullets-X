@@ -213,6 +213,16 @@ body {
 .hidden li{
   position: relative;
   margin-left: 0;
+  right: 20px;
+}
+
+.hidden li button{
+  padding-left: 0;
+}
+
+.hidden li{
+  position: relative;
+  margin-left: 0;
   
   right: 20px;
 }
@@ -220,6 +230,7 @@ body {
 .hidden li button{
   padding-left: 0;
 }
+
 
 
 
@@ -331,7 +342,9 @@ body {
 
 .newnav-menu li button{
   text-align: left;
+
   /* padding-left: 0; */
+
 }
 
 .newnav-menu-closed ul{
