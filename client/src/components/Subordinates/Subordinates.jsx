@@ -148,7 +148,7 @@ function Subordinates() {
             const processedAwardIds = new Set();
             return subordinateAwards.map((re, i) => {
               if (processedAwardIds.has(re.award_id)) {
-                return null; // Skip duplicates
+                return null;
               }
               processedAwardIds.add(re.award_id);
               const awardName = subordinateAwardNames.find((aw) => aw.id === re.award_id);
