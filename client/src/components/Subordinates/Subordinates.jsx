@@ -41,6 +41,7 @@ function Subordinates() {
       const fetchAwards = async () => {
         try {
           const awardsPromises = subordinateData.map((subordinate) =>
+
             fetch(`http://localhost:3001/user_award/users/${subordinate.id}`)
               .then((res) => {
                 if (!res.ok) {
@@ -143,32 +144,48 @@ function Subordinates() {
 
           <div className="subordinate-item">
             <p className="subordinate-title">Awards Nominated</p>
-            {subordinateAwards.map((re, i) => {
+            {(() => {
+            const processedAwardIds = new Set();
+            return subordinateAwards.map((re, i) => {
+              if (processedAwardIds.has(re.award_id)) {
+                return null; // Skip duplicates
+              }
+              processedAwardIds.add(re.award_id);
               const awardName = subordinateAwardNames.find((aw) => aw.id === re.award_id);
               return (
                 <p key={i} className="subordinate-awards-nominated">
-                  {re?.status === "Submitted" && awardName ? (
+                  {re?.drafting === false && awardName ? (
                     <Link to={`/subordinates/bullet/${re.user_id}`}>{awardName.name}</Link>
                   ) : (
                     awardName?.name
                   )}
-                </p>
-              );
-            })}
+                  </p>
+                );
+              });
+            })()}
           </div>
 
           <div className="subordinate-item">
             <p className="subordinate-title">Ready For Review?</p>
-            {subordinateAwards.map((re, i) => (
+            {(() => {
+            const processedAwardIds = new Set();
+              return subordinateAwards.map((re, i) => {
+              if (processedAwardIds.has(re.award_id)) {
+              return null;
+                }
+                processedAwardIds.add(re.award_id);
+              return (
               <label key={i} className="subordinate-ready-for-review">
                 <input type="checkbox" className="subordinate-checkbox"
-                  checked={re?.status === "Submitted"}
+                  checked={re?.drafting === false}
                   readOnly
                 />
                 <label className='subordinate-checkbox-label' htmlFor='award-checkbox'></label>
               </label>
-            ))}
-          </div>
+              );
+            });
+          })()}
+       </div>
           {/* <div className="subordinate-item">
           <p className="subordinate-title">Ready For Review?</p>
           {subordinateData.map((sub, i) => {
