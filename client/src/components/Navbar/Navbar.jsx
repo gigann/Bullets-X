@@ -54,33 +54,32 @@ export default function Navbar() {
         </Link>}
         
         {/* MENU */}
-        {isOpen && <div className={isOpen ? "newnav-menu" : ""}>
+        {<div className={isOpen ? "newnav-menu" : "newnav-menu-closed"}>
             <nav>
-            
               <ul className={!isOpen ? "hidden" : "visable"}>
                 <li hidden={!loggedIn}>
-                  <button className="nav-btn" onClick={() =>handleNavigation(loggedIn ? `/home/${loggedIn.id}` : "")}>Home</button>
+                  <button className="nav-btn" onClick={() => {handleNavigation(loggedIn ? `/home/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Home</button>
                 </li>
                 <li hidden={!loggedIn}>
-                  <button className="nav-btn" onClick={() => handleNavigation(loggedIn ? `/profile/${loggedIn.id}` : "")}>Profile</button>
+                  <button className="nav-btn" onClick={() => {handleNavigation(loggedIn ? `/profile/${loggedIn.id}` : "") , setOpen(!isOpen)}}>Profile</button>
                 </li>
                 <li hidden={!loggedIn}>
-                  <button className="nav-btn" onClick={() => handleNavigation(loggedIn ? `/activity/${loggedIn.id}` : "") } >Activity</button>
+                  <button className="nav-btn" onClick={() => {handleNavigation(loggedIn ? `/activity/${loggedIn.id}` : ""), setOpen(!isOpen)} } >Activity</button>
                 </li>
                 <li hidden={!loggedIn}>
-                  <button className="nav-btn"onClick={() =>handleNavigation(loggedIn ? `/bullets/${loggedIn.id}` : "")}>Bullets</button>
+                  <button className="nav-btn"onClick={() => {handleNavigation(loggedIn ? `/bullets/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Bullets</button>
                 </li>
                 <li hidden={!loggedIn}>
-                  <button className="nav-btn"onClick={() =>handleNavigation(loggedIn ? `/upcoming/${loggedIn.id}` : "")}>Upcoming Awards</button>
+                  <button className="nav-btn"onClick={() => {handleNavigation(loggedIn ? `/upcoming/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Upcoming Awards</button>
                 </li>
                 <li hidden={!loggedIn}>
-                  <button className="nav-btn"onClick={() =>handleNavigation(loggedIn ? `/awards/${loggedIn.id}` : "")}>My Awards</button>
+                  <button className="nav-btn"onClick={() => {handleNavigation(loggedIn ? `/awards/${loggedIn.id}` : ""), setOpen(!isOpen)}}>My Awards</button>
                 </li>
                 <li hidden={!loggedIn}>
-                  <button className="nav-btn"onClick={() =>handleNavigation(loggedIn ? `/subordinates/${loggedIn.id}` : "")}>Subordinates</button>
+                  <button className="nav-btn"onClick={() => {handleNavigation(loggedIn ? `/subordinates/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Subordinates</button>
                 </li>
                 <li hidden={loggedIn}>
-                  <button className="nav-btn" onClick={() => handleNavigation("/")}>Log In</button>
+                  <button className="nav-btn" onClick={() => {handleNavigation("/"), setOpen(!isOpen)}}>Log In</button>
                 </li>
               </ul>
             </nav>
@@ -92,7 +91,7 @@ export default function Navbar() {
         </div>
 
         {/* div for the picture menu */}
-        <div className="nav-profile-details" hidden={profiledetails} >
+        <div className="nav-profile-details" hidden={!profiledetails} >
           {/* Logged In Version */}
           {loggedIn && 
             <div>
