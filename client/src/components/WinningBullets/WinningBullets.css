@@ -1,7 +1,63 @@
+
+
 .winning-bullets-div{
   height: 30vh;
   width: 90%;
   overflow: auto;
   padding: 10px;
   margin: 10px;
+}
+
+.award-header{
+  margin-top: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-bottom: 1px solid #b67ef0;
+}
+
+.scrolling-winning-bullets{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.scroll-ui{
+  display: flex;
+  list-style: none;
+}
+
+.scroll-navigator{
+  display: flex;
+  position: relative;
+  top: 45px;
+  right:100px;
+}
+
+.displayedAward{
+  margin-left: 80px;
+  margin-right: 80px;
+  position: relative;
+  bottom: 65px;
+  left: 8.8rem;
+  width: 700px;
+  text-align: center;
+}
+
+
+.displayedAward h4{
+  align-self: center;
+  text-align: center;
+}
+
+
+
+.dots{
+  display: flex;
+  position: relative;
+  right: 27.7em;
+  top: 2.8rem;
+}
+
+.dots h1{
+  margin-left: 20px;
 }

@@ -270,3 +270,10 @@ Made with https://sql.toad.cz
 *  [Ashley Reynolds](https://github.com/ashdrey1110)
 *  [Brook Sharpenski](https://github.com/Bsharpenski)
 *  [Tia Tomescu](https://github.com/tiatomescu)
+
+## Credits
+[Adam Brace](https://github.com/Adam-Brace) for the template.
+
+
+
+
