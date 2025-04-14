@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 
 
 export default function Profile() {
@@ -68,29 +69,16 @@ export default function Profile() {
 
     const editProfile = async ()=>{
       try{
-        // if(updatePicutre === false){
-        //   console.log("if")
-        //   const response = await fetch(`http://localhost:3001/users/${loggedIn.id}`, {
-        //     method: 'PATCH',
-        //     headers: {
-        //       Accept: "application/json",
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(patchValues),
-        //   })
-        // }else{
+        const response = await fetch(`http://localhost:3001/users/${loggedIn.id}`, {
+          method: 'PATCH',
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({id: patchValues.id, first_name: patchValues.first_name, last_name: patchValues.last_name, username: patchValues.username, supervisor_id: patchValues.supervisor_id, unit_name: patchValues.unit_name, rank: patchValues.rank, profile_picture: profileImg, is_supervisor: patchValues.is_supervisor}),
+        })
 
-          const response = await fetch(`http://localhost:3001/users/${loggedIn.id}`, {
-            method: 'PATCH',
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({id: patchValues.id, first_name: patchValues.first_name, last_name: patchValues.last_name, username: patchValues.username, supervisor_id: patchValues.supervisor_id, unit_name: patchValues.unit_name, rank: patchValues.rank, profile_picture: profileImg, is_supervisor: patchValues.is_supervisor}),
-          })
-        // }
-
-      setIsHidden(!isHidden)
+        setIsHidden(!isHidden)
       
       }catch(err){
         console.log(err)
@@ -190,7 +178,7 @@ export default function Profile() {
               }}><ArrowDownwardIcon/></IconButton>}
             </div>
             <div className="edit-button">
-              <IconButton onClick={() => setIsHidden(!isHidden)} ><EditIcon/></IconButton>
+              <IconButton onClick={() => setIsHidden(!isHidden)} >{isHidden? <EditIcon/>: <ClearRoundedIcon/>}</IconButton>
             </div> 
             <div className="edit-save">
               {!isHidden && <IconButton onClick={() => editProfile()} className="profile-icon"><SaveIcon className="profile-icon"/></IconButton>}

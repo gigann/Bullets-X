@@ -19,6 +19,7 @@ exports.seed = async function (knex) {
       profile_picture: "/generic.jpg",
       supervisor_id: null,
       is_supervisor: true,
+      admin: true,
     },
     {
       first_name: "Daisy",
@@ -30,6 +31,7 @@ exports.seed = async function (knex) {
       profile_picture: "../client/public/daisy.jpg",
       supervisor_id: 1,
       is_supervisor: false,
+      admin: false,
     },
     {
       first_name: "Donald",
@@ -41,6 +43,7 @@ exports.seed = async function (knex) {
       profile_picture: "../client/public/donald.jpg",
       supervisor_id: 1,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Homer",
@@ -52,6 +55,7 @@ exports.seed = async function (knex) {
       profile_picture: "/generic.jpg",
       supervisor_id: null,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Marge",
@@ -63,6 +67,7 @@ exports.seed = async function (knex) {
       profile_picture: "/generic.jpg",
       supervisor_id: 4,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Maggie",
@@ -74,6 +79,7 @@ exports.seed = async function (knex) {
       profile_picture: "/generic.jpg",
       supervisor_id: 5,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Bart",
@@ -85,6 +91,7 @@ exports.seed = async function (knex) {
       profile_picture: "/generic.jpg",
       supervisor_id: null,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Lisa",
@@ -96,6 +103,7 @@ exports.seed = async function (knex) {
       profile_picture: "/generic.jpg",
       supervisor_id: 7,
       is_supervisor: true,
+      admin: false,
     },
   ]);
 };
