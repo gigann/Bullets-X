@@ -56,6 +56,9 @@ const Packages = () => {
         alert(data.message)
       }
       refresh == 1? setRefresh(0):setRefresh(1)
+      if(awardName == awards[i].name){
+        setAwardName('');
+      }
     })
     .catch(err => console.log(err))
   }
