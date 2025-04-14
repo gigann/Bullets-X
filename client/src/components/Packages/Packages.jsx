@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import '../Packages/Packages.css';
 import { useLocalStorage } from "@uidotdev/usehooks";
+import IconButton from '@mui/material/IconButton';
+import CopyAllIcon from '@mui/icons-material/CopyAll';
 
 const Packages = () => {
   const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
@@ -62,6 +64,11 @@ const Packages = () => {
     setAwardName(event.target.innerText);
   }
 
+  const handleCopy = () => {
+    let text = document.getElementById('bullet-body').innerText;
+    navigator.clipboard.writeText(text);
+  }
+
   return (
     <>
       <h2 className='page-title'>Packages</h2>
@@ -109,9 +116,12 @@ const Packages = () => {
         {
           awardName == ''
             ? <h3></h3>
-            : <h3>Bullets for {awardName}</h3>
+            : <div className='bullet-header'>
+                <h3>Bullets for {awardName}</h3>
+                <IconButton onClick={handleCopy}><CopyAllIcon/></IconButton>
+              </div>
         }
-        <ul>
+        <ul id='bullet-body'>
           {
             bullets
             .filter(bullet => bullet.award_name == awardName)

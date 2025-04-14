@@ -19,3 +19,8 @@
 .award-name-btn:hover {
   color: var(--accent-color-1);
 }
+.bullet-header {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
