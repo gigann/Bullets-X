@@ -1,7 +1,7 @@
 const request = require('supertest');
 const { app } = require('./index');
 
-describe('Root route', () => {
+describe('Root endpoint', () => {
    test('GET / return "Server is up and running".', (done) => {
      request(app)
        .get('/')
@@ -14,7 +14,7 @@ describe('Root route', () => {
   })
 })
 
-describe('activity routes', () => {
+describe('activity endpoints', () => {
   test('GET /activity should return JSON content and OK (200).', (done) => {
     request(app)
       .get('/activity')
@@ -94,7 +94,7 @@ describe('activity routes', () => {
   })
 })
 
-describe('award routes', () => {
+describe('award endpoints', () => {
   test('GET /award should return JSON content and OK (200).', (done) => {
     request(app)
       .get('/award')
@@ -163,7 +163,7 @@ describe('award routes', () => {
   })
 })
 
-describe('bullet routes', () => {
+describe('bullet endpoints', () => {
   test('GET /bullet should return JSON content and OK (200).', (done) => {
     request(app)
       .get('/bullet')
@@ -296,6 +296,71 @@ describe('bullet routes', () => {
       .delete('/bullet/1')
       .expect('Content-Type', /json/)
       .expect(201)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+})
+
+describe('unit endpoints', () => {
+  test('GET /unit should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/unit')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /unit/:name should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/unit/53 SOPS Det C')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('POST /unit should return JSON content and CREATED (201).', (done) => {
+    request(app)
+      .post('/unit')
+      .send({
+        name: 'TEST UNIT',
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('PATCH /unit/:id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .patch('/unit/1')
+      .send({
+        name: 'TEST',
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('DELETE /unit/:id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .delete('/unit/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
       .end((err, res) => {
         if (err) throw err;
         done();
