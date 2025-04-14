@@ -42,7 +42,7 @@ export default function Activity() {
                                 <td className='act-td'>{row.name}</td>
                                 <td className='act-td' id='description'>{row.description}</td>
                                 <td className='act-td'>{new Date(row.created_at).toLocaleDateString()}</td>
-                                <td className='act-td'><HandleDelete id={row.id}/></td>
+                                <td className='act-td-del-btn'><HandleDelete id={row.id}/></td>
                             </tr>
                         ))}
                     </tbody>
