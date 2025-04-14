@@ -8,7 +8,7 @@ function Bullets() {
   const [loggedIn] = useLocalStorage('loggedIn');
   const userID = loggedIn.id;
   const [bullets, setBullets] = useState([]);
-  const [newBullet, setNewBullet] = useState('');
+  const [newBulletAward, setNewBulletAward] = useState(null);
   const [loading, setLoading] = useState(true);
   const [bulletName, setBulletName] = useState('');
   const [action, setAction] = useState('');
@@ -61,11 +61,13 @@ function Bullets() {
   }, [userID]);
 
   const handleAddBullet = () => {
-    const emptyFieldsCheck = (!action.trim() && !impact.trim() && !result.trim());
+    const emptyFieldsCheck = (!action.trim() || !impact.trim() || !result.trim());
     if (emptyFieldsCheck) {
       alert('Please fill in the fields');
       return;
     }
+
+
     fetch('http://localhost:3001/bullet', {
       method: 'POST',
       headers: {
@@ -78,7 +80,8 @@ function Bullets() {
         impact: impact,
         result: result,
         status: 'Drafting',
-        drafting: true
+        drafting: true,
+        award_id: newBulletAward
       }),
     })
     .then(res => res.json())
@@ -86,12 +89,14 @@ function Bullets() {
       fetch(`http://localhost:3001/bullet/users/${userID}`)
         .then(res => res.json())
         .then(data => {
+          console.log("Bullet added successfully:", data);
           setBullets(data);
         });
       setBulletName('');
       setAction('');
       setImpact('');
       setResult('');
+      setNewBulletAward(null);
     })
     .catch(err => {
       console.log(err);
@@ -108,7 +113,6 @@ function Bullets() {
     if (fieldName === "drafting" && newText === false) {
       updateData.status = "Submitted";
     }
-
 
     setBullets(prevBullets => {
       return prevBullets.map(bullet => {
@@ -197,15 +201,33 @@ function Bullets() {
               />
               <h3>Action:</h3>
               <input
-              type="text"
-              value={action}
-              onChange={(e) => setAction(e.target.value)} />
+                type="text"
+                value={action}
+                onChange={(e) => setAction(e.target.value)} />
 
               <h3>Impact:</h3>
-              <input type="text" value={impact} onChange={(e) => setImpact(e.target.value)} />
+              <input
+                type="text"
+                value={impact}
+                onChange={(e) => setImpact(e.target.value)} />
 
               <h3>Result:</h3>
-              <input type="text" value={result} onChange={(e) => setResult(e.target.value)} />
+              <input
+                type="text"
+                value={result}
+                onChange={(e) => setResult(e.target.value)} />
+
+              <h3>Tagged Package:</h3>
+              <select
+                value={newBulletAward || ""}
+                onChange={(e) => setNewBulletAward(e.target.value === "" ? null : parseInt(e.target.value))}>
+                <option value="">General Purpose</option>
+                {userAwards.map(award => (
+                  <option key={award.award_id} value={award.award_id}>
+                    {award.name}
+                  </option>
+                ))}
+              </select>
 
           <div className="live-preview">
             <h3>Preview: {newBulletPreview || "(Your new bullet will appear here...)"}</h3>
@@ -221,7 +243,7 @@ function Bullets() {
               <th>Name</th>
               <th>Description</th>
               <th>Last Updated</th>
-              <th>Tagged Package</th>
+              <th>Award Package</th>
               <th>Status</th>
               <th>Submit for Review</th>
               <th>Actions</th>
@@ -297,10 +319,9 @@ function Bullets() {
                   onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
                 >
                   <option value="Drafting">Drafting</option>
-                  <option value="Ready for Review">Ready for Review</option>
                   <option value="Supervisor Review">Supervisor Review</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Returned for Corrections">Returned for Corrections</option>
+                  <option value="Returned">Returned</option>
+                  <option value="Supervisor Approved">Supervisor Approved</option>
                 </select>
               ) : (bullet.status || "Drafting");
               const submitForReviewElement = isEditing ? (
