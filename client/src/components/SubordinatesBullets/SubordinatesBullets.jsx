@@ -1,7 +1,9 @@
 import "./SubordinatesBullets.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router-dom";
+import SubordinateContext from '../Context/SubordinateContext';
+
 
 export default function SubordinatesBullets() {
   const [loading, setLoading] = useState(true);
@@ -19,133 +21,144 @@ export default function SubordinatesBullets() {
   const [impact, setImpact] = useState("");
   const [result, setResult] = useState("");
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
+  const {subordinateInfo, setSubordinateInfo} = useContext(SubordinateContext)
   const navigate = useNavigate();
+  const [certainAward, setCertainAward] = useLocalStorage('certainAward')
+  const [certainSubordinateID, setCertainSubordinateID] = useLocalStorage('certainSubordinateID')
 
   const handleSetSubordinateID = (id, bulletName, awardID) => {
-    setSubordinateID(id);
+    // setSubordinateID(id);
     setName(bulletName)
+    // setAwardID(awardID)
     setMakeFormVisible(true)
-    setAwardID(awardID)
     console.log("Selected Subordinate ID:", id);
+    console.log("Selected Award ID:", awardID);
   };
 
   const backButton = () => {
     navigate(-1);
   };
 
-  const userID = loggedIn?.id;
-
   useEffect(() => {
-    if (!userID) {
-      setLoading(false);
-      setError("User not logged in.");
-      return;
-    }
+    fetch(`http://localhost:3001/bullet/completed/${certainSubordinateID}/${certainAward}`)
+      .then(res => res.json())
+      .then(data => setSubordinateInfo(data))
+  }, [])
 
-    fetch(`http://localhost:3001/users/supervisor/${userID}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched items data:", data);
-        setSubordinateData(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error.message);
-        console.error("Error fetching data:", error);
-      });
-  }, [userID]);
+  // const userID = loggedIn?.id;
 
-  useEffect(() => {
-    if (Array.isArray(subordinateData) && subordinateData.length > 0) {
-      const fetchAwards = async () => {
-        try {
-          const awardsPromises = subordinateData.map((subordinate) =>
-            fetch(
-              `http://localhost:3001/user_award/users/${subordinate.id}`
-            ).then((res) => {
-              if (!res.ok) {
-                throw new Error(
-                  `Failed to fetch awards for user ID ${subordinate.id}`
-                );
-              }
-              return res.json();
-            })
-          );
+  // useEffect(() => {
+  //   if (!userID) {
+  //     setLoading(false);
+  //     setError("User not logged in.");
+  //     return;
+  //   }
 
-          const awardsData = await Promise.all(awardsPromises);
-          console.log("Fetched ready for review data:", awardsData);
-          setSubordinateAwards(awardsData.flat());
-        } catch (error) {
-          setError(error.message);
-        }
-      };
+  //   fetch(`http://localhost:3001/users/supervisor/${userID}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("Fetched items data:", data);
+  //       setSubordinateData(data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       setLoading(false);
+  //       setError(error.message);
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, [userID]);
 
-      fetchAwards();
-    }
-  }, [subordinateData]);
+  // useEffect(() => {
+  //   if (Array.isArray(subordinateData) && subordinateData.length > 0) {
+  //     const fetchAwards = async () => {
+  //       try {
+  //         const awardsPromises = subordinateData.map((subordinate) =>
+  //           fetch(
+  //             `http://localhost:3001/user_award/users/${subordinate.id}`
+  //           ).then((res) => {
+  //             if (!res.ok) {
+  //               throw new Error(
+  //                 `Failed to fetch awards for user ID ${subordinate.id}`
+  //               );
+  //             }
+  //             return res.json();
+  //           })
+  //         );
 
-  useEffect(() => {
-    if (Array.isArray(subordinateData) && subordinateData.length > 0) {
-      const fetchBullets = async () => {
-        try {
-          const bulletsPromises = subordinateData.map((subordinate) =>
-            fetch(
-              `http://localhost:3001/bullet/completed/${subordinate.id}`
-            ).then((res) => {
-              if (!res.ok) {
-                throw new Error(
-                  `Failed to fetch awards for award ID ${subordinate.id}`
-                );
-              }
-              return res.json();
-            })
-          );
+  //         const awardsData = await Promise.all(awardsPromises);
+  //         console.log("Fetched ready for review data:", awardsData);
+  //         setSubordinateAwards(awardsData.flat());
+  //       } catch (error) {
+  //         setError(error.message);
+  //       }
+  //     };
 
-          const bulletsData = await Promise.all(bulletsPromises);
-          console.log("Fetched awards data:", bulletsData);
-          setSubordinateBullets(bulletsData.flat());
-          setLoading(false);
-        } catch (error) {
-          setError(error.message);
-          setLoading(false);
-        }
-      };
+  //     fetchAwards();
+  //   }
+  // }, [subordinateData]);
 
-      fetchBullets();
-    }
-  }, [subordinateData]);
+  // useEffect(() => {
+  //   if (Array.isArray(subordinateData) && subordinateData.length > 0) {
+  //     const fetchBullets = async () => {
+  //       try {
+  //         const bulletsPromises = subordinateData.map((subordinate) =>
+  //           fetch(
+  //             `http://localhost:3001/bullet/completed/${subordinate.id}`
+  //           ).then((res) => {
+  //             if (!res.ok) {
+  //               throw new Error(
+  //                 `Failed to fetch awards for award ID ${subordinate.id}`
+  //               );
+  //             }
+  //             return res.json();
+  //           })
+  //         );
 
-  useEffect(() => {
-    if (Array.isArray(subordinateAwards) && subordinateAwards.length > 0) {
-      const fetchAwardNames = async () => {
-        try {
-          const awardNamesPromises = subordinateAwards.map((awardInfo) =>
-            fetch(`http://localhost:3001/award/${awardInfo.award_id}`).then(
-              (res) => {
-                if (!res.ok) {
-                  throw new Error(
-                    `Failed to fetch awards for award ID ${awardInfo.id}`
-                  );
-                }
-                return res.json();
-              }
-            )
-          );
+  //         const bulletsData = await Promise.all(bulletsPromises);
+  //         console.log("Fetched awards data:", bulletsData);
+  //         setSubordinateBullets(bulletsData.flat());
+  //         setLoading(false);
+  //       } catch (error) {
+  //         setError(error.message);
+  //         setLoading(false);
+  //       }
+  //     };
 
-          const awardNamesData = await Promise.all(awardNamesPromises);
-          console.log("Fetched awards data:", awardNamesData);
-          setSubordinateAwardNames(awardNamesData.flat());
-          setLoading(false);
-        } catch (error) {
-          setError(error.message);
-          setLoading(false);
-        }
-      };
+  //     fetchBullets();
+  //   }
+  // }, [subordinateData]);
 
-      fetchAwardNames();
-    }
-  }, [subordinateAwards]);
+  // useEffect(() => {
+  //   if (Array.isArray(subordinateAwards) && subordinateAwards.length > 0 && subordinateID) {
+  //     const fetchAwardNames = async () => {
+  //       try {
+  //         const awardNamesPromises = subordinateAwards.map((awardInfo) =>
+  //           fetch(`http://localhost:3001/bullet/completed/${subordinateID}/${awardID}`).then(
+  //             (res) => {
+  //               if (!res.ok) {
+  //                 throw new Error(
+  //                   `Failed to fetch awards for award ID ${awardID}`
+  //                 );
+  //               }
+  //               return res.json();
+  //             }
+  //           )
+  //         );
+
+  //         const awardNamesData = await Promise.all(awardNamesPromises);
+  //         console.log("Personnal awards data:", awardNamesData);
+  //         setSubordinateAwardNames(awardNamesData.flat());
+  //       } catch (error) {
+  //         console.error("Error fetching award names:", error.message);
+  //         setError("Failed to fetch award names.");
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     };
+
+  //     fetchAwardNames();
+  //   }
+  // }, [subordinateAwards, subordinateID]);
 
   const handleAddBullet = () => {
     const emptyFieldsCheck = !action.trim() && !impact.trim() && !result.trim();
@@ -173,8 +186,7 @@ export default function SubordinatesBullets() {
     .then((res) => res.json())
     .then(() => {
       const awardNamesPromises = subordinateAwards.map((awardInfo) =>
-      fetch(`http://localhost:3001/bullet/completed/${subordinateID}/${awardInfo.award_id}`)
-      // fetch(`http://localhost:3001/bullet/users/${subordinateID}`)
+      fetch(`http://localhost:3001/bullet/users/${subordinateID}`)
       .then((res) => res.json())
       .then((data) => {
             setSubordinateBullets(data);
@@ -191,15 +203,18 @@ export default function SubordinatesBullets() {
       });
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!Array.isArray(subordinateData) || subordinateData.length === 0)
-    return <p>You have no subordinates</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
+  // if (!Array.isArray(subordinateInfo) || subordinateInfo.length === 0)
+  //   return <p>You have no subordinates</p>;
+
+
 
   return (
     <>
+      <button onClick={() => console.log(subordinateInfo)}>Console log</button>
       <div className="subordinates-bullets-page-container">
-        {makeFormVisible && (
+        {!makeFormVisible && (
           <div className="subordinate-bullet-card">
             <h3>Add a Revised Bullet</h3>
             {/* <label>
@@ -251,12 +266,12 @@ export default function SubordinatesBullets() {
           </div>
         )}
 
-        {subordinateBullets.map((bu, i) => (
+        {subordinateInfo.map((bu, i) => (
           <div key={i} className="subordinate-bullet-card">
             <button
               className="suggest"
               onClick={() => {
-                handleSetSubordinateID(bu.user_id, bu.name, bu.award_id);
+                handleSetSubordinateID(bu.user_id, bu.award_name, bu.award_id);
               }}>Suggest</button>
             <p className="subordinate-bullet-title">
               {bu.name}
