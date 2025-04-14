@@ -11,15 +11,16 @@
   margin: 20px;
 }
 
-table, th, td {
+/* table, th, td {
   border: 1px solid rgba(103, 113, 150, 0.575);
   border-radius: 0px;
   border-collapse: none;
-}
+} */
+
 
 thead, th {
-  color: var(--bg-color);
-  background-color: var(--text-color);
+  color: var(--panel-text-color);
+  background-color: var(--accent-color-1);
 }
 
 tr:nth-child(even) {
@@ -47,3 +48,38 @@ td {
 .award-td {
   text-align: center;
 }
+
+
+/* Damon CSS  */
+
+.award-table{
+  border: none;
+  height: 500px;
+  border-spacing: 0px;
+  border-radius: 5px;
+}
+
+.award-th{
+  background-color: var(--accent-color-1);
+  border-spacing: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 40px;
+}
+
+.award-tr{
+ background-color: var(--panel-bg-color);
+ margin-bottom: 50px;
+}
+
+.award-td{
+  border: none;
+}
+
+#award-button{
+  background: none;
+  padding: 0px;
+}
+
+
+/* END Damon CSS */
