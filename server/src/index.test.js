@@ -367,3 +367,81 @@ describe('unit endpoints', () => {
       })
   })
 })
+
+describe('user_award endpoints', () => {
+  test('GET /user_award should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/unit')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /user_award/users/:user_id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/user_award/users/2')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /user_award/:user_id/awards should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/user_award/2/awards')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('POST /user_award should return JSON content and CREATED (201) or CONFLICT (409).', (done) => {
+    request(app)
+      .post('/user_award')
+      .send({
+        user_id: 2,
+        award_id: 2,
+        status: 'Status'
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(r=>[201, 409].includes(r.status))
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('PATCH /user_award/:id should return JSON content and CREATED (201).', (done) => {
+    request(app)
+      .patch('/user_award/1')
+      .send({
+        status: 'Status 2',
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('DELETE /user_award/:id should return JSON content and CREATED (201).', (done) => {
+    request(app)
+      .delete('/user_award/1')
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+})
