@@ -17,7 +17,7 @@
   border-radius: 4px;
 }
 
-.btn-edit, .btn-done, .btn-delete {
+.btn-edit, .btn-done, .btn-copy, .btn-delete {
   display: block;
   width: 100%;
   margin-bottom: 5px;
