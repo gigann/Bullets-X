@@ -16,6 +16,7 @@ function Bullets() {
   const [result, setResult] = useState('');
   const [editingBulletId, setEditingBulletId] = useState(null);
   const [userAwards, setUserAwards] = useState([]);
+  const [hiddenBullet, setHiddenBullet] = useState(true)
 
   const formatBulletText = (action, impact, result) => {
     return `${action} — ${impact}; ${result}`.trim();
@@ -189,9 +190,9 @@ function Bullets() {
     <>
       <h2 className="page-title">My Bullets</h2>
       <div className="subordinates-bullets-page-container">
-        <div className="subordinate-bullet-card">
+        <div className={hiddenBullet ? "subordinate-bullet-card" : "" } hidden={!hiddenBullet}>
 
-              <h2>New Bullet</h2>
+              <h2>New Bullet</h2> <button onClick={() => {setHiddenBullet(!hiddenBullet)}} className='bullet-exitbutton'>X</button>
 
               <h3>Name:</h3>
               <input
@@ -360,7 +361,9 @@ function Bullets() {
             })}
           </tbody>
         </table>
+        <button onClick={() => {setHiddenBullet(!hiddenBullet)}}>Add New Bullet</button>
       </div>
+      
     </>
   );
 

@@ -31,3 +31,14 @@ td {
   padding-left: 0.3em;
   padding-right: 0.25em;
 }
+
+.bullet-exitbutton{
+  position: relative;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  bottom: 50px;
+  left: 45rem;
+}
