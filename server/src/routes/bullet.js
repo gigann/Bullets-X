@@ -7,6 +7,7 @@ const knex = require("knex")(require("../../knexfile")["development"]);
 router.get("/", (req, res) => {
   knex("bullet")
     .select("*")
+    .orderBy("award_id")
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) => res.status(500).json({ error: err.message }));
 });
@@ -17,6 +18,7 @@ router.get("/users/:user_id", (req, res) => {
     .join("award", "award_id", "=", "award.id")
     .select("bullet.*", "award.name as award_name")
     .where("user_id", user_id)
+    .orderBy("award_id")
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>
       res.status(404).json({
@@ -60,6 +62,7 @@ router.get("/with_award_name/:user_id", (req, res) => {
     .join("award", "award_id", "=", "award.id")
     .select("bullet.*", "award.name as award_name")
     .where("bullet.user_id", user_id)
+    .orderBy("award_id")
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>
       res.status(404).json({
@@ -76,6 +79,7 @@ router.get("/completed/:user_id", (req, res) => {
     .select("bullet.*", "award.name as award_name")
     .where("user_id", user_id)
     .where("drafting", false)
+    .orderBy("award_id")
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>
       res.status(404).json({
