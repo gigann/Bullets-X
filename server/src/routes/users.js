@@ -68,7 +68,7 @@ router.post("/", (req, res) => {
               is_supervisor,
             })
             .returning("id")
-            .then(() => res.status(201).json({ message: `User added successfully` }))
+            .then(([returnedId]) => res.status(201).json({ message: `User added successfully`, id: returnedId.id}))
             .catch((err) =>
               res.status(500).json({
                 message: "User could not be added",

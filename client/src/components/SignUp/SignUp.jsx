@@ -62,10 +62,27 @@ function Signup() {
         })
             .then(res => res.json())
             .then(data => {
-                // console.log("Server Response: ", data);
+                console.log("Server Response: ", data);
                 alert("Account Created");
-                navigate("/");
+                return data.id
             })
+            .then((userId) => {
+                fetch('http://localhost:3001/user_award', {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        award_id: 1,
+                        status: 'Drafting',
+                        drafting: null
+                    })
+                })
+            })
+            .then(() => navigate("/"))
     }
 
     return (
