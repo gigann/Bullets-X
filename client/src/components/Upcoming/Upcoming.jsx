@@ -74,15 +74,10 @@ function Upcoming() {
   }, [awardData, bulletData, userAwardData]);
 
   const isSelected = (awardId) => {
-    console.log("Checking if award is selected:", awardId);
-    console.log("User Award Data:", userAwardData);
-  
-    // Filter userAwardData to only include entries for the logged-in user
     const userAwards = userAwardData.filter(
       (userAward) => userAward.user_id === loggedIn.id
     );
   
-    // Check if the award exists in the filtered user awards
     return userAwards.some((userAward) => userAward.award_id === awardId);
   };
 
