@@ -406,7 +406,7 @@ function Bullets() {
         </table>
         <button onClick={() => {setHiddenBullet(!hiddenBullet)}}>Add New Bullet</button>
       </div>
-      
+
     </>
   );
 
