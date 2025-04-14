@@ -58,15 +58,16 @@ function Home() {
                   <WinningBullets />
                 </div>
                 <div className='home-sub-page'>
-                  <div className='my-bullets'>
+                  {/* <div className='my-bullets'>
                     <h3 className='my-bullets-link'><a onClick={() => {
                       navigate(`/bullets/${loggedIn.id}`);
                     }}>My Bullets</a></h3>
-                  </div>
+                  </div> */}
                   <div className='add-a-quick-action'>
-                    <b>Add Activity:</b>
+                    <b>Quick Add Activity:</b>
                     <input id='quick-name' type='text' placeholder='Name' />
-                    <TextareaAutosize id='quick-description' placeholder='Description' minRows={3} />
+                    {/* <TextareaAutosize id='quick-description' placeholder='Description' minRows={6} /> */}
+                    <input type="text" id="quick-description" placeholder="Description"/>
                     <button id="hbtn" onClick={() => {
                       let name = document.querySelector('#quick-name').value;
                       let description = document.querySelector('#quick-description').value;
