@@ -26,7 +26,7 @@ describe('activity routes', () => {
       })
   })
 
-  test('GET /activity/users/:id (1) should return JSON content and OK (200).', (done) => {
+  test('GET /activity/users/:id should return JSON content and OK (200).', (done) => {
     request(app)
       .get('/activity/users/1')
       .expect('Content-Type', /json/)
@@ -163,3 +163,142 @@ describe('award routes', () => {
   })
 })
 
+describe('bullet routes', () => {
+  test('GET /bullet should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/bullet')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /bullet/users/:id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/bullet/users/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /bullet/award/:award_id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/bullet/award/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /bullet/latest-awarded should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/bullet/latest-awarded')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /bullet/with_award_name/:user_id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/bullet/with_award_name/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /bullet/completed/:user_id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/bullet/completed/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /bullet/completed/:user_id/:award_id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/bullet/completed/1/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('POST /bullet should return JSON content and CREATED (201).', (done) => {
+    request(app)
+      .post('/bullet')
+      .send({
+        user_id: 1,
+        name: 'test',
+        action: 'test',
+        impact: 'test',
+        result: 'test',
+        status: 'Drafting',
+        drafting: true,
+        award_id: 2,
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .end((err, res) => {
+        if (err) {
+          console.log(res?.body || res?.text);
+          throw err;
+        }
+        done();
+      })
+  })
+
+  test('PATCH /bullet/:id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .patch('/bullet/2')
+      .send({
+        user_id: 1,
+        name: 'test',
+        action: 'test',
+        impact: 'test',
+        result: 'test',
+        status: 'Drafting',
+        drafting: true,
+        award_id: 2,
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          console.log(res?.body || res?.text);
+          throw err;
+        }
+        done();
+      })
+  })
+
+  test('DELETE /bullet/:id should return JSON content and CREATED (201).', (done) => {
+    request(app)
+      .delete('/bullet/1')
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+})
