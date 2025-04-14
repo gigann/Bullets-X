@@ -45,15 +45,15 @@ router.post("/", (req, res) => {
     is_supervisor,
   } = req.body;
 
-  knex('users')
-  .where({ username })
-  .first()
-  .then(foundUser => {
-    if(foundUser) {
-      return res.status(409).json({
-        message: "Username already taken"
-      })
-    } else {
+  knex("users")
+    .where({ username })
+    .first()
+    .then((foundUser) => {
+      if (foundUser) {
+        return res.status(409).json({
+          message: "Username already taken",
+        });
+      } else {
         bcrypt.hash(password, 10).then((hashedPassword) => {
           knex("users")
             .insert({
@@ -66,17 +66,20 @@ router.post("/", (req, res) => {
               profile_picture,
               supervisor_id,
               is_supervisor,
+              admin: false,
             })
             .returning("id")
-            .then(() => res.status(201).json({ message: `User added successfully` }))
+            .then(() =>
+              res.status(201).json({ message: `User added successfully` })
+            )
             .catch((err) =>
               res.status(500).json({
                 message: "User could not be added",
               })
             );
         });
-    };
-  });
+      }
+    });
 });
 
 router.post("/login", (req, res) => {
@@ -100,6 +103,7 @@ router.post("/login", (req, res) => {
               profile_picture: user.profile_picture,
               supervisor_id: user.supervisor_id,
               is_supervisor: user.is_supervisor,
+              admin: user.admin,
             };
             return res
               .status(200)
@@ -188,7 +192,9 @@ router.get("/supervisor/:supervisor_id", (req, res) => {
       if (subordinates.length > 0) {
         res.status(200).json(subordinates);
       } else {
-        res.status(404).json({ message: "No subordinates found for this supervisor." });
+        res
+          .status(404)
+          .json({ message: "No subordinates found for this supervisor." });
       }
     })
     .catch((err) => {
