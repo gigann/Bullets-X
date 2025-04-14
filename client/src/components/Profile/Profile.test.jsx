@@ -1,9 +1,11 @@
-function Profile() {
+import { render, screen, fireEvent } from "@testing-library/react";
+import Profile from "./Profile";
 
-    return (
-      <>
-      </>
-    )
+test("Renders Profile if logged in, nothing otherwise", () => {
+  if (localStorage.getItem('loggedIn') === null) {
+    render(null);
   }
-  
-  export default Profile;
+  else {
+    render(<Profile />);
+  }
+});

@@ -1,11 +1,11 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import Subordinates from "./Subordinates";
+import Navbar from "./Navbar";
 
-test("Renders Subordinates if logged in, nothing otherwise", () => {
+test("Renders Navbar if logged in, nothing otherwise", () => {
   if (localStorage.getItem('loggedIn') === null) {
     render(null);
   }
   else {
-    render(<Subordinates />);
+    render(<Navbar />);
   }
 });
