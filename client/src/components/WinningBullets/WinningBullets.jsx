@@ -70,7 +70,7 @@ const WinningBullets = () => {
       <h2 className='award-header'>Award Winning Bullets</h2>
       <div className='scrolling-winning-bullets'>
         <div className='displayedAward'>
-           {wins.length > current ? <h4 className='award'>{wins[current].action + " " + wins[current].impact + " " + wins[current].result}</h4> : ""}
+           {wins.length > current ? <h4 className='award'>{wins[current].action + "; " + wins[current].impact + "--" + wins[current].result}</h4> : ""}
         </div>
         
         {/* <h1 className='leftArrow' onClick={() => {scroll(-1)}}>{"<"}</h1>
