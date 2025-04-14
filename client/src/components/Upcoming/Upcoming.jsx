@@ -9,9 +9,9 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 function Upcoming() {
   const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
 
-  const [awardData, setAwardData] = useState({});
-  const [userAwardData, setUserAwardData] = useState({});
-  const [bulletData, setBulletData] = useState({});
+  const [awardData, setAwardData] = useState([]);
+  const [userAwardData, setUserAwardData] = useState([]);
+  const [bulletData, setBulletData] = useState([]);
 
   const [tableData, setTableData] = useState();
 
@@ -73,6 +73,19 @@ function Upcoming() {
     setTableData(newTableData);
   }, [awardData, bulletData, userAwardData]);
 
+  const isSelected = (awardId) => {
+    console.log("Checking if award is selected:", awardId);
+    console.log("User Award Data:", userAwardData);
+  
+    // Filter userAwardData to only include entries for the logged-in user
+    const userAwards = userAwardData.filter(
+      (userAward) => userAward.user_id === loggedIn.id
+    );
+  
+    // Check if the award exists in the filtered user awards
+    return userAwards.some((userAward) => userAward.award_id === awardId);
+  };
+
   const handleSelect = (i) => {
     let request = {user_id: loggedIn.id, award_id: awardData[i].id, status: "Drafting"}
     fetch('http://localhost:3001/user_award', {
@@ -89,8 +102,9 @@ function Upcoming() {
       }
     })
     .catch(err => console.log(err))
+    window.location.reload()
   }
-
+  
   return (
     <>
       <h2 className='page-title'>Upcoming Awards</h2>
@@ -141,7 +155,18 @@ function Upcoming() {
                         return <td className='award-td' key={j}>{item}</td>;
                     }
                   })}
-                  <td className='award-td' id='award-button'><button key={i} onClick={() => handleSelect(i)} className='interested-button'>Select</button></td>
+                  <td className='award-td' id='award-button'>
+                          {awardData[i]?.id && isSelected(awardData[i]?.id) ? (
+                    <span className='selected-text'>Selected</span>
+                  ) : (
+                    <button
+                      onClick={() => handleSelect(i)}
+                      className='interested-button'
+                    >
+                      Select
+                    </button>
+                  )}
+                    </td>
                 </tr>
               ))}
             </tbody>
