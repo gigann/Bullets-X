@@ -1,44 +1,53 @@
-.activity-con{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
+.activity-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
 }
 
-input{
-    text-align: center;
-    padding: 10px;
-    border: 1px solid rgba(103, 113, 150, 0.76);
-    border-radius: 10px;
-    cursor: pointer;
+input {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid rgba(103, 113, 150, 0.76);
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.descrip{
-    min-width: 500px;
-   margin: 10px;
+.descrip {
+  min-width: 500px;
+  margin: 10px;
 }
 
-.add-act{
-    margin: 15px;
-    padding:5px;
+.add-act {
+  margin: 15px;
+  padding: 5px;
 }
 
+/* .t-div {
+  height: 500px;
 
-.t-div{
-    height: 500px;
+  overflow: auto;
+  border-radius: 15px;
+} */
 
-    overflow: auto;
-    border-radius: 15px;
+
+
+/* #description {
+  width: 500px;
+} */
+
+.name,
+.date {
+  width: 100px;
 }
 
-#description{
-    width: 500px;
-
+.act-td {
+  padding-left: 0.5em;
+  padding-right: 0.4em;
 }
 
-.name, .date{
-    width:100px;
+.act-td-del-btn {
+  padding-left: 0.17em;
+  padding-right: 0.15em;
 }
-
-
