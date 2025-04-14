@@ -10,13 +10,12 @@ function Login() {
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn')
     const [data, setData] = useState([])
     const [loginError, setLoginError] = useState(false);
-
     const navigate = useNavigate();
-
     useEffect(() => {
         fetch('http://localhost:3001/users')
             .then(res => res.json())
             .then(res2 => setData(res2))
+            .then(setLoggedIn())
     },[])
 
     function handleChange(event){
