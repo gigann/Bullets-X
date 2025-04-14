@@ -19,16 +19,16 @@ export default function Navbar() {
 
   const handleNavigation = (path) => {
     navigate(path);
-    //toggle hamburger to close 
+    //toggle hamburger to close
     setOpen(false);
   };
 
-  
-  
+
+
   const toggleDarkMode = (checked) => {
     setDarkMode(checked);
   };
-  
+
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark-mode');
@@ -48,13 +48,13 @@ export default function Navbar() {
         <div className="nav-Hamburger">
           <Hamburger toggled={isOpen} toggle={setOpen} className="nav-Hamburger"/>
         </div>
-        
+
         {/* TITLE */}
         {!loggedIn && <h1 className="navHeader">BulletsX</h1>}
         {loggedIn && <Link to={`/home/${loggedIn.id}`} className="home-link">
             <h1 className="navHeader">BulletsX</h1>
         </Link>}
-        
+
         {/* MENU */}
         {<div className={isOpen ? "newnav-menu" : "newnav-menu-closed"}>
             <nav>
@@ -75,7 +75,7 @@ export default function Navbar() {
                   <button className="nav-btn"onClick={() => {handleNavigation(loggedIn ? `/upcoming/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Upcoming Awards</button>
                 </li>
                 <li hidden={!loggedIn}>
-                  <button className="nav-btn"onClick={() => {handleNavigation(loggedIn ? `/awards/${loggedIn.id}` : ""), setOpen(!isOpen)}}>My Awards</button>
+                  <button className="nav-btn"onClick={() => {handleNavigation(loggedIn ? `/packages/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Packages</button>
                 </li>
                 <li hidden={!loggedIn}>
                   <button className="nav-btn"onClick={() => {handleNavigation(loggedIn ? `/subordinates/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Subordinates</button>
@@ -95,7 +95,7 @@ export default function Navbar() {
         {/* div for the picture menu */}
         <div className="nav-profile-details" hidden={!profiledetails} >
           {/* Logged In Version */}
-          {loggedIn && 
+          {loggedIn &&
             <div>
                 <div className="nav-profile-details-name">
                   <p>{loggedIn ? loggedIn.first_name + " " + loggedIn.last_name : ""}</p>
@@ -109,7 +109,7 @@ export default function Navbar() {
           }
 
           {/* Logged out Version */}
-          {!loggedIn && 
+          {!loggedIn &&
             <div className="nav-profile-details-buttons">
               <button>Log In</button>
             </div>
@@ -121,8 +121,8 @@ export default function Navbar() {
             <Xbutton onClick={() => {console.log('hello')}} checked={console.log("check")} />
           </div>
         </div>
-        
-        
+
+
       </nav>
     </>
   );

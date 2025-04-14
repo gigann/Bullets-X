@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import '../Awards/Awards.css';
+import '../Packages/Packages.css';
 import { useLocalStorage } from "@uidotdev/usehooks";
 
-const Awards = () => {
+const Packages = () => {
   const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn');
   const [awards, setAwards] = useState([])
   const [bullets, setBullets] = useState([]);
@@ -64,7 +64,7 @@ const Awards = () => {
 
   return (
     <>
-      <h2 className='page-title'>My Awards</h2>
+      <h2 className='page-title'>Packages</h2>
       {(tableData !== undefined) ? (
         <div className='award-page'>
           <table className='award-table'>
@@ -124,4 +124,4 @@ const Awards = () => {
     </>
   )
 }
-export default Awards;
+export default Packages;
