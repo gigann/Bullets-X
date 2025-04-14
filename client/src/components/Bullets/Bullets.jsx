@@ -21,10 +21,19 @@ function Bullets() {
     return `${action} — ${impact}; ${result}`.trim();
   }
 
+  const handleCopyBullet = (bulletText) => {
+    navigator.clipboard.writeText(bulletText)
+      .then(() => {
+        alert('Bullet copied to clipboard');
+      })
+      .catch(err => {
+        console.error('Failed to copy text:', err);
+        alert('Failed to copy bullet to clipboard');
+      });
+  }
+
 
   useEffect(() => {
-    // console.log("Login state:", loggedIn);
-    // console.log("User ID:", userID);
     if (userID) {
       fetch(`http://localhost:3001/bullet/users/${userID}`)
         .then(res => res.json())
@@ -67,6 +76,12 @@ function Bullets() {
       return;
     }
 
+    const awardId = newBulletAward || (userAwards.length > 0 ? userAwards[0].award_id : null);
+
+    if (!awardId) {
+      alert('You need to have at least one award package available to add a bullet.');
+      return;
+    }
 
     fetch('http://localhost:3001/bullet', {
       method: 'POST',
@@ -81,7 +96,7 @@ function Bullets() {
         result: result,
         status: 'Drafting',
         drafting: true,
-        award_id: newBulletAward
+        award_id: awardId
       }),
     })
     .then(res => res.json())
@@ -111,14 +126,15 @@ function Bullets() {
     }
 
     if (fieldName === "drafting" && newText === false) {
-      updateData.status = "Submitted";
+      updateData.status = "Supervisor Review";
+      console.log('Changing status to Supervisor Review. Drafting has been set to false.');
     }
 
     setBullets(prevBullets => {
       return prevBullets.map(bullet => {
         if (bullet.id === id) {
           if (fieldName === "drafting" && newText === false) {
-            return {...bullet, [fieldName]: newText, status: "Submitted"};
+            return {...bullet, [fieldName]: newText, status: "Supervisor Review"};
           }
           return {...bullet, [fieldName]: newText};
         }
@@ -138,6 +154,14 @@ function Bullets() {
         throw new Error('Failed to update bullet');
       }
       return res.json();
+    })
+    .then(data => {
+      console.log('Bullet updated successfully:', id, updateData);
+      return fetch(`http://localhost:3001/bullet/users/${userID}`);
+    })
+    .then(res => res.json())
+    .then(data => {
+      setBullets(data);
     })
     .catch(err => {
       console.error('Error updating bullet:', err);
@@ -218,16 +242,20 @@ function Bullets() {
                 onChange={(e) => setResult(e.target.value)} />
 
               <h3>Tagged Package:</h3>
-              <select
-                value={newBulletAward || ""}
-                onChange={(e) => setNewBulletAward(e.target.value === "" ? null : parseInt(e.target.value))}>
-                <option value="">General Purpose</option>
-                {userAwards.map(award => (
-                  <option key={award.award_id} value={award.award_id}>
-                    {award.name}
-                  </option>
-                ))}
-              </select>
+              {userAwards.length > 0 ? (
+                <select
+                  value={newBulletAward || ""}
+                  onChange={(e) => setNewBulletAward(parseInt(e.target.value))}
+                >
+                  {userAwards.map(award => (
+                    <option key={award.award_id} value={award.award_id}>
+                      {award.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <p>No award packages available. Please add an award package first.</p>
+              )}
 
           <div className="live-preview">
             <h3>Preview: {newBulletPreview || "(Your new bullet will appear here...)"}</h3>
@@ -235,7 +263,6 @@ function Bullets() {
           <button onClick={handleAddBullet}>Add Bullet</button>
         </div>
 
-        {/* <h1>My Bullets</h1> */}
         <table className="bullets-table">
           <thead>
             <tr>
@@ -300,22 +327,25 @@ function Bullets() {
                   ) : descriptionBulletPreview;
 
               const awardElement = isEditing ? (
-                <select
-                  value={bullet.award_id || ""}
-                  onChange={(e) => handleEditBullet(bullet.id, "award_id", e.target.value === "" ? null : parseInt(e.target.value))}
-                >
-                  <option value="">General Purpose</option>
-                  {userAwards.map(award => (
-                    <option key={award.award_id} value={award.award_id}>
-                      {award.name}
-                    </option>
-                  ))}
-                </select>
-              ) : (userAwards.find(award => award.award_id === bullet.award_id)?.name || "No packages tagged at this time.");
+                userAwards.length > 0 ? (
+                  <select
+                    value={bullet.award_id || userAwards[0].award_id}
+                    onChange={(e) => handleEditBullet(bullet.id, "award_id", parseInt(e.target.value))}
+                  >
+                    {userAwards.map(award => (
+                      <option key={award.award_id} value={award.award_id}>
+                        {award.name}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <p>No award packages available</p>
+                )
+              ) : (userAwards.find(award => award.award_id === bullet.award_id)?.name || "No award package assigned");
 
               const statusElement = isEditing ? (
                 <select
-                  value={bullet.status || "Drafting"}
+                  value={bullet.status || "Status"}
                   onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
                 >
                   <option value="Drafting">Drafting</option>
@@ -323,7 +353,8 @@ function Bullets() {
                   <option value="Returned">Returned</option>
                   <option value="Supervisor Approved">Supervisor Approved</option>
                 </select>
-              ) : (bullet.status || "Drafting");
+              ) : (bullet.status || "Status");
+
               const submitForReviewElement = isEditing ? (
                 <input
                   type="checkbox"
@@ -347,6 +378,12 @@ function Bullets() {
                       className={isEditing ? "btn-done" : "btn-edit"}
                     >
                       {isEditing ? "Done" : "Edit"}
+                    </button>
+                    <button
+                      onClick={() => handleCopyBullet(descriptionBulletPreview)}
+                      className="btn-copy"
+                    >
+                      Copy
                     </button>
                     <button
                       onClick={() => handleDeleteBullet(bullet.id)}
