@@ -30,8 +30,8 @@
 .profile-header{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     position: fixed;
     top: 8em;
 }
