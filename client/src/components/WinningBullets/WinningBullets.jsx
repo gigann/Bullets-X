@@ -10,7 +10,7 @@ const WinningBullets = () => {
     fetch('http://localhost:3001/bullet/latest-awarded')
     .then(rawData => rawData.json())
     .then(data => {setWins(data) })
-
+    
   }, [])
 
   useEffect(() => {

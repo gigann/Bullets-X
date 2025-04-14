@@ -89,7 +89,7 @@ export default function Navbar() {
 
         {/* profile picture */}
         <div className="nav-profilePicture">
-          <button className="nav-picture-button" onClick={() => setProfileDetails(!profiledetails)}><img src={loggedIn ? loggedIn.profile_picture  : generic } alt="" className="nav-picture" /></button>
+          <button className="nav-picture-button" onClick={() => setProfileDetails(!profiledetails)}><img src={loggedIn ? loggedIn.profile_picture : generic } alt="" className="nav-picture" /></button>
         </div>
 
         {/* div for the picture menu */}
