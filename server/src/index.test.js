@@ -317,7 +317,7 @@ describe('unit endpoints', () => {
 
   test('GET /unit/:name should return JSON content and OK (200).', (done) => {
     request(app)
-      .get('/unit/53 SOPS Det C')
+      .get('/unit/TEST')
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
@@ -330,7 +330,7 @@ describe('unit endpoints', () => {
     request(app)
       .post('/unit')
       .send({
-        name: 'TEST UNIT',
+        name: 'TEST',
       })
       .set('Content-Type', 'application/json')
       .expect('Content-Type', /json/)
@@ -444,4 +444,116 @@ describe('user_award endpoints', () => {
         done();
       })
   })
+})
+
+describe('users endpoints', () => {
+  test('GET /users should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/users')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /users/:id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/users/2')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /users/byunit/:unit should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/users/byunit/TEST')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('POST /users should return JSON content and CREATED (201) or CONFLICT (409).', (done) => {
+    request(app)
+      .post('/users')
+      .send({
+        first_name: 'TEST',
+        last_name: 'TEST',
+        unit_name: 'TEST',
+        username: 'TEST',
+        password: 'TEST',
+        rank: 'TEST',
+        profile_picture: 'TEST',
+        supervisor_id: 1,
+        is_supervisor: false,
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(r => [201, 409].includes(r.status))
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('POST /users/login should return JSON content and OK (200) or UNAUTHORIZED (401).', (done) => {
+    request(app)
+      .post('/users/login')
+      .send({
+        username: 'TEST',
+        password: 'TEST',
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(r => [200, 401].includes(r.status))
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('PATCH /users/:id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .patch('/users/1')
+      .send({
+        first_name: 'Test'
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('DELETE /users/:id should return JSON content and CREATED (201).', (done) => {
+    request(app)
+      .delete('/users/3')
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
+  test('GET /users/supervisor/:supervisor_id should return JSON content and OK (200).', (done) => {
+    request(app)
+      .get('/users/supervisor/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        done();
+      })
+  })
+
 })
