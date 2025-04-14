@@ -34,7 +34,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 20px auto;
   padding-top: 10px;
   height: 300px;
@@ -77,10 +77,12 @@
   color: var(--panel-text-color);
   background-color: var(--panel-bg-color);
   text-align: center;
-  margin: 20px 20px 45px 10px;
+  /* margin: 20px 20px 45px 10px; */
   border: 1px solid rgba(103, 113, 150, 0.575);
   border-radius: 10px;
   padding: 15px;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .award-card {
@@ -129,8 +131,64 @@
 .home-table-data{
   
   border: none;
-  color: #b67ef0;
+  color: var(--panel-text-color);
   padding-bottom: 20px;
   justify-content: left;
 }
 
+.home-sub-page{
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+}
+
+.add-a-quick-action{
+  display: flex;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  background-color: var(--panel-bg-color);
+  height: 200px;
+}
+
+.add-a-quick-action b{
+  font-family: "Orbitron", sans-serif;
+  justify-self: center;
+  align-self: center;
+  position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-bottom: #b67ef0 1px solid;
+}
+
+#quick-name{
+  position: relative;
+  right: 18rem;
+  bottom: 0px;
+  z-index: 999;
+  background-color: var(--panel-bg-color);
+  border-color: var(--panel-text-color);
+  color: var(--panel-text-color);
+}
+
+#quick-description{
+  background-color: var(--accent-color-3);
+  border-color: var(--panel-text-color);
+  position: relative;
+  /* right: 200px; */
+  bottom: 20px;
+  width: 700px;
+  height: 200px;
+  z-index: 0;
+}
+
+#hbtn{
+  position: relative;
+  top: -0.5rem;
+  left: 22rem;
+}
+
+.my-bullets{
+  width: 100%;
+}
