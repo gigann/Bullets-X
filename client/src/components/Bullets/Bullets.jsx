@@ -16,7 +16,7 @@ function Bullets() {
   const [result, setResult] = useState('');
   const [editingBulletId, setEditingBulletId] = useState(null);
   const [userAwards, setUserAwards] = useState([]);
-  const [hiddenBullet, setHiddenBullet] = useState(true)
+  const [hiddenBullet, setHiddenBullet] = useState(false)
 
   const formatBulletText = (action, impact, result) => {
     return `${action} — ${impact}; ${result}`.trim();
