@@ -171,6 +171,12 @@ function Bullets() {
   };
 
   const handleDeleteBullet = (id) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this bullet?');
+
+    if (!confirmDelete) {
+      return;
+    }
+
     setBullets(prevBullets => prevBullets.filter(bullet => bullet.id !== id));
 
     fetch(`http://localhost:3001/bullet/${id}`, {
