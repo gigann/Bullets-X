@@ -2,7 +2,7 @@
 import { Route, Routes } from 'react-router-dom';
 import * as ReactDOM from 'react-dom';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useLocalStorage } from '@uidotdev/usehooks';
 
 import Login from './components/Login/Login';
@@ -16,10 +16,14 @@ import Subordinates from './components/Subordinates/Subordinates';
 import Packages from './components/Packages/Packages';
 import Navbar from './components/Navbar/Navbar';
 import SubordinatesBullets from './components/SubordinatesBullets/SubordinatesBullets';
+import SubordinateContext from './components/Context/SubordinateContext';
 
 import "./App.css";
 
 function App() {
+
+  const [subordinateInfo, setSubordinateInfo] = useState([]);
+  const subordinateState = {subordinateInfo, setSubordinateInfo};
 
   const [darkMode, setDarkMode] = useLocalStorage('darkMode') || false;
 
@@ -41,6 +45,7 @@ function App() {
 
   return (
     <>
+    <SubordinateContext.Provider value = {subordinateState}>
       <Navbar />
       <Routes>
         <Route path='/' element={<Login />}></Route>
@@ -54,6 +59,7 @@ function App() {
         <Route path='/subordinates/:id' element={<Subordinates />}></Route>
         <Route path='/subordinates/bullet/:id' element={<SubordinatesBullets />}></Route>
       </Routes>
+    </SubordinateContext.Provider>
     </>
   );
 }

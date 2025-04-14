@@ -42,3 +42,9 @@ td {
   bottom: 50px;
   left: 45rem;
 }
+
+.character-limit-exceeded {
+  font-style: italic;
+  color: #d32f2f;
+}
+

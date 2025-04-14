@@ -19,7 +19,12 @@ function Bullets() {
   const [hiddenBullet, setHiddenBullet] = useState(false)
 
   const formatBulletText = (action, impact, result) => {
-    return `${action} — ${impact}; ${result}`.trim();
+    return `${action}; ${impact} — ${result}`.trim();
+  }
+
+  const calculateCharacterCount = (action, impact, result) => {
+    const formattedBulletText = formatBulletText(action, impact, result);
+    return formattedBulletText.length;
   }
 
   const handleCopyBullet = (bulletText) => {
@@ -77,8 +82,13 @@ function Bullets() {
       return;
     }
 
-    const awardId = newBulletAward || (userAwards.length > 0 ? userAwards[0].award_id : null);
+    const characterCount = calculateCharacterCount(action, impact, result);
+    if (characterCount > 115) {
+      alert('Bullet exceeds 115 character limit. Please shorten your bullet.');
+      return;
+    }
 
+    const awardId = newBulletAward || (userAwards.length > 0 ? userAwards[0].award_id : null);
     if (!awardId) {
       alert('You need to have at least one award package available to add a bullet.');
       return;
@@ -124,6 +134,20 @@ function Bullets() {
     let updateData = {
       user_id: userID,
       [fieldName]: newText,
+    }
+
+    if (fieldName === "action" || fieldName === "impact" || fieldName === "result") {
+      const currentBullet = bullets.find(bullet => bullet.id === id);
+      if (currentBullet) {
+        const updatedAction = fieldName === "action" ? newText : currentBullet.action;
+        const updatedImpact = fieldName === "impact" ? newText : currentBullet.impact;
+        const updatedResult = fieldName === "result" ? newText : currentBullet.result;
+
+        const characterCount = calculateCharacterCount(updatedAction, updatedImpact, updatedResult);
+        if (characterCount > 115) {
+          alert('Bullet exceeds 115 character limit.');
+        }
+      }
     }
 
     if (fieldName === "drafting" && newText === false) {
@@ -265,7 +289,15 @@ function Bullets() {
               )}
 
           <div className="live-preview">
-            <h3>Preview: {newBulletPreview || "(Your new bullet will appear here...)"}</h3>
+            <h3>Preview: </h3>
+            <p>{newBulletPreview || "(Your new bullet will appear here...)"}</p>
+            <div className="character-counter">
+              <h3> Character Count: </h3>
+              <p>{calculateCharacterCount(action, impact, result)}/115 characters</p>
+              {calculateCharacterCount(action, impact, result) > 115 ? (
+                <span className="character-limit-exceeded"> (Exceeds limit)</span>
+              ) : null}
+            </div>
           </div>
           <button onClick={handleAddBullet}>Add Bullet</button>
         </div>
@@ -328,8 +360,15 @@ function Bullets() {
                       </div>
                       <p>
                         <strong>Preview:</strong>{" "}
-                        {descriptionBulletPreview}
+                        <p>{descriptionBulletPreview}</p>
                       </p>
+                      <div className="character-counter">
+                      <strong>Character Count:</strong>
+                      <p>{calculateCharacterCount(bullet.action, bullet.impact, bullet.result)}/115 characters</p>
+                      {calculateCharacterCount(bullet.action, bullet.impact, bullet.result) > 115 ? (
+                        <span className="character-limit-exceeded"> (Exceeds limit)</span>
+                      ) : null}
+                    </div>
                     </>
                   ) : descriptionBulletPreview;
 

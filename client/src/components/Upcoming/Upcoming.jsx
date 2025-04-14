@@ -7,16 +7,18 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 // user_award table for status
 
 function Upcoming() {
+
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
   const [awardName, setAwardName] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState(null);
   const [bulletMin, setBulletMin] = useState(null);
   const [bulletMax, setBulletMax] = useState(null);
-  const [awardData, setAwardData] = useState({});
-  const [userAwardData, setUserAwardData] = useState({});
-  const [bulletData, setBulletData] = useState({});
   const [hiddenAward, setHiddenAward] = useState(false);
+  const [awardData, setAwardData] = useState([]);
+  const [userAwardData, setUserAwardData] = useState([]);
+  const [bulletData, setBulletData] = useState([]);
+
 
   const [tableData, setTableData] = useState();
 
@@ -119,6 +121,14 @@ function Upcoming() {
     setTableData(newTableData);
   }, [awardData, bulletData, userAwardData]);
 
+  const isSelected = (awardId) => {
+    const userAwards = userAwardData.filter(
+      (userAward) => userAward.user_id === loggedIn.id
+    );
+  
+    return userAwards.some((userAward) => userAward.award_id === awardId);
+  };
+
   const handleSelect = (i) => {
     let request = {
       user_id: loggedIn.id,
@@ -139,6 +149,7 @@ function Upcoming() {
         }
       })
       .catch((err) => console.log(err));
+      window.location.reload()
   };
 
   const handleDelete = (id) => {
@@ -178,7 +189,6 @@ function Upcoming() {
   return (
     <>
       <h2 className="page-title">Upcoming Awards</h2>
-
       <div className="award-page">
         <div
           className={hiddenAward ? "subordinate-bullet-card" : ""}
