@@ -278,7 +278,7 @@ function Bullets() {
               <th>Description</th>
               <th>Last Updated</th>
               <th>Award Package</th>
-              <th>Status</th>
+              {/* <th>Status</th> */}
               <th>Submit for Review</th>
               <th>Actions</th>
             </tr>
@@ -377,7 +377,7 @@ function Bullets() {
                   <td>{descriptionElement}</td>
                   <td>{formattedDate}</td>
                   <td>{awardElement}</td>
-                  <td>{statusElement}</td>
+                  {/* <td>{statusElement}</td> */}
                   <td>{submitForReviewElement}</td>
                   <td>
                     <button
@@ -406,7 +406,7 @@ function Bullets() {
         </table>
         <button onClick={() => {setHiddenBullet(!hiddenBullet)}}>Add New Bullet</button>
       </div>
-      
+
     </>
   );
 
