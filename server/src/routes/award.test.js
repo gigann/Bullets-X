@@ -1,8 +1,6 @@
 const request = require('supertest');
 const { app } = require('../index');
 
-// jest.setTimeout(30000);
-
 describe('GET /activity/', () => {
   test('should return seeded activities.', (done) => {
     request(app)
@@ -548,56 +546,3 @@ describe('GET /activity/:id', () => {
       })
   })
 })
-
-
-// router.get("/:id", (req, res) => {
-//   let id = req.params.id;
-//   knex("activity")
-//     .select()
-//     .where("id", id)
-//     .then((activity) => res.status(200).json(activity))
-//     .catch((err) => res.status(500).json({ error: err.message }));
-// });
-
-// //CREATE
-// router.post("/", (req, res) => {
-//   const { user_id, name, description } = req.body;
-//   knex("activity")
-//     .insert({ user_id, name, description })
-//     .then(() => {
-//       return res.status(201).json({ message: `Activity: ${name} added.` });
-//     })
-//     .catch((err) => {
-//       res
-//         .status(500)
-//         .json({ message: "Unable to create activity.", error: err });
-//     });
-// });
-
-// //UPDATE
-// router.patch("/:id", (req, res) => {
-//   knex("activity")
-//     .where("id", req.params.id)
-//     .update(req.body)
-//     .then(() => {
-//       res.status(200).json({ message: "Activity updated successfully" });
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ message: "Error updating activity", error: err });
-//     });
-// });
-
-// //DELETE
-// router.delete("/:id", (req, res) => {
-//   knex("activity")
-//     .where("id", req.params.id)
-//     .del()
-//     .then((rowsDeleted) => {
-//       rowsDeleted == 1
-//         ? res.status(200).json({ message: `Activity successfully deleted.` })
-//         : res.status(404).json({ message: `Activity does not exist.` });
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ message: "Error deleting activity", error: err });
-//     });
-// });
