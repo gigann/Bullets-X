@@ -16,9 +16,10 @@ exports.seed = async function (knex) {
       username: "mickeymouse1",
       password: hashedPassword,
       rank: "O-5",
-      profile_picture: "something.png",
+      profile_picture: "/generic.jpg",
       supervisor_id: null,
       is_supervisor: true,
+      admin: true,
     },
     {
       first_name: "Daisy",
@@ -30,6 +31,7 @@ exports.seed = async function (knex) {
       profile_picture: "../client/public/daisy.jpg",
       supervisor_id: 1,
       is_supervisor: false,
+      admin: false,
     },
     {
       first_name: "Donald",
@@ -41,6 +43,7 @@ exports.seed = async function (knex) {
       profile_picture: "../client/public/donald.jpg",
       supervisor_id: 1,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Homer",
@@ -49,9 +52,10 @@ exports.seed = async function (knex) {
       username: "homer1",
       password: hashedPassword,
       rank: "O-5",
-      profile_picture: "something.png",
+      profile_picture: "/generic.jpg",
       supervisor_id: null,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Marge",
@@ -60,9 +64,10 @@ exports.seed = async function (knex) {
       username: "marge1",
       password: hashedPassword,
       rank: "O-3",
-      profile_picture: "something.png",
+      profile_picture: "/generic.jpg",
       supervisor_id: 4,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Maggie",
@@ -71,9 +76,10 @@ exports.seed = async function (knex) {
       username: "maggie1",
       password: hashedPassword,
       rank: "O-1",
-      profile_picture: "something.png",
+      profile_picture: "/generic.jpg",
       supervisor_id: 5,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Bart",
@@ -82,9 +88,10 @@ exports.seed = async function (knex) {
       username: "bart1",
       password: hashedPassword,
       rank: "O-1",
-      profile_picture: "something.png",
+      profile_picture: "/generic.jpg",
       supervisor_id: null,
       is_supervisor: true,
+      admin: false,
     },
     {
       first_name: "Lisa",
@@ -93,9 +100,10 @@ exports.seed = async function (knex) {
       username: "lisa1",
       password: hashedPassword,
       rank: "E-3",
-      profile_picture: "something.png",
+      profile_picture: "/generic.jpg",
       supervisor_id: 7,
       is_supervisor: true,
+      admin: false,
     },
   ]);
 };

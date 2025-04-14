@@ -13,7 +13,7 @@ import Activity from './components/Activity/Activity';
 import Bullets from './components/Bullets/Bullets';
 import Upcoming from './components/Upcoming/Upcoming';
 import Subordinates from './components/Subordinates/Subordinates';
-import Awards from './components/Awards/Awards';
+import Packages from './components/Packages/Packages';
 import Navbar from './components/Navbar/Navbar';
 import SubordinatesBullets from './components/SubordinatesBullets/SubordinatesBullets';
 import SubordinateContext from './components/Context/SubordinateContext';
@@ -55,7 +55,7 @@ function App() {
         <Route path='/activity/:id' element={<Activity />}></Route>
         <Route path='/bullets/:id' element={<Bullets />}></Route>
         <Route path='/upcoming/:id' element={<Upcoming />}></Route>
-        <Route path='/awards/:id' element={<Awards />}></Route>
+        <Route path='/packages/:id' element={<Packages />}></Route>
         <Route path='/subordinates/:id' element={<Subordinates />}></Route>
         <Route path='/subordinates/bullet/:id' element={<SubordinatesBullets />}></Route>
       </Routes>

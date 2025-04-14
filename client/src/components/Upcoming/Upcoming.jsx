@@ -141,7 +141,7 @@ function Upcoming() {
                         return <td className='award-td' key={j}>{item}</td>;
                     }
                   })}
-                  <td className='award-td'><button key={i} onClick={() => handleSelect(i)}>Select</button></td>
+                  <td className='award-td' id='award-button'><button key={i} onClick={() => handleSelect(i)} className='interested-button'>Select</button></td>
                 </tr>
               ))}
             </tbody>

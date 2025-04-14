@@ -3,15 +3,29 @@ import './WinningBullets.css';
 
 const WinningBullets = () => {
   const [wins, setWins] = useState([])
+  const [bullets, setBullets] = useState([])
   const [current, setCurrent] = useState(0)
   var counter = 0
 
   useEffect(() => {
     fetch('http://localhost:3001/bullet/latest-awarded')
     .then(rawData => rawData.json())
-    .then(data => {setWins(data) })
+    .then(data => {setBullets(data)})
 
   }, [])
+
+  useEffect(() => {
+    var temp = []
+    var tempBullets = []
+    if(bullets.length > 1){
+    for(let i =0; i < 5; i ++){
+      var random = Math.floor(Math.random() * (bullets.length + 1)) - 1
+      temp.push(random)
+      tempBullets.push(bullets[random])
+    }
+    }
+    setWins(tempBullets)
+  }, [bullets])
 
   useEffect(() => {
       
@@ -50,13 +64,13 @@ const WinningBullets = () => {
     }
   }
 
-
+  if(wins.length > 0){
   return(
     <>
       <h2 className='award-header'>Award Winning Bullets</h2>
       <div className='scrolling-winning-bullets'>
         <div className='displayedAward'>
-           {wins.length > current ? <h4 className='award'>{wins[current].action + " " + wins[current].impact + " " + wins[current].result}</h4> : ""}
+           {wins.length > current ? <h4 className='award'>{wins[current].action + "; " + wins[current].impact + "--" + wins[current].result}</h4> : ""}
         </div>
         
         {/* <h1 className='leftArrow' onClick={() => {scroll(-1)}}>{"<"}</h1>
@@ -74,6 +88,7 @@ const WinningBullets = () => {
       </div>
     </>
   )
+}
 }
 
 export default WinningBullets;

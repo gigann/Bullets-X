@@ -155,6 +155,8 @@ body {
   padding-top: 5px;
 }
 
+
+
 .navbar-btn {
   background-color: transparent;
   border: 2px solid #ecf0f1;
@@ -211,6 +213,16 @@ body {
 .hidden li{
   position: relative;
   margin-left: 0;
+  right: 20px;
+}
+
+.hidden li button{
+  padding-left: 0;
+}
+
+.hidden li{
+  position: relative;
+  margin-left: 0;
   
   right: 20px;
 }
@@ -218,6 +230,7 @@ body {
 .hidden li button{
   padding-left: 0;
 }
+
 
 
 
@@ -260,8 +273,11 @@ body {
 }
 
 .newnav-menu{
+  display: flex;
+  justify-content: left;
   position: fixed;
   top: 120px;
+  
   left: 0px;
   height: 100vh;
   background-color: var(--panel-bg-color);
@@ -321,11 +337,14 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: left;
+  padding-left: 10px;
 }
 
 .newnav-menu li button{
   text-align: left;
-  padding-left: 0;
+
+  /* padding-left: 0; */
+
 }
 
 .newnav-menu-closed ul{

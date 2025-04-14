@@ -14,6 +14,7 @@ exports.up = function (knex) {
     table.string("profile_picture", 250);
     table.integer("supervisor_id");
     table.boolean("is_supervisor");
+    table.boolean("admin");
   });
 };
 

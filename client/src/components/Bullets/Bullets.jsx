@@ -8,7 +8,7 @@ function Bullets() {
   const [loggedIn] = useLocalStorage('loggedIn');
   const userID = loggedIn.id;
   const [bullets, setBullets] = useState([]);
-  const [newBullet, setNewBullet] = useState('');
+  const [newBulletAward, setNewBulletAward] = useState(null);
   const [loading, setLoading] = useState(true);
   const [bulletName, setBulletName] = useState('');
   const [action, setAction] = useState('');
@@ -16,15 +16,25 @@ function Bullets() {
   const [result, setResult] = useState('');
   const [editingBulletId, setEditingBulletId] = useState(null);
   const [userAwards, setUserAwards] = useState([]);
+  const [hiddenBullet, setHiddenBullet] = useState(false)
 
   const formatBulletText = (action, impact, result) => {
     return `${action} — ${impact}; ${result}`.trim();
   }
 
+  const handleCopyBullet = (bulletText) => {
+    navigator.clipboard.writeText(bulletText)
+      .then(() => {
+        alert('Bullet copied to clipboard');
+      })
+      .catch(err => {
+        console.error('Failed to copy text:', err);
+        alert('Failed to copy bullet to clipboard');
+      });
+  }
+
 
   useEffect(() => {
-    // console.log("Login state:", loggedIn);
-    // console.log("User ID:", userID);
     if (userID) {
       fetch(`http://localhost:3001/bullet/users/${userID}`)
         .then(res => res.json())
@@ -61,11 +71,19 @@ function Bullets() {
   }, [userID]);
 
   const handleAddBullet = () => {
-    const emptyFieldsCheck = (!action.trim() && !impact.trim() && !result.trim());
+    const emptyFieldsCheck = (!action.trim() || !impact.trim() || !result.trim());
     if (emptyFieldsCheck) {
       alert('Please fill in the fields');
       return;
     }
+
+    const awardId = newBulletAward || (userAwards.length > 0 ? userAwards[0].award_id : null);
+
+    if (!awardId) {
+      alert('You need to have at least one award package available to add a bullet.');
+      return;
+    }
+
     fetch('http://localhost:3001/bullet', {
       method: 'POST',
       headers: {
@@ -78,7 +96,8 @@ function Bullets() {
         impact: impact,
         result: result,
         status: 'Drafting',
-        drafting: true
+        drafting: true,
+        award_id: awardId
       }),
     })
     .then(res => res.json())
@@ -86,12 +105,14 @@ function Bullets() {
       fetch(`http://localhost:3001/bullet/users/${userID}`)
         .then(res => res.json())
         .then(data => {
+          console.log("Bullet added successfully:", data);
           setBullets(data);
         });
       setBulletName('');
       setAction('');
       setImpact('');
       setResult('');
+      setNewBulletAward(null);
     })
     .catch(err => {
       console.log(err);
@@ -106,15 +127,15 @@ function Bullets() {
     }
 
     if (fieldName === "drafting" && newText === false) {
-      updateData.status = "Submitted";
+      updateData.status = "Supervisor Review";
+      console.log('Changing status to Supervisor Review. Drafting has been set to false.');
     }
-
 
     setBullets(prevBullets => {
       return prevBullets.map(bullet => {
         if (bullet.id === id) {
           if (fieldName === "drafting" && newText === false) {
-            return {...bullet, [fieldName]: newText, status: "Submitted"};
+            return {...bullet, [fieldName]: newText, status: "Supervisor Review"};
           }
           return {...bullet, [fieldName]: newText};
         }
@@ -135,6 +156,14 @@ function Bullets() {
       }
       return res.json();
     })
+    .then(data => {
+      console.log('Bullet updated successfully:', id, updateData);
+      return fetch(`http://localhost:3001/bullet/users/${userID}`);
+    })
+    .then(res => res.json())
+    .then(data => {
+      setBullets(data);
+    })
     .catch(err => {
       console.error('Error updating bullet:', err);
       alert('Error updating bullet. Changes may not be saved.');
@@ -143,6 +172,12 @@ function Bullets() {
   };
 
   const handleDeleteBullet = (id) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this bullet?');
+
+    if (!confirmDelete) {
+      return;
+    }
+
     setBullets(prevBullets => prevBullets.filter(bullet => bullet.id !== id));
 
     fetch(`http://localhost:3001/bullet/${id}`, {
@@ -185,9 +220,9 @@ function Bullets() {
     <>
       <h2 className="page-title">My Bullets</h2>
       <div className="subordinates-bullets-page-container">
-        <div className="subordinate-bullet-card">
+        <div className={hiddenBullet ? "subordinate-bullet-card" : "" } hidden={!hiddenBullet}>
 
-              <h2>New Bullet</h2>
+              <h2>New Bullet</h2> <button onClick={() => {setHiddenBullet(!hiddenBullet)}} className='bullet-exitbutton'>X</button>
 
               <h3>Name:</h3>
               <input
@@ -197,15 +232,37 @@ function Bullets() {
               />
               <h3>Action:</h3>
               <input
-              type="text"
-              value={action}
-              onChange={(e) => setAction(e.target.value)} />
+                type="text"
+                value={action}
+                onChange={(e) => setAction(e.target.value)} />
 
               <h3>Impact:</h3>
-              <input type="text" value={impact} onChange={(e) => setImpact(e.target.value)} />
+              <input
+                type="text"
+                value={impact}
+                onChange={(e) => setImpact(e.target.value)} />
 
               <h3>Result:</h3>
-              <input type="text" value={result} onChange={(e) => setResult(e.target.value)} />
+              <input
+                type="text"
+                value={result}
+                onChange={(e) => setResult(e.target.value)} />
+
+              <h3>Tagged Package:</h3>
+              {userAwards.length > 0 ? (
+                <select
+                  value={newBulletAward || ""}
+                  onChange={(e) => setNewBulletAward(parseInt(e.target.value))}
+                >
+                  {userAwards.map(award => (
+                    <option key={award.award_id} value={award.award_id}>
+                      {award.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <p>No award packages available. Please add an award package first.</p>
+              )}
 
           <div className="live-preview">
             <h3>Preview: {newBulletPreview || "(Your new bullet will appear here...)"}</h3>
@@ -213,7 +270,6 @@ function Bullets() {
           <button onClick={handleAddBullet}>Add Bullet</button>
         </div>
 
-        {/* <h1>My Bullets</h1> */}
         <table className="bullets-table">
           <thead>
             <tr>
@@ -221,8 +277,8 @@ function Bullets() {
               <th>Name</th>
               <th>Description</th>
               <th>Last Updated</th>
-              <th>Tagged Package</th>
-              <th>Status</th>
+              <th>Award Package</th>
+              {/* <th>Status</th> */}
               <th>Submit for Review</th>
               <th>Actions</th>
             </tr>
@@ -278,31 +334,34 @@ function Bullets() {
                   ) : descriptionBulletPreview;
 
               const awardElement = isEditing ? (
-                <select
-                  value={bullet.award_id || ""}
-                  onChange={(e) => handleEditBullet(bullet.id, "award_id", e.target.value === "" ? null : parseInt(e.target.value))}
-                >
-                  <option value="">General Purpose</option>
-                  {userAwards.map(award => (
-                    <option key={award.award_id} value={award.award_id}>
-                      {award.name}
-                    </option>
-                  ))}
-                </select>
-              ) : (userAwards.find(award => award.award_id === bullet.award_id)?.name || "No packages tagged at this time.");
+                userAwards.length > 0 ? (
+                  <select
+                    value={bullet.award_id || userAwards[0].award_id}
+                    onChange={(e) => handleEditBullet(bullet.id, "award_id", parseInt(e.target.value))}
+                  >
+                    {userAwards.map(award => (
+                      <option key={award.award_id} value={award.award_id}>
+                        {award.name}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <p>No award packages available</p>
+                )
+              ) : (userAwards.find(award => award.award_id === bullet.award_id)?.name || "No award package assigned");
 
               const statusElement = isEditing ? (
                 <select
-                  value={bullet.status || "Drafting"}
+                  value={bullet.status || "Status"}
                   onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
                 >
                   <option value="Drafting">Drafting</option>
-                  <option value="Ready for Review">Ready for Review</option>
                   <option value="Supervisor Review">Supervisor Review</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Returned for Corrections">Returned for Corrections</option>
+                  <option value="Returned">Returned</option>
+                  <option value="Supervisor Approved">Supervisor Approved</option>
                 </select>
-              ) : (bullet.status || "Drafting");
+              ) : (bullet.status || "Status");
+
               const submitForReviewElement = isEditing ? (
                 <input
                   type="checkbox"
@@ -318,7 +377,7 @@ function Bullets() {
                   <td>{descriptionElement}</td>
                   <td>{formattedDate}</td>
                   <td>{awardElement}</td>
-                  <td>{statusElement}</td>
+                  {/* <td>{statusElement}</td> */}
                   <td>{submitForReviewElement}</td>
                   <td>
                     <button
@@ -326,6 +385,12 @@ function Bullets() {
                       className={isEditing ? "btn-done" : "btn-edit"}
                     >
                       {isEditing ? "Done" : "Edit"}
+                    </button>
+                    <button
+                      onClick={() => handleCopyBullet(descriptionBulletPreview)}
+                      className="btn-copy"
+                    >
+                      Copy
                     </button>
                     <button
                       onClick={() => handleDeleteBullet(bullet.id)}
@@ -339,7 +404,9 @@ function Bullets() {
             })}
           </tbody>
         </table>
+        <button onClick={() => {setHiddenBullet(!hiddenBullet)}}>Add New Bullet</button>
       </div>
+
     </>
   );
 

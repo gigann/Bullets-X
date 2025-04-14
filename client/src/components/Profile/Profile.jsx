@@ -7,29 +7,30 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 
 
 export default function Profile() {
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn')
+    const [patchValues, setPatchValues] = useState({id: loggedIn.id, first_name: loggedIn.first_name, last_name: loggedIn.last_name, username: loggedIn.username, supervisor_id: loggedIn.supervisor_id, unit_name: loggedIn.unit_name, rank: loggedIn.rank, profile_picture: loggedIn.profile_picture, is_supervisor: loggedIn.is_supervisor})
     const [updateLocalStorage, setUpdateLocalStorage] = useState(0)
     const [unit, setUnit] = useState(loggedIn.unit_name)
     const [supervisor, setSupervisor] = useState(loggedIn.supervisor_id)
     const [isHidden, setIsHidden] = useState(true)
-    const [name, setName] = useState(loggedIn.first_name)
+    const [name, setName] = useState(patchValues.first_name? patchValues.first_name: loggedIn.first_name)
     const [lastName, setLastName] = useState(loggedIn.last_name)
-    const [patchValues, setPatchValues] = useState({id: loggedIn.id, first_name: loggedIn.first_name, last_name: loggedIn.last_name, username: loggedIn.username, supervisor_id: loggedIn.supervisor_id, unit_name: loggedIn.unit_name, rank: loggedIn.rank, profile_picture: loggedIn.profile_picture, is_supervisor: loggedIn.is_supervisor})
     const imageArray = ['/donald.jpg', '/daisy.jpg', '/generic.jpg', '/alien.png', '/rocket.png', '/telescope.png', '/mitochondria.png', '/astronaut.png']
-    const [profileImg, setProfileImg] = useState(imageArray[2])
+    const [profileImg, setProfileImg] = useState(loggedIn.profile_picture? loggedIn.profile_picture : imageArray[2])
     const testArray = [1, 2, 2]
-    const [iterator, setIterator] = useState(0)
     const [supervisorName, setSupervisorName] = useState('')
     const [supervisorList, setSupervisorList] = useState()
     const [unitList, setUnitList] = useState([])
-  
+    const [updatePicutre, setUpdatePicture] = useState(false)
+    const [iterator, setIterator] = useState(imageArray.indexOf(profileImg))
 
     //updatest the localstorage everytime the patch is sent
     useEffect(() => {
-        setLoggedIn(patchValues)
+        setLoggedIn({id: patchValues.id, first_name: patchValues.first_name, last_name: patchValues.last_name, username: patchValues.username, supervisor_id: patchValues.supervisor_id, unit_name: patchValues.unit_name, rank: patchValues.rank, profile_picture: profileImg, is_supervisor: patchValues.is_supervisor})
         console.log('setting local storage')
     }, [updateLocalStorage])
 
@@ -48,10 +49,11 @@ export default function Profile() {
     }, [])
 
     useEffect(()=>{
-
+      console.log(supervisor)
         fetch(`http://localhost:3001/users/${supervisor}`)
           .then(res => res.json())
           .then(data => {
+            console.log(data[0].first_name)
             setSupervisorName(data[0].first_name + ' ' + data[0].last_name + '  (' + data[0].rank + ')')
         })
 
@@ -63,7 +65,7 @@ export default function Profile() {
                 console.log("user data:", supervisorList)
             })
             .catch(err => console.log("error: ",err))
-    }, [supervisor, patchValues.unit_name])
+    }, [supervisor, patchValues.unit_name, patchValues.supervisor_id])
 
     const editProfile = async ()=>{
       try{
@@ -73,9 +75,10 @@ export default function Profile() {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(patchValues),
+          body: JSON.stringify({id: patchValues.id, first_name: patchValues.first_name, last_name: patchValues.last_name, username: patchValues.username, supervisor_id: patchValues.supervisor_id, unit_name: patchValues.unit_name, rank: patchValues.rank, profile_picture: profileImg, is_supervisor: patchValues.is_supervisor}),
         })
-      setIsHidden(!isHidden)
+
+        setIsHidden(!isHidden)
       
       }catch(err){
         console.log(err)
@@ -142,6 +145,7 @@ export default function Profile() {
                       <option value="W-5">W-5</option>
               </select>
               <select name="supervisor_id" value={patchValues.supervisor_id} hidden={isHidden} onChange={(e) => {setSupervisor(e.target.value), handleChange(e)}} >
+              <option key={0} value={supervisor}>Select Supervisor</option>
                 {supervisorList?.map((user, i) => {
                             if(user.id == patchValues.id){
                               return
@@ -162,18 +166,19 @@ export default function Profile() {
                 temp === imageArray.length-1? temp = 0: temp++
                 setProfileImg(imageArray[temp])
                 setIterator(temp)
-
-                }}><ArrowUpwardIcon/></IconButton>}
+                setUpdatePicture(true)
+              }}><ArrowUpwardIcon/></IconButton>}
               {!isHidden && <IconButton onClick={() => {
+
                 let temp2 = iterator
                 temp2 === 0? temp2 = (imageArray.length - 1): temp2--
                 setProfileImg(imageArray[temp2])
                 setIterator(temp2)
-                
-                }}><ArrowDownwardIcon/></IconButton>}
+                setUpdatePicture(true)  
+              }}><ArrowDownwardIcon/></IconButton>}
             </div>
             <div className="edit-button">
-              <IconButton onClick={() => setIsHidden(!isHidden)} ><EditIcon/></IconButton>
+              <IconButton onClick={() => setIsHidden(!isHidden)} >{isHidden? <EditIcon/>: <ClearRoundedIcon/>}</IconButton>
             </div> 
             <div className="edit-save">
               {!isHidden && <IconButton onClick={() => editProfile()} className="profile-icon"><SaveIcon className="profile-icon"/></IconButton>}
