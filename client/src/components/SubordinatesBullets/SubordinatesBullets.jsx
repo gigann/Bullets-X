@@ -82,7 +82,7 @@ export default function SubordinatesBullets() {
         setAction("");
         setImpact("");
         setResult("");
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -136,7 +136,7 @@ export default function SubordinatesBullets() {
             />
 
             <button onClick={handleAddBullet}>Add Bullet</button>
-            <button onClick={() => setMakeFormVisible(false)}>Cancel</button>
+            {/* <button onClick={() => setMakeFormVisible(false)}>Cancel</button> */}
             <button hidden={revisedHidden} onClick={() => {setRevisedHidden(!revisedHidden)}} className="bullets-xbutton">X</button>
           </div>
 
@@ -174,7 +174,7 @@ export default function SubordinatesBullets() {
           </div>
         ))}
         {/* <button onClick={() => setRevisedHidden(!revisedHidden)}>Add Revised Bullet</button> */}
-        <button onClick={() => backButton}>Back</button>
+        <button onClick={backButton}>Back</button>
       </div>
     </>
   );
