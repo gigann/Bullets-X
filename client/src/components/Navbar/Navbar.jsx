@@ -117,9 +117,6 @@ export default function Navbar() {
 
           {/* Visable in both verisons */}
           {/* Night Mode Switch */}
-          <div className="Xbutton">
-            <Xbutton onClick={() => {console.log('hello')}} checked={console.log("check")} />
-          </div>
         </div>
 
 
