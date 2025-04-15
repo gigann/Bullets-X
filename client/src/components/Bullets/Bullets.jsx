@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import { useLocalStorage } from "@uidotdev/usehooks";
 import "./Bullets.css";
-import "../SubordinatesBullets/SubordinatesBullets.css";
+// import "../SubordinatesBullets/SubordinatesBullets.css";
 
 
 function Bullets() {
@@ -82,11 +82,11 @@ function Bullets() {
       return;
     }
 
-    const characterCount = calculateCharacterCount(action, impact, result);
-    if (characterCount > 115) {
-      alert('Bullet exceeds 115 character limit. Please shorten your bullet.');
-      return;
-    }
+    // const characterCount = calculateCharacterCount(action, impact, result);
+    // if (characterCount > 115) {
+    //   alert('Bullet exceeds 115 character limit. Please shorten your bullet.');
+    //   return;
+    // }
 
     const awardId = newBulletAward || (userAwards.length > 0 ? userAwards[0].award_id : null);
     if (!awardId) {
@@ -136,19 +136,19 @@ function Bullets() {
       [fieldName]: newText,
     }
 
-    if (fieldName === "action" || fieldName === "impact" || fieldName === "result") {
-      const currentBullet = bullets.find(bullet => bullet.id === id);
-      if (currentBullet) {
-        const updatedAction = fieldName === "action" ? newText : currentBullet.action;
-        const updatedImpact = fieldName === "impact" ? newText : currentBullet.impact;
-        const updatedResult = fieldName === "result" ? newText : currentBullet.result;
+    // if (fieldName === "action" || fieldName === "impact" || fieldName === "result") {
+    //   const currentBullet = bullets.find(bullet => bullet.id === id);
+    //   if (currentBullet) {
+    //     const updatedAction = fieldName === "action" ? newText : currentBullet.action;
+    //     const updatedImpact = fieldName === "impact" ? newText : currentBullet.impact;
+    //     const updatedResult = fieldName === "result" ? newText : currentBullet.result;
 
-        const characterCount = calculateCharacterCount(updatedAction, updatedImpact, updatedResult);
-        if (characterCount > 115) {
-          alert('Bullet exceeds 115 character limit.');
-        }
-      }
-    }
+    //     const characterCount = calculateCharacterCount(updatedAction, updatedImpact, updatedResult);
+    //     if (characterCount > 115) {
+    //       alert('Bullet exceeds 115 character limit.');
+    //     }
+    //   }
+    // }
 
     if (fieldName === "drafting" && newText === false) {
       updateData.status = "Supervisor Review";
@@ -243,8 +243,8 @@ function Bullets() {
   return (
     <>
       <h2 className="page-title">My Bullets</h2>
-      <div className="subordinates-bullets-page-container">
-        <div className={hiddenBullet ? "subordinate-bullet-card" : "" } hidden={!hiddenBullet}>
+      <div className="bullets-page-container">
+        <div className={hiddenBullet ? "bullet-card" : "" } hidden={!hiddenBullet}>
 
               <h2>New Bullet</h2> <button onClick={() => {setHiddenBullet(!hiddenBullet)}} className='bullet-exitbutton'>X</button>
 
@@ -295,7 +295,7 @@ function Bullets() {
               <h3> Character Count: </h3>
               <p>{calculateCharacterCount(action, impact, result)}/115 characters</p>
               {calculateCharacterCount(action, impact, result) > 115 ? (
-                <span className="character-limit-exceeded"> (Exceeds limit)</span>
+                <span className="character-limit-exceeded"> (Exceeds recommended limit)</span>
               ) : null}
             </div>
           </div>
@@ -310,7 +310,7 @@ function Bullets() {
               <th>Description</th>
               <th>Last Updated</th>
               <th>Award Package</th>
-              {/* <th>Status</th> */}
+              <th>Status</th>
               <th>Submit for Review</th>
               <th>Actions</th>
             </tr>
@@ -366,7 +366,7 @@ function Bullets() {
                       <strong>Character Count:</strong>
                       <p>{calculateCharacterCount(bullet.action, bullet.impact, bullet.result)}/115 characters</p>
                       {calculateCharacterCount(bullet.action, bullet.impact, bullet.result) > 115 ? (
-                        <span className="character-limit-exceeded"> (Exceeds limit)</span>
+                        <span className="character-limit-exceeded"> (Exceeds recommended limit)</span>
                       ) : null}
                     </div>
                     </>
@@ -416,7 +416,7 @@ function Bullets() {
                   <td>{descriptionElement}</td>
                   <td>{formattedDate}</td>
                   <td>{awardElement}</td>
-                  {/* <td>{statusElement}</td> */}
+                  <td>{statusElement}</td>
                   <td>{submitForReviewElement}</td>
                   <td>
                     <button

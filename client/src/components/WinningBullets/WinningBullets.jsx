@@ -63,13 +63,13 @@ const WinningBullets = () => {
     }
   }
 
-  if(wins.length > 0){
+  if(wins.length -1 > 0){
   return(
     <>
       <h2 className='award-header'>Award Winning Bullets</h2>
       <div className='scrolling-winning-bullets'>
         <div className='displayedAward'>
-           {wins.length -1 > current ? <h4 className='award'>{wins[current].action + "; " + wins[current].impact + "--" + wins[current].result}</h4> : <h4 className='award'>{wins[0].action + "; " + wins[0].impact + "--" + wins[0].result}</h4>}
+           {wins[current] ? <h4 className='award'>{wins[current].action + "; " + wins[current].impact + "--" + wins[current].result}</h4> : <h4 className='award'>{wins[0].action + "; " + wins[0].impact + "--" + wins[0].result}</h4>}
         </div>
         
         <div className='dots'>

@@ -182,6 +182,8 @@ body {
   border-color: #3498db;
 }
 
+
+
 /* Fire effect */
 .navbar-btn:active::after {
   content: "";
@@ -306,6 +308,7 @@ body {
   border: none;
   font-family: "Orbitron", sans-serif;
   font-size: large;
+  outline: none;
 }
 
 .newnav-menu-closed .visable{
@@ -323,14 +326,35 @@ body {
   color: gray;
 }
 
+.nav-picture-button{
+  outline: none;
+}
+
+.nav-picture{
+  outline: none;
+}
+
 .newnav-menu button{
   background: none;
   border: none;
   font-family: "Orbitron", sans-serif;
   font-size: large;
+  outline: none;
 }
 
 .newnav-menu button:focus{
+  border: none;
+}
+
+.nav-btn{
+  outline-style: none;
+  outline: none;
+  border: none;
+}
+
+.nav-btn::after{
+  outline-style: none;
+  outline: none;
   border: none;
 }
 

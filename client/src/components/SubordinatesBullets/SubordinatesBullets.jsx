@@ -104,7 +104,7 @@ export default function SubordinatesBullets() {
         setAction("");
         setImpact("");
         setResult("");
-        window.location.reload();
+        setRevisedHidden(!revisedHidden)
       })
       .catch((err) => {
         console.log(err);

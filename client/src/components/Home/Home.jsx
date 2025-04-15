@@ -41,7 +41,8 @@ function Home() {
         res.json();
         if (res.ok) {
           alert('Activity added!');
-          window.location.reload();
+          document.querySelector('#quick-name').value = ""
+          document.querySelector('#quick-description').value = ""
         }
       })
   }

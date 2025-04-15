@@ -39,7 +39,12 @@ export default function Addact() {
       const data = await response.json();
       if (response.ok) {
         alert("Activity added!");
-        window.location.reload();
+        
+        setFormData({
+          ...formData,
+          ['description']: '',
+          ['name']: ''
+        });
       }
     } catch (error) {
       console.error("Error:", error);
@@ -55,6 +60,7 @@ export default function Addact() {
           placeholder="Activity Name"
           type="text"
           name="name"
+          id="add-name"
           value={formData.name}
           onChange={inputChange}
         ></input>
@@ -63,6 +69,7 @@ export default function Addact() {
           placeholder="Description"
           type="text"
           name="description"
+          id="add-description"
           value={formData.description}
           onChange={inputChange}
         ></input>

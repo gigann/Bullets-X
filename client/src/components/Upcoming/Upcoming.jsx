@@ -146,7 +146,6 @@ function Upcoming() {
         }
       })
       .catch((err) => console.log(err));
-    window.location.reload();
   };
 
   const handleDelete = (id) => {
@@ -171,11 +170,12 @@ function Upcoming() {
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to delete award");
+        }else{
+          var temp = document.getElementById(`award${id}`)
+          console.log(temp)
+          temp.hidden = true;
         }
         return res.json();
-      })
-      .then(() => {
-        window.location.reload();
       })
       .catch((err) => {
         console.error("Error deleting award:", err);
@@ -267,7 +267,7 @@ function Upcoming() {
               </thead>
               <tbody className="award-tbpdy">
                 {tableData.map((row, i) => (
-                  <tr className="award-tr" key={i}>
+                  <tr className="award-tr" key={i} id={`award${i}`}>
                     {row.map((item, j) => {
                       switch (j) {
                         case 0:
@@ -310,9 +310,10 @@ function Upcoming() {
                      </button>
                    )}
                      </td>
-                    <td className="award-td" id="award-button">
+                    <td className="award-td" id="award-button" >
                       <button
                         key={i}
+                        
                         style={{ background: "red" }}
                         onClick={() => handleDelete(i)}
                         className={loggedIn.admin ? "interested-button" : ""}
