@@ -169,116 +169,62 @@ function Subordinates() {
 
   return (
     <>
-      <button onClick={() => console.log(subordinateInfo)}>Console log</button>
       <h2 className="page-title">Subordinates</h2>
       <div className="subordinates-page-container">
-        <div className="subordinates-container">
-          <div className="subordinate-item">
-            <p className="subordinate-item-name-rank"></p>
-            <p className="subordinate-title">Name</p>
-
-            {/* {subordinateData.map((re, i) => {
-              const award = subordinateAwards.find((aw) => aw.user_id === re.id && aw.status === "Submitted");
-              const awardName = award ? subordinateAwardNames.find((awName) => awName.id === award.award_id) : null;
+  <div className="subordinates-table">
+    <div className="subordinate-header">
+      <p>Name</p>
+      <p>Rank</p>
+      <p>Awards Nominated</p>
+      <p>Ready For Review?</p>
+    </div>
+    {subordinateData.map((sub, i) => {
+      const userAwards = subordinateAwards.filter((award) => award.user_id === sub.id);
+      return (
+        <div key={i} className="subordinate-row">
+          <p className="subordinate-name">{`${sub.first_name} ${sub.last_name}`}</p>
+          <p className="subordinate-rank">{sub.rank}</p>
+          <div className="subordinate-awards-wrapper">
+            {userAwards.map((award, j) => {
+              const awardName = subordinateAwardNames.find((aw) => aw.id === award.award_id);
               return (
-                <p key={i} className="subordinate-name">
-                  {award && awardName ? (
-                    <Link to={`/subordinates/bullet/${re.id}`}>{`${re.first_name} ${re.last_name}`}</Link>
+                <p key={j} className="subordinate-awards-nominated">
+                  {award?.drafting === false && awardName ? (
+                    <Link
+                      to={`/subordinates/bullet/${sub.id}`}
+                      onClick={() => {
+                        setCertainAward(award.award_id);
+                        setCertainSubordinateID(award.user_id);
+                      }}
+                    >
+                      {awardName.name}
+                    </Link>
                   ) : (
-                    `${re.first_name} ${re.last_name}`
+                    awardName?.name
                   )}
                 </p>
               );
             })}
-          </div> */}
-
-          {subordinateData.map((sub, i) => (
-            <p key={i} className="subordinate-name">
-              {`${sub.first_name} ${sub.last_name}`}
-            </p>
-          ))}
-        </div>
-
-          <div className="subordinate-item">
-            <p className="subordinate-item-name-rank"></p>
-            <p className="subordinate-title">Rank</p>
-            {subordinateData.map((ra, i) => (
-              <p key={i} className="subordinate-rank">
-                {ra.rank}
-              </p>
-            ))}
           </div>
-
-          <div className="subordinate-item">
-            <p className="subordinate-title">Awards Nominated</p>
-            {subordinateData.map((sub, i) => {
-              const userAwards = subordinateAwards.filter((award) => award.user_id === sub.id);
-              const processedAwardIds = new Set();
-
-              return (
-                <div key={i}>
-                    {userAwards.map((re, j) => {
-                      if (processedAwardIds.has(re.award_id)) {
-                        return null;
-                      }
-                      processedAwardIds.add(re.award_id);
-                      const awardName = subordinateAwardNames.find((aw) => aw.id === re.award_id);
-                      return (
-                        <p key={j} className="subordinate-awards-nominated">
-                          {re?.drafting === false && awardName ? (
-                            <Link
-                              to={`/subordinates/bullet/${re.user_id}`}
-                              onClick={() => {
-                              setCertainAward(re.award_id)
-                              setCertainSubordinateID(re.user_id)
-                            }}>{awardName.name}
-                              </Link>
-                              ) : (
-                            awardName?.name
-                          )}
-                        </p>
-                      );
-                    })}
-                </div>
-              );
-  })}
-</div>
-
-          <div className="subordinate-item">
-            <p className="subordinate-title">Ready For Review?</p>
-            {/* {(() => { */}
-            {subordinateAwards.map((re, i) => (
-              // if (processedAwardIds.has(re.award_id)) {
-              // return null;
-              //   }
-              //   processedAwardIds.add(re.award_id);
-              // return (
-              <label key={i} className="subordinate-ready-for-review">
-                <input type="checkbox" className="subordinate-checkbox"
-                  checked={re?.drafting === false}
+          <div className="subordinate-review-wrapper">
+            {userAwards.map((award, k) => (
+              <label key={k} className="subordinate-ready-for-review">
+                <input
+                  type="checkbox"
+                  className="subordinate-checkbox"
+                  checked={award?.drafting === false}
                   readOnly
                 />
-                <label className='subordinate-checkbox-label' htmlFor='award-checkbox'></label>
+                <label className="subordinate-checkbox-label" htmlFor="award-checkbox"></label>
               </label>
-              ))}
-            {/* });
-         })()} */}
-       </div>
-          {/* <div className="subordinate-item">
-          <p className="subordinate-title">Ready For Review?</p>
-          {subordinateData.map((sub, i) => {
-            const award = subordinateAwards.find((aw) => aw.user_id === sub.id);
-              // console.log("blah", award)
-            return (
-            <label key={i} className="subordinate-ready-for-review">
-                readOnly
-              />
-            </label>
-            )
-          })}
-        </div> */}
+            ))}
+          </div>
         </div>
-      </div>
+      );
+    })}
+  </div>
+</div>
+
     </>
   );
 }
