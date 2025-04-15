@@ -7,7 +7,6 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 // user_award table for status
 
 function Upcoming() {
-
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
   const [awardName, setAwardName] = useState("");
   const [description, setDescription] = useState("");
@@ -18,7 +17,6 @@ function Upcoming() {
   const [awardData, setAwardData] = useState([]);
   const [userAwardData, setUserAwardData] = useState([]);
   const [bulletData, setBulletData] = useState([]);
-
 
   const [tableData, setTableData] = useState();
 
@@ -59,7 +57,6 @@ function Upcoming() {
           });
         setAwardName("");
         setDescription("");
-        setDueDate(null);
         setBulletMin(0);
         setBulletMax(0);
         setHiddenAward(false);
@@ -125,7 +122,7 @@ function Upcoming() {
     const userAwards = userAwardData.filter(
       (userAward) => userAward.user_id === loggedIn.id
     );
-  
+
     return userAwards.some((userAward) => userAward.award_id === awardId);
   };
 
@@ -149,7 +146,7 @@ function Upcoming() {
         }
       })
       .catch((err) => console.log(err));
-      window.location.reload()
+    window.location.reload();
   };
 
   const handleDelete = (id) => {
@@ -157,13 +154,15 @@ function Upcoming() {
       "Are you sure you want to delete this award?"
     );
 
+    console.log(id);
+
     if (!confirmDelete) {
       return;
     }
 
-    setAwardData((prevAwards) => prevAwards.filter((award) => award.id !== id));
+    let deleteId = awardData[id].id;
 
-    fetch(`http://localhost:3001/award/${id}`, {
+    fetch(`http://localhost:3001/award/${deleteId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -174,6 +173,9 @@ function Upcoming() {
           throw new Error("Failed to delete award");
         }
         return res.json();
+      })
+      .then(() => {
+        window.location.reload();
       })
       .catch((err) => {
         console.error("Error deleting award:", err);
