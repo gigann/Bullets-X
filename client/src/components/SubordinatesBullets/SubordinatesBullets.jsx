@@ -215,7 +215,7 @@ export default function SubordinatesBullets() {
       <button onClick={() => console.log(subordinateInfo)}>Console log</button>
       <div className="subordinates-bullets-page-container">
         {!makeFormVisible && (
-          <div className="subordinate-bullet-card">
+          <div className="subordinate-bullet-card-ethan">
             <h3>Add a Revised Bullet</h3>
             {/* <label>
               Name:
