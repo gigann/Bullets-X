@@ -214,7 +214,6 @@ export default function SubordinatesBullets() {
   return (
     <>
       <div className="subordinates-bullets-page-container">
-        {!makeFormVisible && (
           <div className={!revisedHidden ? "subordinate-bullet-card" : "" } hidden={revisedHidden}>
             
             <h3>Add a Revised Bullet</h3>
@@ -266,7 +265,6 @@ export default function SubordinatesBullets() {
             <button onClick={() => setMakeFormVisible(false)}>Cancel</button>
             <button hidden={revisedHidden} onClick={() => {setRevisedHidden(!revisedHidden)}} className="bullets-xbutton">X</button>
           </div>
-        )}
 
         {subordinateInfo.map((bu, i) => (
           <div key={i} className="subordinate-bullet-card-ethan">
@@ -277,7 +275,7 @@ export default function SubordinatesBullets() {
                 setRevisedHidden(!revisedHidden)
               }}>Suggest</button>
             <p className="subordinate-bullet-title">
-              {bu.name}
+              {bu.award_name}
             </p>
             <p className="subordinate-bullet-section">
               <span className="subordinate-bullet-label">Action:</span>{" "}
@@ -297,7 +295,7 @@ export default function SubordinatesBullets() {
             </p>
           </div>
         ))}
-        <button onClick={() => setRevisedHidden(!revisedHidden)}>Add Revised Bullet</button>
+        {/* <button onClick={() => setRevisedHidden(!revisedHidden)}>Add Revised Bullet</button> */}
         <button onClick={() => backButton}>Back</button>
       </div>
     </>
