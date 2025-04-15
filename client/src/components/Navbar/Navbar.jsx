@@ -58,9 +58,6 @@ export default function Navbar() {
             <nav>
               <ul className={!isOpen ? "hidden" : "visable"}>
                 <li hidden={!loggedIn}>
-                  <button onClick={() => (console.log(theme, darkMode))}>Console.logTHEME</button>
-                </li>
-                <li hidden={!loggedIn}>
                   <button className="nav-btn" onClick={() => {handleNavigation(loggedIn ? `/home/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Home</button>
                 </li>
                 <li hidden={!loggedIn}>
