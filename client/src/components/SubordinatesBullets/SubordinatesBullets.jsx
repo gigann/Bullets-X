@@ -25,6 +25,7 @@ export default function SubordinatesBullets() {
   const navigate = useNavigate();
   const [certainAward, setCertainAward] = useLocalStorage('certainAward')
   const [certainSubordinateID, setCertainSubordinateID] = useLocalStorage('certainSubordinateID')
+  const [revisedHidden, setRevisedHidden] = useState(true)
 
   const handleSetSubordinateID = (id, bulletName, awardID) => {
     // setSubordinateID(id);
@@ -214,7 +215,8 @@ export default function SubordinatesBullets() {
     <>
       <div className="subordinates-bullets-page-container">
         {!makeFormVisible && (
-          <div className="subordinate-bullet-card-ethan">
+          <div className={!revisedHidden ? "subordinate-bullet-card" : "" } hidden={revisedHidden}>
+            
             <h3>Add a Revised Bullet</h3>
             {/* <label>
               Name:
@@ -262,15 +264,17 @@ export default function SubordinatesBullets() {
 
             <button onClick={handleAddBullet}>Add Bullet</button>
             <button onClick={() => setMakeFormVisible(false)}>Cancel</button>
+            <button hidden={revisedHidden} onClick={() => {setRevisedHidden(!revisedHidden)}} className="bullets-xbutton">X</button>
           </div>
         )}
 
         {subordinateInfo.map((bu, i) => (
-          <div key={i} className="subordinate-bullet-card">
+          <div key={i} className="subordinate-bullet-card-ethan">
             <button
               className="suggest"
               onClick={() => {
                 handleSetSubordinateID(bu.user_id, bu.award_name, bu.award_id);
+                setRevisedHidden(!revisedHidden)
               }}>Suggest</button>
             <p className="subordinate-bullet-title">
               {bu.name}
@@ -293,7 +297,8 @@ export default function SubordinatesBullets() {
             </p>
           </div>
         ))}
-        <button onClick={backButton}>Back</button>
+        <button onClick={() => setRevisedHidden(!revisedHidden)}>Add Revised Bullet</button>
+        <button onClick={() => backButton}>Back</button>
       </div>
     </>
   );
