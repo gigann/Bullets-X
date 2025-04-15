@@ -30,7 +30,6 @@ const WinningBullets = () => {
   useEffect(() => {
       
       const interval = setInterval(() => {
-        console.log(interval)
         if(current == 4 || counter == 4){
           setCurrent(0);
           counter = 0;
@@ -70,16 +69,12 @@ const WinningBullets = () => {
       <h2 className='award-header'>Award Winning Bullets</h2>
       <div className='scrolling-winning-bullets'>
         <div className='displayedAward'>
-           {wins.length > current ? <h4 className='award'>{wins[current].action + "; " + wins[current].impact + "--" + wins[current].result}</h4> : ""}
+           {wins.length -1 > current ? <h4 className='award'>{wins[current].action + "; " + wins[current].impact + "--" + wins[current].result}</h4> : <h4 className='award'>{wins[0].action + "; " + wins[0].impact + "--" + wins[0].result}</h4>}
         </div>
-        
-        {/* <h1 className='leftArrow' onClick={() => {scroll(-1)}}>{"<"}</h1>
-
-        <h1 className='rightArrow' onClick={() => {scroll(1)}}>{">"}</h1> */}
         
         <div className='dots'>
             {wins.map((item, i) => (
-              <h1 id={i} key={i} onClick={() => {setCurrent(i)}} style={i == current ? {color: "#b67ef0"} : {}}>o</h1>
+              <h1 id={i} key={i} style={i == current ? {color: "#b67ef0"} : {}}>o</h1>
             )
 
             )}
