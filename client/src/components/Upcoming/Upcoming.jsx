@@ -296,15 +296,18 @@ function Upcoming() {
                           );
                       }
                     })}
-                    <td className="award-td" id="award-button">
-                      <button
-                        key={i}
-                        onClick={() => handleSelect(i)}
-                        className="interested-button"
-                      >
-                        Select
-                      </button>
-                    </td>
+                    <td className='award-td' id='award-button'>
+                           {awardData[i]?.id && isSelected(awardData[i]?.id) ? (
+                     <span className='selected-text'>Selected</span>
+                   ) : (
+                     <button
+                       onClick={() => handleSelect(i)}
+                       className='interested-button'
+                     >
+                       Select
+                     </button>
+                   )}
+                     </td>
                     <td className="award-td" id="award-button">
                       <button
                         key={i}
