@@ -82,11 +82,11 @@ function Bullets() {
       return;
     }
 
-    const characterCount = calculateCharacterCount(action, impact, result);
-    if (characterCount > 115) {
-      alert('Bullet exceeds 115 character limit. Please shorten your bullet.');
-      return;
-    }
+    // const characterCount = calculateCharacterCount(action, impact, result);
+    // if (characterCount > 115) {
+    //   alert('Bullet exceeds 115 character limit. Please shorten your bullet.');
+    //   return;
+    // }
 
     const awardId = newBulletAward || (userAwards.length > 0 ? userAwards[0].award_id : null);
     if (!awardId) {
@@ -136,19 +136,19 @@ function Bullets() {
       [fieldName]: newText,
     }
 
-    if (fieldName === "action" || fieldName === "impact" || fieldName === "result") {
-      const currentBullet = bullets.find(bullet => bullet.id === id);
-      if (currentBullet) {
-        const updatedAction = fieldName === "action" ? newText : currentBullet.action;
-        const updatedImpact = fieldName === "impact" ? newText : currentBullet.impact;
-        const updatedResult = fieldName === "result" ? newText : currentBullet.result;
+    // if (fieldName === "action" || fieldName === "impact" || fieldName === "result") {
+    //   const currentBullet = bullets.find(bullet => bullet.id === id);
+    //   if (currentBullet) {
+    //     const updatedAction = fieldName === "action" ? newText : currentBullet.action;
+    //     const updatedImpact = fieldName === "impact" ? newText : currentBullet.impact;
+    //     const updatedResult = fieldName === "result" ? newText : currentBullet.result;
 
-        const characterCount = calculateCharacterCount(updatedAction, updatedImpact, updatedResult);
-        if (characterCount > 115) {
-          alert('Bullet exceeds 115 character limit.');
-        }
-      }
-    }
+    //     const characterCount = calculateCharacterCount(updatedAction, updatedImpact, updatedResult);
+    //     if (characterCount > 115) {
+    //       alert('Bullet exceeds 115 character limit.');
+    //     }
+    //   }
+    // }
 
     if (fieldName === "drafting" && newText === false) {
       updateData.status = "Supervisor Review";
@@ -389,17 +389,17 @@ function Bullets() {
                 )
               ) : (userAwards.find(award => award.award_id === bullet.award_id)?.name || "No award package assigned");
 
-              const statusElement = isEditing ? (
-                <select
-                  value={bullet.status || "Status"}
-                  onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
-                >
-                  <option value="Drafting">Drafting</option>
-                  <option value="Supervisor Review">Supervisor Review</option>
-                  <option value="Returned">Returned</option>
-                  <option value="Supervisor Approved">Supervisor Approved</option>
-                </select>
-              ) : (bullet.status || "Status");
+              // const statusElement = isEditing ? (
+              //   <select
+              //     value={bullet.status || "Status"}
+              //     onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
+              //   >
+              //     <option value="Drafting">Drafting</option>
+              //     <option value="Supervisor Review">Supervisor Review</option>
+              //     <option value="Returned">Returned</option>
+              //     <option value="Supervisor Approved">Supervisor Approved</option>
+              //   </select>
+              // ) : (bullet.status || "Status");
 
               const submitForReviewElement = isEditing ? (
                 <input

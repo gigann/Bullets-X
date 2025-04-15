@@ -19,7 +19,7 @@ export default function Profile() {
     const [isHidden, setIsHidden] = useState(true)
     const [name, setName] = useState(patchValues.first_name? patchValues.first_name: loggedIn.first_name)
     const [lastName, setLastName] = useState(loggedIn.last_name)
-    const imageArray = ['/donald.jpg', '/daisy.jpg', '/generic.jpg', '/alien.png', '/rocket.png', '/telescope.png', '/mitochondria.png', '/astronaut.png']
+    const imageArray = ['/BATMAN.png', '/generic.jpg', '/alien.png', '/rocket.png', '/telescope.png', '/mitochondria.png', '/astronaut.png']
     const [profileImg, setProfileImg] = useState(loggedIn.profile_picture? loggedIn.profile_picture : imageArray[2])
     const testArray = [1, 2, 2]
     const [supervisorName, setSupervisorName] = useState('')
