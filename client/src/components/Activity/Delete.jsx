@@ -18,7 +18,6 @@ export default function HandleDelete({ id }) {
             .then((res) => {
                 if (res.ok) {
                     alert('Activity deleted!')
-                    window.location.reload()
                 } else {
                     setStatus('failed to delete')
                 }

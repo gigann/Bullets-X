@@ -146,7 +146,6 @@ function Upcoming() {
         }
       })
       .catch((err) => console.log(err));
-    window.location.reload();
   };
 
   const handleDelete = (id) => {
@@ -173,9 +172,6 @@ function Upcoming() {
           throw new Error("Failed to delete award");
         }
         return res.json();
-      })
-      .then(() => {
-        window.location.reload();
       })
       .catch((err) => {
         console.error("Error deleting award:", err);

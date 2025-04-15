@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 const Switch = () => {
     const [darkMode, setDarkMode] = useLocalStorage(true);
-    const [theme, setTheme] = useLocalStorage('theme', true)
+    const [theme, setTheme] = useLocalStorage('theme')
 
   return (
     <StyledWrapper>

@@ -98,7 +98,6 @@ function Subordinates() {
       fetchAwards();
     }
   }, [subordinateData]);
-  // window.location.reload();
 
   useEffect(() => {
     // const timeout = setTimeout(() => {
