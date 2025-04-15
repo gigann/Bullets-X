@@ -99,7 +99,7 @@ export default function SubordinatesBullets() {
 
   return (
     <>
-      <button onClick={() => console.log()}>Console.log</button>
+      {/* <button onClick={() => console.log()}>Console.log</button> */}
       <div className="subordinates-bullets-page-container">
           <div className={!revisedHidden ? "subordinate-bullet-card" : "" } hidden={revisedHidden}>
             

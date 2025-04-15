@@ -24,6 +24,7 @@ function App() {
 
   const [subordinateInfo, setSubordinateInfo] = useState([]);
   const subordinateState = {subordinateInfo, setSubordinateInfo};
+  const [theme, setTheme] = useLocalStorage('theme', true)
 
   const [darkMode, setDarkMode] = useLocalStorage('darkMode') || false;
 
@@ -31,14 +32,18 @@ function App() {
     setDarkMode(checked);
   };
 
+  
+
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
+      setTheme(true)
     }
     else {
       document.body.classList.add('light-mode');
       document.body.classList.remove('dark-mode');
+      setTheme(false)
     }
   }, [darkMode])
 

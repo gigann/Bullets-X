@@ -16,6 +16,7 @@ export default function Navbar() {
   const [profiledetails, setProfileDetails] = useState(false)
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
   const [darkMode, setDarkMode] = useLocalStorage(true);
+  const [theme, setTheme] = useLocalStorage('theme')
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -24,19 +25,16 @@ export default function Navbar() {
   };
 
 
-
-  const toggleDarkMode = (checked) => {
-    setDarkMode(checked);
-  };
-
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
+      setTheme(true)
     }
     else {
       document.body.classList.add('light-mode');
       document.body.classList.remove('dark-mode');
+      setTheme(false)
     }
   }, [darkMode])
 
@@ -59,6 +57,9 @@ export default function Navbar() {
         {<div className={isOpen ? "newnav-menu" : "newnav-menu-closed"}>
             <nav>
               <ul className={!isOpen ? "hidden" : "visable"}>
+                <li hidden={!loggedIn}>
+                  <button onClick={() => (console.log(theme, darkMode))}>Console.logTHEME</button>
+                </li>
                 <li hidden={!loggedIn}>
                   <button className="nav-btn" onClick={() => {handleNavigation(loggedIn ? `/home/${loggedIn.id}` : ""), setOpen(!isOpen)}}>Home</button>
                 </li>
