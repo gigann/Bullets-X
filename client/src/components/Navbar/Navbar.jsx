@@ -117,6 +117,9 @@ export default function Navbar() {
 
           {/* Visable in both verisons */}
           {/* Night Mode Switch */}
+          <div className="Xbutton">
+            <Xbutton/>
+          </div>
         </div>
 
 
