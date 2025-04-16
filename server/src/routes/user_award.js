@@ -78,6 +78,24 @@ router.patch("/:id", (req, res) => {
     });
 });
 
+//patch for a user ID
+router.patch("/users/:user_id", (req, res) => {
+  const{ user_id } = req.params;
+  const { award_id, status } = req.body;
+
+  knex("user_award")
+    .where("user_id", user_id)
+    .andWhere("award_id", award_id)
+    .update({ status })
+    .then(res.status(201).json({ message: "Award successfully updated!" }))
+    .catch((err) => {
+      console.error("Database update error:", err);
+      return res.status(500).json({
+        message: err,
+      });
+    });
+});
+
 router.delete("/:id", (req, res) => {
   const id = req.params;
 
