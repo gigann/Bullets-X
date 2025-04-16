@@ -417,7 +417,7 @@ body {
   position: fixed;
   top: 123px;
   left: 0px;
-  width: 85%;
+  width: calc(100% - 119px - 30px);
   height: 100%;
   z-index: 99;
 }
