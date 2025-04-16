@@ -26,6 +26,9 @@ export default function SubordinatesBullets() {
   const [certainSubordinateID, setCertainSubordinateID] = useLocalStorage('certainSubordinateID')
   const [revisedHidden, setRevisedHidden] = useState(true)
 
+
+  const userID = loggedIn?.id;
+
   const handleSetSubordinateID = (id, bulletName, awardID) => {
     // setSubordinateID(id);
     setName(bulletName)
@@ -41,10 +44,14 @@ export default function SubordinatesBullets() {
 
   useEffect(() => {
     fetch(`http://localhost:3001/bullet/completed/${certainSubordinateID}/${certainAward}`)
-      .then(res => res.json())
-      .then(data => { setSubordinateInfo(data)
-      })
-  }, [])
+      .then((res) =>  {
+        if (!res.ok) {
+        throw new Error("No bullets found for this user and award.");
+      }
+      return res.json();
+    })
+      .then(data => { setSubordinateInfo(data)})
+  }, [certainSubordinateID, certainAward])
 
   const handleChangeStatus = (bulletID) => {
     fetch(`http://localhost:3001/bullet/${bulletID}`, {
@@ -54,6 +61,7 @@ export default function SubordinatesBullets() {
     },
     body: JSON.stringify({
       status: "Supervisor Approved",
+      drafting: true,
     }),
   })
   .then((res) => {
@@ -117,7 +125,12 @@ export default function SubordinatesBullets() {
   // if (!Array.isArray(subordinateInfo) || subordinateInfo.length === 0)
   //   return <p>You have no subordinates</p>;
 
+  useEffect(() => {
+    if (!subordinateInfo || (Array.isArray(subordinateInfo) && subordinateInfo.length === 0)) {
+      navigate(`/subordinates/${userID}`);
 
+    }
+  }, [subordinateInfo, userID, navigate]);
 
   return (
     <>
@@ -163,7 +176,10 @@ export default function SubordinatesBullets() {
             <button hidden={revisedHidden} onClick={() => {setRevisedHidden(!revisedHidden)}} className="bullets-xbutton">X</button>
           </div>
 
-        {subordinateInfo.map((bu, i) => (
+      {!subordinateInfo || (Array.isArray(subordinateInfo) && subordinateInfo.length === 0) ? (
+        <p className = "no-bullets-message">No completed bullets for this subordinate</p>
+      ) : (
+        subordinateInfo.map((bu, i) => (
           <div key={i} className="subordinate-bullet-card-ethan">
             <button
               className="suggest"
@@ -179,10 +195,9 @@ export default function SubordinatesBullets() {
               className = "approve"
               onClick ={() => {
                 handleChangeStatus(bu.id);
-                console.log(bu)
-              }}
-              >Approve
-              </button>
+                // navigate(`/subordinates/${userID}`)
+                window.location.reload()
+              }}>Approve</button>
             <p className="subordinate-bullet-title">
               {bu.name}
             </p>
@@ -203,9 +218,10 @@ export default function SubordinatesBullets() {
               {bu.status}
             </p>
           </div>
-        ))}
+        ))
+      )}
         {/* <button onClick={() => setRevisedHidden(!revisedHidden)}>Add Revised Bullet</button> */}
-        <button onClick={backButton}>Back</button>
+      <button onClick={backButton}>Back</button>
       </div>
     </>
   );

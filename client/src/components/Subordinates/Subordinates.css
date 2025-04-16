@@ -63,6 +63,13 @@
   margin: 14px;
 }
 
+/* .subordinate-status {
+  font-size: 14px;
+  color: var(--panel-text-color);
+  text-align: center;
+  margin: 14px;
+} */
+
 .subordinate-ready-for-review {
   display: flex;
   justify-content: center;
@@ -138,6 +145,7 @@ a:hover {
   border-radius: 8px;
 }
 
+/* .subordinate-status-wrapper, */
 .subordinate-awards-wrapper,
 .subordinate-review-wrapper {
   flex: 2;
