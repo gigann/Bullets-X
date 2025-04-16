@@ -16,38 +16,57 @@ function Subordinates() {
   const [certainAward, setCertainAward] = useLocalStorage('certainAward')
   const [certainSubordinateID, setCertainSubordinateID] = useLocalStorage('certainSubordinateID')
 
-
   const userID = loggedIn?.id;
 
-  const fetchBulletsForSubordinates = async (subordinateId) => {
+  // useEffect(() => {
+  //   const awardsPromises = subordinateData.map((subordinate) =>
+  //     const awardNamesPromises = subordinateAwards.map((awardInfo) =>
+  //   fetch(`http://localhost:3001/bullet/completed/${subordinate.id}/${awardInfo.award_id}`)
+  //     .then((res) =>  {
+  //       if (!res.ok) {
+  //       throw new Error("No bullets found for this user and award.");
+  //     }
+  //     return res.json();
+  //   })
+  //     .then(data => { setSubordinateInfo(data)})
+  // }, [certainSubordinateID, certainAward])
 
-    console.log(`Fetching bullets for subordinate ID: ${subordinateId}`)
-      try {
-        console.log("subordinate awards", subordinateAwards)
-        const awardsForSubordinate = subordinateAwardNames.filter((award) => award.user_id === subordinateId);
-        console.log("Awards for Subordinate: ", awardsForSubordinate)
+  useEffect(() => {
+    if (Array.isArray(subordinateData) && subordinateData.length > 0 && subordinateAwards.length > 0) {
+      const fetchBulletsForSubordinates = async () => {
+        try {
+          const bulletsPromises = subordinateData.map((subordinate) => {
+            const awardsForSubordinate = subordinateAwards.filter(
+              (awardInfo) => awardInfo.user_id === subordinate.id
+            );
 
+            return Promise.allSettled(
+              awardsForSubordinate.map((awardInfo) =>
+                fetch(`http://localhost:3001/bullet/completed/${subordinate.id}/${awardInfo.award_id}`)
+                  .then((res) => {
+                    if (!res.ok) {
+                      throw new Error(`No bullets found for user ID ${subordinate.id} and award ID ${awardInfo.award_id}`);
+                    }
+                    return res.json();
+                  })
+              )
+            );
+          });
 
-        const bulletsPromises = awardsForSubordinate.map((award) =>
-          fetch(`http://localhost:3001/bullet/completed/${subordinateId}/${award.id}`)
-            .then((res) => {
-              if (!res.ok) {
-                console.log(subordinateId, award.award_id)
-                throw new Error(`Failed to fetch bullets for user ID ${subordinateId} and award ID ${award.award_id}`);
-              }
-              return res.json();
-            })
-        );
+          const bulletsData = await Promise.all(bulletsPromises);
 
-        const bulletsData = await Promise.all(bulletsPromises);
-        console.log(`Fetched bullets for subordinate ID ${subordinateId}:`, bulletsData);
-        setSubordinateInfo((prevInfo) => [...prevInfo, ...bulletsData.flat()]);
-      } catch (error) {
-        console.error("Error fetching bullets:", error.message);
-        setError(error.message);
-        setLoading(false);
-      }
-  }
+          // Collect only the fulfilled results
+          const successfulBullets = bulletsData.flat().filter((result) => result.status === "fulfilled").map((result) => result.value);
+
+          setSubordinateInfo(successfulBullets.flat()); // Flatten the array of arrays
+        } catch (error) {
+          console.error("Error fetching bullets:", error.message);
+        }
+      };
+
+      fetchBulletsForSubordinates();
+    }
+  }, [subordinateData, subordinateAwards]);
 
   useEffect(() => {
     if (!userID) {
@@ -175,7 +194,7 @@ function Subordinates() {
       <p>Name</p>
       <p>Rank</p>
       <p>Awards Nominated</p>
-      <p>Ready For Review?</p>
+      <p>Ready to Submit?</p>
     </div>
     {subordinateData.map((sub, i) => {
       const userAwards = subordinateAwards.filter((award) => award.user_id === sub.id);
@@ -186,9 +205,10 @@ function Subordinates() {
           <div className="subordinate-awards-wrapper">
             {userAwards.map((award, j) => {
               const awardName = subordinateAwardNames.find((aw) => aw.id === award.award_id);
+              const linkStuff = subordinateInfo.some((info) => info.user_id === sub.id && info.award_id === award.award_id);
               return (
                 <p key={j} className="subordinate-awards-nominated">
-                  {award?.drafting === false && awardName ? (
+                  {linkStuff && awardName ? (
                     <Link
                       to={`/subordinates/bullet/${sub.id}`}
                       onClick={() => {
@@ -205,13 +225,22 @@ function Subordinates() {
               );
             })}
           </div>
+
+          {/* <div className="subordinate-status-wrapper">
+          {userAwards.map((award, k) => (
+          <div key={k} className="subordinate-status">
+            <p>{award.status}</p>
+          </div>
+          ))}
+        </div> */}
+
           <div className="subordinate-review-wrapper">
             {userAwards.map((award, k) => (
               <label key={k} className="subordinate-ready-for-review">
                 <input
                   type="checkbox"
                   className="subordinate-checkbox"
-                  checked={award?.drafting === false}
+                  checked={award?.status === "Ready to Submit"}
                   readOnly
                 />
                 <label className="subordinate-checkbox-label" htmlFor="award-checkbox"></label>
