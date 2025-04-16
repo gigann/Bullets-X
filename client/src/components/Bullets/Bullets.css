@@ -92,12 +92,13 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  flex-flow:column;
   justify-content: space-between;
 }
 
 .edit-field {
   flex: 1 1 30%;
-  min-width: 150px;
+  min-width: 200px;
 }
 
 .edit-field input {
