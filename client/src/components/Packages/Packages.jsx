@@ -19,12 +19,45 @@ const Packages = () => {
       .catch(err => console.log("Error: ", err));
   }, [refresh])
 
+  // useEffect(() => {
+  //   fetch(`http://localhost:3001/bullet/users/${loggedIn.id}`)
+  //     .then(res => res.json())
+  //     .then(data => setBullets(data))
+  //     .catch(err => console.log("Error: ", err));
+  // }, [awards]);
+
   useEffect(() => {
-    fetch(`http://localhost:3001/bullet/users/${loggedIn.id}`)
+    fetch(`http://localhost:3001/bullet/status/${loggedIn.id}`)
       .then(res => res.json())
-      .then(data => setBullets(data))
+      .then(data => setCompleteStatus(data))
+      .then(() => {
+        for (let award of completeStatus){
+          let complete = parseInt(award.complete_status_count)
+          let body = {
+            award_id: `${award.award_id}`,
+            status: 'Ready to Submit'
+          }
+          console.log(complete, award.name, complete >= award.bullet_minimum)
+          if(complete >= award.bullet_minimum && complete <= award.bullet_maximum){
+            fetch(`http://localhost:3001/user_award/${loggedIn.id}`, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(() => console.log('I am patching status'))
+            .then(() => refresh == 1? setRefresh(0):setRefresh(1))
+            .catch(err => console.log("Error: ", err));
+          }
+        }
+      })
+      .then(() => console.log('I have patched status'))
       .catch(err => console.log("Error: ", err));
+
   }, [awards]);
+
 
   useEffect(() => {
     let newTableData = [];
