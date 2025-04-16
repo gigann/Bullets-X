@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router'
 import { useLocalStorage } from "@uidotdev/usehooks"
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import './SignUp.css'
 
 
@@ -85,10 +86,21 @@ function Signup() {
             .then(() => navigate("/"))
     }
 
+    function changePassword(){
+        let passwordId = document.getElementById("password");
+
+        if(passwordId.type == 'password'){
+            passwordId.type = 'text'
+        }else{
+            passwordId.type = 'password'
+        }
+    }
+
     return (
       <>
         <div className="signup-container">
             <h1>Sign Up</h1>
+            <button onClick={() => {changePassword();}} className="Seepassword"><VisibilityIcon sx={{color: "gray"}} className="password-eye"/></button>
             <form className="signup-form">
                 <div className="signup-names">
                     <input type="text" name="firstname" placeholder="First Name" value={postValues.firstname} onChange={handleChange}/>
@@ -96,7 +108,7 @@ function Signup() {
                 </div>
                 <div className="signup-passwords">
                     <input type="text" name="username" placeholder="Username" value={postValues.username} onChange={handleChange}/>
-                    <input type="text" name="password" placeholder="Password" value={postValues.password} onChange={handleChange}/>
+                    <input type="password" name="password" placeholder="Password" id="password" value={postValues.password} onChange={handleChange}/> 
                 </div>
                 <select name="rank" placeholder="Rank" onChange={handleChange}>
                     <option value="E-1">E-1</option>

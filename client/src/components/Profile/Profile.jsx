@@ -8,6 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 
 export default function Profile() {
@@ -22,7 +23,7 @@ export default function Profile() {
     const imageArray = ['/BATMAN.png', '/generic.jpg', '/alien.png', '/rocket.png', '/telescope.png', '/mitochondria.png', '/astronaut.png']
     const [profileImg, setProfileImg] = useState(loggedIn.profile_picture? loggedIn.profile_picture : imageArray[2])
     const testArray = [1, 2, 2]
-    const [supervisorName, setSupervisorName] = useState('')
+    const [supervisorName, setSupervisorName] = useState('No Supervisor')
     const [supervisorList, setSupervisorList] = useState()
     const [unitList, setUnitList] = useState([])
     const [updatePicutre, setUpdatePicture] = useState(false)
@@ -104,7 +105,7 @@ export default function Profile() {
             </div>
             <div className="profile-data">
               <h2 className="profile-data-item">Rank: {patchValues.rank}</h2>
-              <h2 className="profile-data-item">Supervisor: {supervisorName}</h2>
+              <h2 className="profile-data-item">Supervisor: {supervisorName ? supervisorName : "No Supervisor"}</h2>
               <h2 className="profile-data-item">Unit: {patchValues.unit_name}</h2>
             </div>
           </div>

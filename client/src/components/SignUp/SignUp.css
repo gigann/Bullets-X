@@ -123,7 +123,18 @@
     justify-content: space-between;
 }
 
+.Seepassword{
+    position: fixed;
+    background: none;
+    border: none;
+    left: 43rem;
+    top: 12.8rem;
+    z-index: 999;
+}
 
+.password-eye{
+    color: aqua;
+}
 
 @keyframes wobble {
     0% {
