@@ -42,10 +42,32 @@ export default function SubordinatesBullets() {
   useEffect(() => {
     fetch(`http://localhost:3001/bullet/completed/${certainSubordinateID}/${certainAward}`)
       .then(res => res.json())
-      .then(data => setSubordinateInfo(data))
+      .then(data => { setSubordinateInfo(data)
+      })
   }, [])
 
-  
+  const handleChangeStatus = (bulletID) => {
+    fetch(`http://localhost:3001/bullet/${bulletID}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      status: "Supervisor Approved",
+    }),
+  })
+  .then((res) => {
+    if (!res.ok) {
+      throw new Error("Failed to update status");
+    }
+    return res.json();
+  })
+  .catch((error) => {
+    console.error("Error updating status:", error.message);
+  });
+};
+
+
 
   const handleAddBullet = () => {
     const emptyFieldsCheck = !action.trim() && !impact.trim() && !result.trim();
@@ -102,11 +124,12 @@ export default function SubordinatesBullets() {
       {/* <button onClick={() => console.log()}>Console.log</button> */}
       <div className="subordinates-bullets-page-container">
           <div className={!revisedHidden ? "subordinate-bullet-card" : "" } hidden={revisedHidden}>
-            
+
             <h3>Add a Revised Bullet</h3>
 
             <h3>Name:</h3>
             <input
+              className = "name-suggestion"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -152,6 +175,14 @@ export default function SubordinatesBullets() {
                 setResult(bu.result)
                 setRevisedHidden(!revisedHidden)
               }}>Suggest</button>
+              <button
+              className = "approve"
+              onClick ={() => {
+                handleChangeStatus(bu.id);
+                console.log(bu)
+              }}
+              >Approve
+              </button>
             <p className="subordinate-bullet-title">
               {bu.name}
             </p>

@@ -1,3 +1,93 @@
+.bullets-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.bullets-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  border-spacing: 0;
+  border-radius: 5px;
+}
+
+.bullets-table th {
+  background-color: var(--accent-color-1);
+  color: var(--panel-text-color);
+  font-weight: bold;
+  padding: 12px 8px;
+  text-align: left;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+}
+
+.bullets-table td {
+  padding: 10px 8px;
+  border: 1px solid rgba(103, 113, 150, 0.575);
+}
+
+.bullets-table tr:nth-child(even) {
+  background-color: var(--panel-bg-color);
+}
+
+.bullets-table tr:nth-child(odd) {
+  background-color: rgba(103, 113, 150, 0.1);
+}
+
+/* Responsive design for different screen sizes */
+@media (max-width: 1200px) {
+  .bullets-page-container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .bullet-card {
+    max-width: 90%;
+  }
+
+  .bullet-exitbutton {
+    left: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .bullets-table {
+    font-size: 0.9rem;
+  }
+
+  .bullet-edit-fields {
+    flex-direction: column;
+  }
+
+  .edit-field {
+    width: 100%;
+  }
+
+  .bullet-exitbutton {
+    left: 85%;
+    bottom: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .bullets-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.8rem;
+  }
+
+  .bullet-card {
+    padding: 15px;
+  }
+}
+
 .bullet-edit-fields {
   display: flex;
   gap: 10px;
@@ -47,4 +137,3 @@ td {
   font-style: italic;
   color: #d32f2f;
 }
-

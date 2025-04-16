@@ -104,8 +104,33 @@ router.get("/completed/:user_id/:award_id", (req, res) => {
     .catch((err) => {
       console.error("Error fetching bullets:", err.message);
       res.status(500).json({ message: "Failed to fetch bullets." });
+
     });
 });
+
+// patch a specific user's bullets NOT in draft (ie. ready for supervisor view), for a specific award
+// router.patch("/completed/:id", (req, res) => {
+//     let { id }= req.params;
+//     let { status } = req.body;
+
+//     knex("bullet")
+//       .where("id", id)
+//       .update({
+//         status,
+//       })
+//       .then((count) => {
+//         if (count > 0) {
+//           res.status(200).json({ message: `Status updated successfully` });
+//         } else {
+//           res.status(404).json({ error: "Bullet not found" });
+//         }
+//       })
+//       .catch((err) =>
+//         res.status(500).json({
+//           message: "Bullet could not be updated",
+//         })
+//       );
+//   });
 
 // CREATE
 

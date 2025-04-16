@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import { useLocalStorage } from "@uidotdev/usehooks";
 import "./Bullets.css";
-import "../SubordinatesBullets/SubordinatesBullets.css";
+// import "../SubordinatesBullets/SubordinatesBullets.css";
 
 
 function Bullets() {
@@ -243,8 +243,8 @@ function Bullets() {
   return (
     <>
       <h2 className="page-title">My Bullets</h2>
-      <div className="subordinates-bullets-page-container">
-        <div className={hiddenBullet ? "subordinate-bullet-card" : "" } hidden={!hiddenBullet}>
+      <div className="bullets-page-container">
+        <div className={hiddenBullet ? "bullet-card" : "" } hidden={!hiddenBullet}>
 
               <h2>New Bullet</h2> <button onClick={() => {setHiddenBullet(!hiddenBullet)}} className='bullet-exitbutton'>X</button>
 
@@ -295,7 +295,7 @@ function Bullets() {
               <h3> Character Count: </h3>
               <p>{calculateCharacterCount(action, impact, result)}/115 characters</p>
               {calculateCharacterCount(action, impact, result) > 115 ? (
-                <span className="character-limit-exceeded"> (Exceeds limit)</span>
+                <span className="character-limit-exceeded"> (Exceeds recommended limit)</span>
               ) : null}
             </div>
           </div>
@@ -310,7 +310,7 @@ function Bullets() {
               <th>Description</th>
               <th>Last Updated</th>
               <th>Award Package</th>
-              {/* <th>Status</th> */}
+              <th>Status</th>
               <th>Submit for Review</th>
               <th>Actions</th>
             </tr>
@@ -366,7 +366,7 @@ function Bullets() {
                       <strong>Character Count:</strong>
                       <p>{calculateCharacterCount(bullet.action, bullet.impact, bullet.result)}/115 characters</p>
                       {calculateCharacterCount(bullet.action, bullet.impact, bullet.result) > 115 ? (
-                        <span className="character-limit-exceeded"> (Exceeds limit)</span>
+                        <span className="character-limit-exceeded"> (Exceeds recommended limit)</span>
                       ) : null}
                     </div>
                     </>
@@ -389,17 +389,17 @@ function Bullets() {
                 )
               ) : (userAwards.find(award => award.award_id === bullet.award_id)?.name || "No award package assigned");
 
-              // const statusElement = isEditing ? (
-              //   <select
-              //     value={bullet.status || "Status"}
-              //     onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
-              //   >
-              //     <option value="Drafting">Drafting</option>
-              //     <option value="Supervisor Review">Supervisor Review</option>
-              //     <option value="Returned">Returned</option>
-              //     <option value="Supervisor Approved">Supervisor Approved</option>
-              //   </select>
-              // ) : (bullet.status || "Status");
+              const statusElement = isEditing ? (
+                <select
+                  value={bullet.status || "Status"}
+                  onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
+                >
+                  <option value="Drafting">Drafting</option>
+                  <option value="Supervisor Review">Supervisor Review</option>
+                  <option value="Returned">Returned</option>
+                  <option value="Supervisor Approved">Supervisor Approved</option>
+                </select>
+              ) : (bullet.status || "Status");
 
               const submitForReviewElement = isEditing ? (
                 <input
@@ -416,7 +416,7 @@ function Bullets() {
                   <td>{descriptionElement}</td>
                   <td>{formattedDate}</td>
                   <td>{awardElement}</td>
-                  {/* <td>{statusElement}</td> */}
+                  <td>{statusElement}</td>
                   <td>{submitForReviewElement}</td>
                   <td>
                     <button
