@@ -12,7 +12,7 @@ import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 
 export default function Profile() {
     const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn')
-    const [patchValues, setPatchValues] = useState({id: loggedIn.id, first_name: loggedIn.first_name, last_name: loggedIn.last_name, username: loggedIn.username, supervisor_id: loggedIn.supervisor_id, unit_name: loggedIn.unit_name, rank: loggedIn.rank, profile_picture: loggedIn.profile_picture, is_supervisor: loggedIn.is_supervisor})
+    const [patchValues, setPatchValues] = useState({id: loggedIn.id, first_name: loggedIn.first_name, last_name: loggedIn.last_name, username: loggedIn.username, supervisor_id: loggedIn.supervisor_id, unit_name: loggedIn.unit_name, rank: loggedIn.rank, profile_picture: loggedIn.profile_picture, is_supervisor: loggedIn.is_supervisor, admin: loggedIn.admin})
     const [updateLocalStorage, setUpdateLocalStorage] = useState(0)
     const [unit, setUnit] = useState(loggedIn.unit_name)
     const [supervisor, setSupervisor] = useState(loggedIn.supervisor_id)
@@ -30,7 +30,7 @@ export default function Profile() {
 
     //updatest the localstorage everytime the patch is sent
     useEffect(() => {
-        setLoggedIn({id: patchValues.id, first_name: patchValues.first_name, last_name: patchValues.last_name, username: patchValues.username, supervisor_id: patchValues.supervisor_id, unit_name: patchValues.unit_name, rank: patchValues.rank, profile_picture: profileImg, is_supervisor: patchValues.is_supervisor})
+        setLoggedIn({id: patchValues.id, first_name: patchValues.first_name, last_name: patchValues.last_name, username: patchValues.username, supervisor_id: patchValues.supervisor_id, unit_name: patchValues.unit_name, rank: patchValues.rank, profile_picture: profileImg, is_supervisor: patchValues.is_supervisor, admin: loggedIn.admin})
         console.log('setting local storage')
     }, [updateLocalStorage])
 
@@ -75,7 +75,7 @@ export default function Profile() {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({id: patchValues.id, first_name: patchValues.first_name, last_name: patchValues.last_name, username: patchValues.username, supervisor_id: patchValues.supervisor_id, unit_name: patchValues.unit_name, rank: patchValues.rank, profile_picture: profileImg, is_supervisor: patchValues.is_supervisor}),
+          body: JSON.stringify({id: patchValues.id, first_name: patchValues.first_name, last_name: patchValues.last_name, username: patchValues.username, supervisor_id: patchValues.supervisor_id, unit_name: patchValues.unit_name, rank: patchValues.rank, profile_picture: profileImg, is_supervisor: patchValues.is_supervisor, admin: patchValues.admin}),
         })
 
         setIsHidden(!isHidden)

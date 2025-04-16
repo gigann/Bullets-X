@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Upcoming.css";
 import { useLocalStorage } from "@uidotdev/usehooks";
-// data needed for this page
-// award table for most data
-// bullet table (filter by award id)
-// user_award table for status
 
 function Upcoming() {
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn");
@@ -25,6 +21,7 @@ function Upcoming() {
       .then((res) => res.json())
       .then((data) => setAwardData(data));
   }, []);
+
 
   //add new award
   const handleAddAward = () => {
@@ -95,23 +92,6 @@ function Upcoming() {
         new Date(awardData[i].due_date).toLocaleDateString(),
       ];
 
-      // for (let j in userAwardData) {
-      //   if (awardData[i].id === userAwardData[j].award_id) {
-      //     newRow.push(userAwardData[j].status);
-      //     break;
-      //   }
-      // }
-
-      // add bullets assigned to this award
-      // let bullets = [];
-
-      // for (let k in bulletData) {
-      //   if (awardData[i].id === bulletData[k].award_id) {
-      //     bullets.push(bulletData[k]);
-      //   }
-      // }
-      // newRow.push(bullets);
-
       newTableData.push(newRow);
     }
 
@@ -122,9 +102,13 @@ function Upcoming() {
     const userAwards = userAwardData.filter(
       (userAward) => userAward.user_id === loggedIn.id
     );
-
-    return userAwards.some((userAward) => userAward.award_id === awardId);
+     return userAwards.some((userAward) => userAward.award_id === awardId);
   };
+
+  const isAdmin = () => {
+    return loggedIn?.admin === true;
+  };
+
 
   const handleSelect = (i) => {
     let request = {
@@ -192,7 +176,7 @@ function Upcoming() {
     <>
       <h2 className="page-title">Upcoming Awards</h2>
       <div className="award-page">
-        <div
+      <div
           className={hiddenAward ? "subordinate-bullet-card" : ""}
           hidden={!hiddenAward}
         >
@@ -208,31 +192,31 @@ function Upcoming() {
           <h3>Name:</h3>
           <input
             type="text"
-            value={awardName}
+            value={awardName || ""}
             onChange={(e) => setAwardName(e.target.value)}
           />
           <h3>Description:</h3>
           <input
             type="text"
-            value={description}
+            value={description  || ""}
             onChange={(e) => setDescription(e.target.value)}
           />
           <h3>Due Date:</h3>
           <input
             type="date"
-            value={dueDate}
+            value={dueDate || ""}
             onChange={(e) => setDueDate(e.target.value)}
           />
           <h3>Bullet Min:</h3>
           <input
             type="number"
-            value={bulletMin}
+            value={bulletMin || ``}
             onChange={(e) => setBulletMin(e.target.value)}
           />
           <h3>Bullet Max:</h3>
           <input
             type="number"
-            value={bulletMax}
+            value={bulletMax || ``}
             onChange={(e) => setBulletMax(e.target.value)}
           />
           <h3 style={{ color: "red" }}>
@@ -257,121 +241,87 @@ function Upcoming() {
                   <th className="award-th">Due Date</th>
                   {/* <th className='award-th'>Status</th> */}
                   <th className="award-th">Interested</th>
-                  <th
-                    className={loggedIn.admin ? "award-th" : ""}
-                    hidden={!loggedIn.admin}
-                  >
-                    ADMIN
-                  </th>
+                  {loggedIn.admin && <th className="award-th">ADMIN</th>}
                 </tr>
               </thead>
               <tbody className="award-tbpdy">
-                {tableData.map((row, i) => (
-                  <tr className="award-tr" key={i} id={`award${i}`}>
-                    {row.map((item, j) => {
-                      switch (j) {
-                        case 0:
-                          return (
-                            <td className="award-td" key={j}>
-                              {row[6]?.length > 0 ? (
-                                <details className="award-details">
-                                  <summary>{item}</summary>
-                                  Your Assigned Bullets:
-                                  <ul>
-                                    {row[6].map((bullet, k) => (
-                                      <li key={k}>{bullet.name}</li>
-                                    ))}
-                                  </ul>
-                                </details>
-                              ) : (
-                                <p>{item}</p>
-                              )}
-                            </td>
-                          );
-                        case 6:
-                          return null;
-                        default:
-                          return (
-                            <td className="award-td" key={j}>
-                              {item}
-                            </td>
-                          );
-                      }
-                    })}
-                    <td className='award-td' id='award-button'>
-                           {awardData[i]?.id && isSelected(awardData[i]?.id) ? (
-                     <span className='selected-text'>Selected</span>
-                   ) : (
-                     <button
-                       onClick={() => handleSelect(i)}
-                       className='interested-button'
-                     >
-                       Select
-                     </button>
-                   )}
-                     </td>
-                    <td className="award-td" id="award-button" >
+              {tableData.map((row, i) => (
+                <tr className="award-tr" key={i} id={`award${i}`}>
+                  {row.map((item, j) => {
+                    switch (j) {
+                      case 0:
+                        return (
+                          <td className="award-td" key={j}>
+                            {row[6]?.length > 0 ? (
+                              <details className="award-details">
+                                <summary>{item}</summary>
+                                Your Assigned Bullets:
+                                <ul>
+                                  {row[6].map((bullet, k) => (
+                                    <li key={k}>{bullet.name}</li>
+                                  ))}
+                                </ul>
+                              </details>
+                            ) : (
+                              <p>{item}</p>
+                            )}
+                          </td>
+                        );
+                      case 6:
+                        return null;
+                      default:
+                        return (
+                          <td className="award-td" key={j}>
+                            {item}
+                          </td>
+                        );
+                    }
+                  })}
+                  <td className="award-td" id="award-button">
+                    {awardData[i]?.id && isSelected(awardData[i]?.id) ? (
+                      <span className="selected-text">Selected</span>
+                    ) : (
                       <button
-                        key={i}
-                        
-                        style={{ background: "red" }}
+                        onClick={() => handleSelect(i)}
+                        className="interested-button"
+                      >
+                        Select
+                      </button>
+                    )}
+                  </td>
+                  {loggedIn.admin && (
+                    <td className="award-td" id="award-button">
+                      <button
                         onClick={() => handleDelete(i)}
-                        className={loggedIn.admin ? "interested-button" : ""}
-                        hidden={!loggedIn.admin}
+                        className="interested-button"
+                        style={{ background: "red" }}
                       >
                         DELETE
                       </button>
                     </td>
-                  </tr>
-                ))}
-              </tbody>
+                  )}
+                </tr>
+              ))}
+            </tbody>
             </table>
           ) : null
           // loading spinner could go here
         }
-
-        {/* this could be its own component */}
-        {/* <div className='upcoming-awards'>
-        <h3>Upcoming Awards</h3>
-        <div className='award-card'>
-          <input className='award-checkbox' type='checkbox' />
-          <h3>Award #1</h3>
+        <div className="award-page">
+          {/* Other content */}
+          {isAdmin() && (
+            <button
+              onClick={() => {
+                setHiddenAward(!hiddenAward);
+              }}
+            >
+              Add New Award
+            </button>
+          )}
         </div>
-        <div className='award-card'>
-          <h3>Award #2</h3>
-          <span>April 2025</span>
-        </div>
-        <div className='award-card'>
-          <h3>Award #3</h3>
-          <span>April 2025</span>
-        </div>
-        <div className='award-card'>
-          <h3>Award #4</h3>
-          <span>April 2025</span>
-        </div>
-        <div className='award-card'>
-          <h3>Award #5</h3>
-          <span>April 2025</span>
-        </div>
-      </div> */}
-        <button
-          style={loggedIn && loggedIn.admin ? {} : { display: "none" }}
-          onClick={() => {
-            setHiddenAward(!hiddenAward);
-          }}
-        >
-          Add New Award
-        </button>
       </div>
     </>
   );
 }
 
 export default Upcoming;
-
-// TODO
-// sorting table
-// adding assigned bullets in dropdowns (details)
-
-// conditional btn:
-// style={loggedIn && loggedIn.admin ? { display: 'none' } : {}}
