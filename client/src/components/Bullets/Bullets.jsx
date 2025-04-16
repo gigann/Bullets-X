@@ -108,7 +108,7 @@ function Bullets() {
         method: "PATCH",
         headers: {
           'Content-Type': 'application/json'},
-        body: JSON.stringify({status: "Ready to Submit"}),
+        body: JSON.stringify({status: "Eligible to Submit"}),
       })
       .then(res => res.json())
       .then(updatedAwardStatus => {
