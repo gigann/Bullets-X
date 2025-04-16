@@ -31,7 +31,6 @@ const Packages = () => {
     fetch(`http://localhost:3001/bullet/status/${loggedIn.id}`)
       .then(res => res.json())
       .then(data => setApprovedBullets(data))
-      .then(() => console.log(approvedBullets))
       .then(() => {
         for (let award of approvedBullets){
           let complete = parseInt(award.approved_status_count)
@@ -40,8 +39,7 @@ const Packages = () => {
             status: 'Eligible to Submit'
           }
           if(complete >= award.bullet_minimum && complete <= award.bullet_maximum){
-            console.log(`I am here for ${award.award_name}`)
-            fetch(`http://localhost:3001/user_award/${loggedIn.id}`, {
+            fetch(`http://localhost:3001/user_award/users/${loggedIn.id}`, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json'
@@ -49,7 +47,6 @@ const Packages = () => {
               body: JSON.stringify(body)
             })
             .then(res => res.json())
-            .then(() => console.log(`^Patched successfully`))
             .catch(err => console.log("Error: ", err));
           }
         }
