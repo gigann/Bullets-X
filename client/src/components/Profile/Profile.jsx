@@ -87,10 +87,7 @@ export default function Profile() {
 
       //calls to update local storage
       setUpdateLocalStorage(updateLocalStorage + 1)
-
-      
-
-      
+  
     }
 
     
@@ -117,7 +114,7 @@ export default function Profile() {
               <input type="text" name="first_name" value={patchValues.first_name}  onChange={(e) => {setName(e.target.value), handleChange(e)}} hidden={isHidden}/>
               <input type="text" name="last_name" value={patchValues.last_name}  onChange={(e) => {setLastName(e.target.value), handleChange(e)}} hidden={isHidden}/>
             </div>
-            
+
             <div className="edit-selectors">
               <select name="rank" value={patchValues.rank} hidden={isHidden} onChange={(e) => {handleChange(e)}}>
                       <option value="E-1">E-1</option>
@@ -169,7 +166,6 @@ export default function Profile() {
                 setUpdatePicture(true)
               }}><ArrowUpwardIcon/></IconButton>}
               {!isHidden && <IconButton onClick={() => {
-
                 let temp2 = iterator
                 temp2 === 0? temp2 = (imageArray.length - 1): temp2--
                 setProfileImg(imageArray[temp2])
@@ -184,10 +180,7 @@ export default function Profile() {
               {!isHidden && <IconButton onClick={() => editProfile()} className="profile-icon"><SaveIcon className="profile-icon"/></IconButton>}
             </div>
           </div>
-          
         </div>
-
-
       </>
     )
   }
