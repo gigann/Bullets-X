@@ -55,14 +55,22 @@ router.get("/latest-awarded", (req, res) => {
     );
 });
 
-//get list of bullets with the award name by looking up user id
-router.get("/with_award_name/:user_id", (req, res) => {
-  const user_id = req.params.user_id;
+//get list of bullets with the award id by looking up user id
+router.get("/status/:user_id", (req, res) => {
+  const { user_id } = req.params;
   knex("bullet")
     .join("award", "award_id", "=", "award.id")
-    .select("bullet.*", "award.name as award_name")
     .where("bullet.user_id", user_id)
-    .orderBy("award_id")
+    .andWhere('bullet.status', 'Complete')
+    .groupBy("bullet.award_id", "award.name", "award.bullet_minimum", "award.bullet_maximum")
+    .select(
+      knex.raw("COUNT(*) as complete_status_count"),
+      "bullet.award_id",
+      "award.name as award_name",
+      "award.bullet_minimum",
+      "award.bullet_maximum",
+    )
+    .orderBy("bullet.award_id")
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>
       res.status(404).json({
