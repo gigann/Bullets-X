@@ -98,7 +98,7 @@ function Bullets() {
     if (!userAwards || !userAwards.length) return;
     const awardsToUpdate = userAwards.filter(award => {
       const statusCount = awardStatusCounts.find(status => status.award_id === award.award_id);
-      return (statusCount && statusCount.complete_status_count >= award.bullet_minimum && !readyToSubmitAwards.includes(award.award_id) && award.status !== 'Ready to Submit');
+      return (statusCount && statusCount.approved_status_count >= award.bullet_minimum && !readyToSubmitAwards.includes(award.award_id) && award.status !== 'Ready to Submit');
     })
 
     if (awardsToUpdate.length === 0) return;
@@ -364,7 +364,7 @@ function Bullets() {
           </thead>
           <tbody>
             {bullets.map((bullet) => {
-              const formattedDate = new Date(bullet.updated_at).toLocaleDateString();
+              const formattedDate = new Date(bullet.updated_at).toLocaleDateString() + " " + new Date(bullet.updated_at).toLocaleTimeString();
               const isEditing = bullet.id === editingBulletId;
               const descriptionBulletPreview = formatBulletText(bullet.action, bullet.impact, bullet.result);
               const nameElement = isEditing ? (
@@ -437,7 +437,7 @@ function Bullets() {
               ) : (() => {
                 const awardFound = userAwards.find(award => award.award_id === bullet.award_id);
                 const statusCount = awardStatusCounts.find(status => status.award_id === bullet.award_id);
-                if (awardFound && statusCount && statusCount.complete_status_count >= award.bullet_minimum) {
+                if (awardFound && statusCount && statusCount.approved_status_count >= awardFound.bullet_minimum) {
                   return (
                   <span>
                     {awardFound.name} - Eligible to Submit Package
@@ -449,7 +449,7 @@ function Bullets() {
               })();
 
               const statusElement = bullet.status
-              //dropdown logic for status
+              //dropdown logic for statusElement
               // const statusElement = isEditing ? (
               //   <select
               //     value={bullet.status}
@@ -494,6 +494,7 @@ function Bullets() {
                     </button>
                     <button
                       onClick={() => handleDeleteBullet(bullet.id)}
+                      style={{ background: "red" }}
                       className="btn-delete"
                     >
                       Delete
