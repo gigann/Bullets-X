@@ -61,7 +61,7 @@ export default function SubordinatesBullets() {
     },
     body: JSON.stringify({
       status: "Supervisor Approved",
-      drafting: true,
+      drafting: false,
     }),
   })
   .then((res) => {
@@ -95,8 +95,8 @@ export default function SubordinatesBullets() {
         action: action,
         impact: impact,
         result: result,
-        status: "Revised",
-        drafting: true,
+        status: "Supervisor Revised",
+        drafting: false,
         award_id: certainAward,
       }),
     })
@@ -181,25 +181,19 @@ export default function SubordinatesBullets() {
       ) : (
         subordinateInfo.map((bu, i) => (
           <div key={i} className="subordinate-bullet-card-ethan">
-            <button
-              className="suggest"
-              onClick={() => {
-                handleSetSubordinateID(bu.user_id, bu.award_name, bu.award_id);
-                setName(bu.name)
-                setAction(bu.action)
-                setImpact(bu.impact)
-                setResult(bu.result)
-                setRevisedHidden(!revisedHidden)
-              }}>Suggest</button>
-              <button
-              className = "approve"
-              onClick ={() => {
-                handleChangeStatus(bu.id);
-                // navigate(`/subordinates/${userID}`)
-                window.location.reload()
-              }}>Approve</button>
             <p className="subordinate-bullet-title">
               {bu.name}
+            </p>
+            
+              
+              
+            
+            <p className="subordinate-bullet-section">
+              <span className="subordinate-bullet-label" style={{ color: "#B67EF0" }}>{bu.status}</span>{" "}
+              <br></br>
+              <span className="subordinate-bullet-label" style={{ color: "#B67EF0" }}>{new Date(bu.updated_at).toLocaleDateString()} -{" "}
+              {new Date(bu.updated_at).toLocaleTimeString()}</span>{" "}
+              
             </p>
             <p className="subordinate-bullet-section">
               <span className="subordinate-bullet-label">Action:</span>{" "}
@@ -213,10 +207,28 @@ export default function SubordinatesBullets() {
               <span className="subordinate-bullet-label">Result:</span>{" "}
               {bu.result}
             </p>
-            <p className="subordinate-bullet-section">
-              <span className="subordinate-bullet-label">Status:</span>{" "}
-              {bu.status}
-            </p>
+            <button
+              className="suggest"
+              onClick={() => {
+                handleSetSubordinateID(bu.user_id, bu.award_name, bu.award_id);
+                setName(bu.name)
+                setAction(bu.action)
+                setImpact(bu.impact)
+                setResult(bu.result)
+                setRevisedHidden(!revisedHidden)
+              }}>Submit Revision</button>
+            {bu.status != "Supervisor Approved" ? (
+        <button
+        className = "approve"
+        style={{ background: "green" }}
+        onClick ={() => {
+          handleChangeStatus(bu.id);
+          // navigate(`/subordinates/${userID}`)
+          window.location.reload()
+        }}>Approve</button>
+      ) : (
+        <h3 style={{ color: "green" }}>Supervisor Approved!</h3>
+      )}
           </div>
         ))
       )}
