@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import { useLocalStorage } from "@uidotdev/usehooks";
 import "./Bullets.css";
-// import "../SubordinatesBullets/SubordinatesBullets.css";
+import "../SubordinatesBullets/SubordinatesBullets.css";
 
 
 function Bullets() {
@@ -17,6 +17,8 @@ function Bullets() {
   const [editingBulletId, setEditingBulletId] = useState(null);
   const [userAwards, setUserAwards] = useState([]);
   const [hiddenBullet, setHiddenBullet] = useState(false)
+  const [awardStatusCounts, setAwardStatusCounts] = useState([]);
+  const [readyToSubmitAwards, setReadyToSubmitAwards] = useState([]);
 
   const formatBulletText = (action, impact, result) => {
     return `${action}; ${impact} — ${result}`.trim();
@@ -38,7 +40,7 @@ function Bullets() {
       });
   }
 
-
+  //fetching user's bullets
   useEffect(() => {
     if (userID) {
       fetch(`http://localhost:3001/bullet/users/${userID}`)
@@ -57,6 +59,7 @@ function Bullets() {
     }
   }, [userID]);
 
+  //fetching Award Packages that they have been nominated for
   useEffect(() => {
     if (userID) {
       fetch(`http://localhost:3001/user_award/${userID}/awards`)
@@ -74,6 +77,50 @@ function Bullets() {
       setLoading(false);
     }
   }, [userID]);
+
+  //fetching bullet status of "Complete" counts for each award
+  useEffect(() => {
+    if (userID) {
+      fetch(`http://localhost:3001/bullet/status/${userID}`)
+        .then(res => res.json())
+        .then(data => {
+          setAwardStatusCounts(data);
+        })
+        .catch(err => {
+          console.log(err);
+          alert('Error fetching award count');
+        });
+    }
+  }, [userID]);
+
+  //patch the status of the award to "Ready to Submit" if count of "Supervisor Approved" bullets is >= bullet_minimum
+  useEffect(() => {
+    if (!userAwards || !userAwards.length) return;
+    const awardsToUpdate = userAwards.filter(award => {
+      const statusCount = awardStatusCounts.find(status => status.award_id === award.award_id);
+      return (statusCount && statusCount.complete_status_count >= award.bullet_minimum && !readyToSubmitAwards.includes(award.award_id) && award.status !== 'Ready to Submit');
+    })
+
+    if (awardsToUpdate.length === 0) return;
+
+    awardsToUpdate.forEach(award => {
+      fetch(`http://localhost:3001/user_award/${award.award_id}`, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json'},
+        body: JSON.stringify({status: "Ready to Submit"}),
+      })
+      .then(res => res.json())
+      .then(updatedAwardStatus => {
+        setReadyToSubmitAwards(prev => [...prev, award.award_id]);
+        console.log("Award status updated:", updatedAwardStatus);
+      })
+      .catch(err => {
+        console.error('Error updating award status:', err);
+        alert('Error updating award status');
+      })
+    })
+  }, [userAwards, awardStatusCounts]);
 
   const handleAddBullet = () => {
     const emptyFieldsCheck = (!action.trim() || !impact.trim() || !result.trim());
@@ -244,7 +291,7 @@ function Bullets() {
     <>
       <h2 className="page-title">My Bullets</h2>
       <div className="bullets-page-container">
-        <div className={hiddenBullet ? "bullet-card" : "" } hidden={!hiddenBullet}>
+        <div className={hiddenBullet ? "subordinate-bullet-card" : "" } hidden={!hiddenBullet}>
 
               <h2>New Bullet</h2> <button onClick={() => {setHiddenBullet(!hiddenBullet)}} className='bullet-exitbutton'>X</button>
 
@@ -311,7 +358,7 @@ function Bullets() {
               <th>Last Updated</th>
               <th>Award Package</th>
               <th>Status</th>
-              <th>Submit for Review</th>
+              <th>Supervisor Viewable</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -387,19 +434,33 @@ function Bullets() {
                 ) : (
                   <p>No award packages available</p>
                 )
-              ) : (userAwards.find(award => award.award_id === bullet.award_id)?.name || "No award package assigned");
+              ) : (() => {
+                const awardFound = userAwards.find(award => award.award_id === bullet.award_id);
+                const statusCount = awardStatusCounts.find(status => status.award_id === bullet.award_id);
+                if (awardFound && statusCount && statusCount.complete_status_count >= award.bullet_minimum) {
+                  return (
+                  <span>
+                    {awardFound.name} - Eligible to Submit Package
+                  </span>
+                  );
+                } else {
+                  return awardFound ? awardFound.name : "No award package assigned";
+                }
+              })();
 
-              const statusElement = isEditing ? (
-                <select
-                  value={bullet.status || "Status"}
-                  onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
-                >
-                  <option value="Drafting">Drafting</option>
-                  <option value="Supervisor Review">Supervisor Review</option>
-                  <option value="Returned">Returned</option>
-                  <option value="Supervisor Approved">Supervisor Approved</option>
-                </select>
-              ) : (bullet.status || "Status");
+              const statusElement = bullet.status
+              //dropdown logic for status
+              // const statusElement = isEditing ? (
+              //   <select
+              //     value={bullet.status}
+              //     onChange={(e) => handleEditBullet(bullet.id, "status", e.target.value)}
+              //   >
+              //     <option value="Drafting">Drafting</option>
+              //     <option value="Supervisor Review">Supervisor Review</option>
+              //     <option value="Returned">Returned</option>
+              //     <option value="Supervisor Approved">Supervisor Approved</option>
+              //   </select>
+              // ) : (bullet.status);
 
               const submitForReviewElement = isEditing ? (
                 <input
