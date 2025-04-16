@@ -61,10 +61,10 @@ router.get("/status/:user_id", (req, res) => {
   knex("bullet")
     .join("award", "award_id", "=", "award.id")
     .where("bullet.user_id", user_id)
-    .andWhere('bullet.status', 'Complete')
+    .andWhere('bullet.status', 'Supervisor Approved')
     .groupBy("bullet.award_id", "award.name", "award.bullet_minimum", "award.bullet_maximum")
     .select(
-      knex.raw("COUNT(*) as complete_status_count"),
+      knex.raw("COUNT(*) as approved_status_count"),
       "bullet.award_id",
       "award.name as award_name",
       "award.bullet_minimum",

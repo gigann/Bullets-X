@@ -11,6 +11,7 @@ const Packages = () => {
   const [tableData, setTableData] = useState();
   const [refresh, setRefresh] = useState(1);
   const [awardName, setAwardName] = useState('');
+  const [approvedBullets, setApprovedBullets] = useState([]);
 
   useEffect(() => {
     fetch(`http://localhost:3001/user_award/${loggedIn.id}/awards`)
@@ -25,6 +26,38 @@ const Packages = () => {
       .then(data => setBullets(data))
       .catch(err => console.log("Error: ", err));
   }, [awards]);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/bullet/status/${loggedIn.id}`)
+      .then(res => res.json())
+      .then(data => setApprovedBullets(data))
+      .then(() => console.log(approvedBullets))
+      .then(() => {
+        for (let award of approvedBullets){
+          let complete = parseInt(award.approved_status_count)
+          let body = {
+            award_id: `${award.award_id}`,
+            status: 'Eligible to Submit'
+          }
+          if(complete >= award.bullet_minimum && complete <= award.bullet_maximum){
+            console.log(`I am here for ${award.award_name}`)
+            fetch(`http://localhost:3001/user_award/${loggedIn.id}`, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(() => console.log(`^Patched successfully`))
+            .catch(err => console.log("Error: ", err));
+          }
+        }
+      })
+      .catch(err => console.log("Error: ", err));
+
+  }, [awards]);
+
 
   useEffect(() => {
     let newTableData = [];
