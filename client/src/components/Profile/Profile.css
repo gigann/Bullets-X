@@ -6,7 +6,7 @@
     display: flex;
     justify-self: center;
     justify-content: center;
-    width: 55rem;
+    width: 58rem;
     height: 40rem;
     background-color: var(--panel-bg-color);
     color: var(--panel-text-color);
@@ -42,7 +42,7 @@
     flex-direction: column;
     justify-content: center;
     top: 10rem;
-    left: 30rem;
+    left: 28rem;
 }
 
 .profile-data-item{
@@ -140,12 +140,12 @@
 
 .edit-selectors{
     position: fixed;
-    top: 13rem;
+    top: 12.8rem;
     left: 28rem;
 }
 
 .edit-selectors select{
-    margin-bottom: 50px;
+    margin-bottom: 48px;
 }
 
 .edit-arrows #hidden{
