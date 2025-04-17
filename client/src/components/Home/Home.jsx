@@ -78,7 +78,7 @@ function Home() {
                 </div>
               </div>
               <div className='upcoming-awards'>
-                <h3>Upcoming Awards</h3>
+                <h2>Upcoming Packages</h2>
                 <table>
                   <tbody>
                     {upcomingAwards?.map((award, i) => (
