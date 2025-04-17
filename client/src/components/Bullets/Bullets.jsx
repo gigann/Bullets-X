@@ -291,63 +291,7 @@ function Bullets() {
     <>
       <h2 className="page-title">My Bullets</h2>
       <div className="bullets-page-container">
-        <div className={hiddenBullet ? "subordinate-bullet-card" : "" } hidden={!hiddenBullet}>
-
-              <h2>New Bullet</h2> <button onClick={() => {setHiddenBullet(!hiddenBullet)}} className='bullet-exitbutton'>X</button>
-
-              <h3>Name:</h3>
-              <input
-                type="text"
-                value={bulletName}
-                onChange={(e) => setBulletName(e.target.value)}
-              />
-              <h3>Action:</h3>
-              <input
-                type="text"
-                value={action}
-                onChange={(e) => setAction(e.target.value)} />
-
-              <h3>Impact:</h3>
-              <input
-                type="text"
-                value={impact}
-                onChange={(e) => setImpact(e.target.value)} />
-
-              <h3>Result:</h3>
-              <input
-                type="text"
-                value={result}
-                onChange={(e) => setResult(e.target.value)} />
-
-              <h3>Tagged Package:</h3>
-              {userAwards.length > 0 ? (
-                <select
-                  value={newBulletAward || ""}
-                  onChange={(e) => setNewBulletAward(parseInt(e.target.value))}
-                >
-                  {userAwards.map(award => (
-                    <option key={award.award_id} value={award.award_id}>
-                      {award.name}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <p>No award packages available. Please add an award package first.</p>
-              )}
-
-          <div className="live-preview">
-            <h3>Preview: </h3>
-            <p>{newBulletPreview || "(Your new bullet will appear here...)"}</p>
-            <div className="character-counter">
-              <h3> Character Count: </h3>
-              <p>{calculateCharacterCount(action, impact, result)}/115 characters</p>
-              {calculateCharacterCount(action, impact, result) > 115 ? (
-                <span className="character-limit-exceeded"> (Exceeds recommended limit)</span>
-              ) : null}
-            </div>
-          </div>
-          <button onClick={handleAddBullet}>Add Bullet</button>
-        </div>
+        
 
         <table className="bullets-table">
           <thead>
@@ -505,6 +449,63 @@ function Bullets() {
             })}
           </tbody>
         </table>
+        <div className={hiddenBullet ? "subordinate-bullet-card" : "" } hidden={!hiddenBullet}>
+
+              <h2>New Bullet</h2> <button onClick={() => {setHiddenBullet(!hiddenBullet)}} className='bullet-exitbutton'>X</button>
+
+              <h3>Name:</h3>
+              <input
+                type="text"
+                value={bulletName}
+                onChange={(e) => setBulletName(e.target.value)}
+              />
+              <h3>Action:</h3>
+              <input
+                type="text"
+                value={action}
+                onChange={(e) => setAction(e.target.value)} />
+
+              <h3>Impact:</h3>
+              <input
+                type="text"
+                value={impact}
+                onChange={(e) => setImpact(e.target.value)} />
+
+              <h3>Result:</h3>
+              <input
+                type="text"
+                value={result}
+                onChange={(e) => setResult(e.target.value)} />
+
+              <h3>Tagged Package:</h3>
+              {userAwards.length > 0 ? (
+                <select
+                  value={newBulletAward || ""}
+                  onChange={(e) => setNewBulletAward(parseInt(e.target.value))}
+                >
+                  {userAwards.map(award => (
+                    <option key={award.award_id} value={award.award_id}>
+                      {award.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <p>No award packages available. Please add an award package first.</p>
+              )}
+
+          <div className="live-preview">
+            <h3>Preview: </h3>
+            <p>{newBulletPreview || "(Your new bullet will appear here...)"}</p>
+            <div className="character-counter">
+              <h3> Character Count: </h3>
+              <p>{calculateCharacterCount(action, impact, result)}/115 characters</p>
+              {calculateCharacterCount(action, impact, result) > 115 ? (
+                <span className="character-limit-exceeded"> (Exceeds recommended limit)</span>
+              ) : null}
+            </div>
+          </div>
+          <button onClick={handleAddBullet}>Add Bullet</button>
+        </div>
         <button onClick={() => {setHiddenBullet(!hiddenBullet)}}>Add New Bullet</button>
       </div>
 
