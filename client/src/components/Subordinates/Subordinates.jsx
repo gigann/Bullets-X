@@ -58,7 +58,7 @@ function Subordinates() {
           // Collect only the fulfilled results
           const successfulBullets = bulletsData.flat().filter((result) => result.status === "fulfilled").map((result) => result.value);
 
-          setSubordinateInfo(successfulBullets.flat()); // Flatten the array of arrays
+          setSubordinateInfo(successfulBullets.flat());
         } catch (error) {
           console.error("Error fetching bullets:", error.message);
         }
@@ -194,6 +194,7 @@ function Subordinates() {
       <p>Name</p>
       <p>Rank</p>
       <p>Awards Nominated</p>
+      <p>Needs Review</p>
       <p>Eligible to Submit?</p>
     </div>
     {subordinateData.map((sub, i) => {
@@ -234,9 +235,32 @@ function Subordinates() {
           ))}
         </div> */}
 
+      <div className="subordinate-review-wrapper">
+        {userAwards.map((award, k) => {
+          const hasSupervisorReviewBullets = subordinateInfo.some(
+            (info) =>
+              info.user_id === sub.id &&
+              info.award_id === award.award_id &&
+              info.status === "Supervisor Review"
+          );
+
+          return (
+            <label key={k} className="subordinate-ready-for-review">
+              <input
+                type="checkbox"
+                className="subordinate-checkbox"
+                checked={hasSupervisorReviewBullets}
+                readOnly
+              />
+              <label className="subordinate-checkbox-label" htmlFor="award-checkbox"></label>
+            </label>
+          );
+        })}
+      </div>
+
           <div className="subordinate-review-wrapper">
             {userAwards.map((award, k) => (
-              <label key={k} className="subordinate-ready-for-review">
+              <label key={k} className="subordinate-eligible-for-submit">
                 <input
                   type="checkbox"
                   className="subordinate-checkbox"
