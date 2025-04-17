@@ -93,7 +93,7 @@ function Bullets() {
     }
   }, [userID]);
 
-  //patch the status of the award to "Ready to Submit" if count of "Supervisor Approved" bullets is >= bullet_minimum
+  //patch the status of the award to "Eligible to Submit" if count of "Supervisor Approved" bullets is >= bullet_minimum
   useEffect(() => {
     if (!userAwards || !userAwards.length) return;
     const awardsToUpdate = userAwards.filter(award => {
@@ -108,7 +108,7 @@ function Bullets() {
         method: "PATCH",
         headers: {
           'Content-Type': 'application/json'},
-        body: JSON.stringify({status: "Eligible to Submit"}),
+        body: JSON.stringify({status: "Eligible to Submit Package"}),
       })
       .then(res => res.json())
       .then(updatedAwardStatus => {
