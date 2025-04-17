@@ -45,15 +45,15 @@
   font-size: 16px;
   color: var(--panel-text-color);
   text-align: center;
-  margin-right: 180px;
-  margin-left: 80px;
+  margin-right: 130px;
+  margin-left: 55px;
 }
 
 .subordinate-rank {
   font-size: 14px;
   color: var(--panel-text-color);
   text-align: center;
-  margin-right: 100px
+  margin-right: 80px
 }
 
 .subordinate-awards-nominated {
@@ -71,6 +71,12 @@
 } */
 
 .subordinate-ready-for-review {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.subordinate-eligible-for-submit {
   display: flex;
   justify-content: center;
   width: 100%;
