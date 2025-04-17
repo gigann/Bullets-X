@@ -17,8 +17,9 @@ const Packages = () => {
     fetch(`http://localhost:3001/user_award/${loggedIn.id}/awards`)
       .then(res => res.json())
       .then(data => setAwards(data))
+      .then(() => console.log("Setting awards data"))
       .catch(err => console.log("Error: ", err));
-  }, [refresh])
+  }, [refresh, approvedBullets])
 
   useEffect(() => {
     fetch(`http://localhost:3001/bullet/users/${loggedIn.id}`)
@@ -31,8 +32,8 @@ const Packages = () => {
     fetch(`http://localhost:3001/bullet/status/${loggedIn.id}`)
       .then(res => res.json())
       .then((data) => {
-        setApprovedBullets(data)
-        for (let award of approvedBullets){
+        for (let award of data){
+          console.log(approvedBullets)
           let complete = parseInt(award.approved_status_count)
           let body = {
             award_id: `${award.award_id}`,
@@ -51,11 +52,15 @@ const Packages = () => {
             .catch(err => console.log("Error: ", err));
           }
         }
+        return data;
+      })
+      .then(data => {
+        setApprovedBullets(data)
+        console.log("setting approved bullets")
       })
       .catch(err => console.log("Error: ", err));
 
-  }, [awards]);
-
+  }, []);
 
   useEffect(() => {
     let newTableData = [];
@@ -72,6 +77,7 @@ const Packages = () => {
       newTableData.push(row);
     }
     setTableData(newTableData);
+    console.log("setting table data")
   }, [awards, approvedBullets])
 
   const handleRemove = (i) => {
@@ -160,7 +166,7 @@ const Packages = () => {
             bullets
             .filter(bullet => bullet.award_name == awardName)
             .map((filteredBullet, i) => {
-              return <li>{filteredBullet.action}, {filteredBullet.impact}--{filteredBullet.result}</li>
+              return <li key={i}>{filteredBullet.action}, {filteredBullet.impact}--{filteredBullet.result}</li>
             })
           }
         </ul>
