@@ -30,14 +30,15 @@ const Packages = () => {
   useEffect(() => {
     fetch(`http://localhost:3001/bullet/status/${loggedIn.id}`)
       .then(res => res.json())
-      .then(data => setApprovedBullets(data))
-      .then(() => {
+      .then((data) => {
+        setApprovedBullets(data)
         for (let award of approvedBullets){
           let complete = parseInt(award.approved_status_count)
           let body = {
             award_id: `${award.award_id}`,
             status: 'Eligible to Submit'
           }
+          console.log(complete >= award.bullet_minimum)
           if(complete >= award.bullet_minimum && complete <= award.bullet_maximum){
             fetch(`http://localhost:3001/user_award/users/${loggedIn.id}`, {
               method: 'PATCH',
@@ -71,7 +72,7 @@ const Packages = () => {
       newTableData.push(row);
     }
     setTableData(newTableData);
-  }, [awards])
+  }, [awards, approvedBullets])
 
   const handleRemove = (i) => {
     fetch(`http://localhost:3001/user_award/${awards[i].id}`, {

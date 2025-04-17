@@ -18,7 +18,7 @@ router.get("/users/:user_id", (req, res) => {
     .join("award", "award_id", "=", "award.id")
     .select("bullet.*", "award.name as award_name")
     .where("user_id", user_id)
-    .orderBy("award_id")
+    .orderBy("id")
     .then((bullets) => res.status(200).json(bullets))
     .catch((err) =>
       res.status(404).json({
@@ -61,14 +61,19 @@ router.get("/status/:user_id", (req, res) => {
   knex("bullet")
     .join("award", "award_id", "=", "award.id")
     .where("bullet.user_id", user_id)
-    .andWhere('bullet.status', 'Supervisor Approved')
-    .groupBy("bullet.award_id", "award.name", "award.bullet_minimum", "award.bullet_maximum")
+    .andWhere("bullet.status", "Supervisor Approved")
+    .groupBy(
+      "bullet.award_id",
+      "award.name",
+      "award.bullet_minimum",
+      "award.bullet_maximum"
+    )
     .select(
       knex.raw("COUNT(*) as approved_status_count"),
       "bullet.award_id",
       "award.name as award_name",
       "award.bullet_minimum",
-      "award.bullet_maximum",
+      "award.bullet_maximum"
     )
     .orderBy("bullet.award_id")
     .then((bullets) => res.status(200).json(bullets))
@@ -105,14 +110,15 @@ router.get("/completed/:user_id/:award_id", (req, res) => {
     .where({ user_id, award_id, drafting: false }) // Ensure only non-drafting bullets are returned
     .then((bullets) => {
       if (bullets.length === 0) {
-        return res.status(404).json({ message: "No bullets found for this user and award." });
+        return res
+          .status(404)
+          .json({ message: "No bullets found for this user and award." });
       }
       res.status(200).json(bullets);
     })
     .catch((err) => {
       console.error("Error fetching bullets:", err.message);
       res.status(500).json({ message: "Failed to fetch bullets." });
-
     });
 });
 

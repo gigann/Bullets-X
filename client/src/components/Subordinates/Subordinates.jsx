@@ -194,7 +194,7 @@ function Subordinates() {
       <p>Name</p>
       <p>Rank</p>
       <p>Awards Nominated</p>
-      <p>Ready to Submit?</p>
+      <p>Eligible to Submit?</p>
     </div>
     {subordinateData.map((sub, i) => {
       const userAwards = subordinateAwards.filter((award) => award.user_id === sub.id);
@@ -240,7 +240,7 @@ function Subordinates() {
                 <input
                   type="checkbox"
                   className="subordinate-checkbox"
-                  checked={award?.status === "Ready to Submit"}
+                  checked={award?.status === "Eligible to Submit"}
                   readOnly
                 />
                 <label className="subordinate-checkbox-label" htmlFor="award-checkbox"></label>
