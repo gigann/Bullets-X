@@ -1,7 +1,6 @@
 # BulletsX
 Built with **React** on the frontend and **Express**, **Knex.js**, and **PostgreSQL** on the backend, **BulletsX** is a fullstack bullet management system, offering bullet drafting, tracking, and reporting capabilities for supervisors and subordinates.
 
-[screenshots here]
 ---
 ## How to Download
 * ```git clone``` the project URL or download and extract the .ZIP archive.
@@ -86,18 +85,13 @@ npm run test
     * *Log out.*
     * Toggle **Light/Dark Mode**.
 
-More instructions TBD
-
+---
 ## Planning and Design
 ### Problem Statement
 There isn’t a centralized location to draft bullets, regularly track awards and accomplishments, and collab with your supervisor through it all. **Our app provides a dashboard for users to create and track award goals, as well as regularly log their notable work activity for performance reporting.**
 ### User Personas
 ![Persona1](./screenshots/user_persona_1.png)
 ![Persona2](./screenshots/user_persona_2.png)
-
-### Kanban
-![Kanban](./screenshots/kanban.png)
-Made with https://figma.com
 
 ### Entity Relationship Diagram (ERD)
 ![Kanban](./screenshots/erd.png)
